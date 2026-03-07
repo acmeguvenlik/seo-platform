@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="en" className="light" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${geistSans.variable} ${geistMono.variable} ${dmSerif.variable} antialiased`}>
         {children}
       </body>

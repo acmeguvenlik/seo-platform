@@ -5,15 +5,15 @@ import { Moon, Sun } from "lucide-react";
 import { Button } from "./button";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light"); // Default to light
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     // Check localStorage or system preference
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-    const initialTheme = savedTheme || systemTheme;
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    const initialTheme = savedTheme || "light"; // Default to light mode
     
     setTheme(initialTheme);
     document.documentElement.classList.toggle("light", initialTheme === "light");

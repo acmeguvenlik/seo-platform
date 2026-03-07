@@ -76,29 +76,29 @@
 /* Light Mode Variables */
 .light {
   --color-bg-base: #FFFFFF;
-  --color-bg-elevated: #F9FAFB;
-  --color-bg-overlay: #F3F4F6;
-  --color-bg-subtle: #E5E7EB;
-  --color-bg-muted: #D1D5DB;
+  --color-bg-elevated: #FFFFFF;
+  --color-bg-overlay: #F8F9FA;
+  --color-bg-subtle: #F1F3F5;
+  --color-bg-muted: #E9ECEF;
   
-  --color-border-default: rgba(0, 0, 0, 0.08);
-  --color-border-strong: rgba(0, 0, 0, 0.14);
+  --color-border-default: rgba(0, 0, 0, 0.1);
+  --color-border-strong: rgba(0, 0, 0, 0.2);
   --color-border-focus: rgba(0, 212, 180, 0.6);
   
-  --color-text-primary: #111827;
-  --color-text-secondary: #4B5563;
-  --color-text-muted: #9CA3AF;
-  --color-text-disabled: #D1D5DB;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #4A5568;
+  --color-text-muted: #718096;
+  --color-text-disabled: #CBD5E0;
   
-  --color-accent-teal: #00B89F;
-  --color-accent-teal-dim: rgba(0, 212, 180, 0.08);
-  --color-accent-teal-glow: rgba(0, 212, 180, 0.15);
-  --color-accent-amber: #D97706;
-  --color-accent-amber-dim: rgba(245, 158, 11, 0.08);
+  --color-accent-teal: #00D4B4;
+  --color-accent-teal-dim: rgba(0, 212, 180, 0.1);
+  --color-accent-teal-glow: rgba(0, 212, 180, 0.2);
+  --color-accent-amber: #F59E0B;
+  --color-accent-amber-dim: rgba(245, 158, 11, 0.1);
   
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-glow: 0 0 40px rgba(0, 212, 180, 0.1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 40px rgba(0, 212, 180, 0.15);
 }
 
 :root {
