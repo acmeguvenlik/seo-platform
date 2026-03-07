@@ -88,7 +88,6 @@ export async function getSession(): Promise<SessionPayload | null> {
   // Check if session exists in database
   const session = await db.session.findUnique({
     where: { token },
-    include: { user: true },
   });
 
   if (!session || session.expiresAt < new Date()) {
