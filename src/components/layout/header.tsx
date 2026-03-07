@@ -7,6 +7,7 @@ import { Search } from "lucide-react";
 import { useAuth, useUser } from "@/contexts/auth-context";
 import { LanguageSwitcher } from "./language-switcher";
 import { MobileMenu } from "./mobile-menu";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function Header() {
   const t = useTranslations("nav");
@@ -67,6 +68,9 @@ export function Header() {
             <Search className="h-4 w-4" />
             <span className="text-xs">⌘K</span>
           </button>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
           {/* Language Switcher */}
           <LanguageSwitcher />
