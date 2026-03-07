@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser } from "@/lib/auth";
 import { anthropic, CLAUDE_MODEL } from "@/lib/anthropic";
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = await auth();
+    const user = await getCurrentUser();
 
-    if (!userId) {
+    if (!user) {
       return NextResponse.json(
         { error: "Giriş yapmanız gerekiyor" },
         { status: 401 }
