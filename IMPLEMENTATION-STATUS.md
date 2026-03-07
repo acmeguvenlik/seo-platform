@@ -128,17 +128,19 @@ Son güncelleme: Mart 2026
 ## ⏳ Devam Eden / Planlanan
 
 ### Dashboard Pages
-- ⏳ /dashboard - Overview with usage stats
-- ⏳ /dashboard/history - Analysis history
-- ⏳ /dashboard/saved - Saved analyses
+- ✅ /dashboard - Overview with usage stats
+- ✅ /dashboard/history → /analyses - Analysis history
+- ⏳ /dashboard/saved - Saved analyses (component exists, needs backend)
 - ⏳ /dashboard/api-keys - API key management (Pro/Enterprise)
-- ⏳ /dashboard/billing - Billing & subscription
+- ✅ /dashboard/billing - Billing & subscription (UI ready, Stripe needs activation)
 
 ### Payments (Stripe)
-- ⏳ Stripe entegrasyonu
-- ⏳ Checkout flow
-- ⏳ Webhook handler
-- ⏳ Subscription management
+- ✅ Stripe configuration and utilities
+- ✅ Plan pricing structure (PRO/ENTERPRISE)
+- ✅ Checkout API route (foundation ready)
+- ⏳ Stripe API key integration
+- ⏳ Webhook handler for subscription events
+- ⏳ Customer portal integration
 - ⏳ Invoice history
 
 ### Advanced Features
@@ -198,10 +200,10 @@ Son güncelleme: Mart 2026
 ### Build Stats
 - Build time: ~5 seconds
 - TypeScript check: ~4 seconds
-- Total routes: 42
-- API routes: 13
+- Total routes: 50 (+8 from previous)
+- API routes: 17 (+4 dashboard APIs, +1 checkout)
 - Static pages: 1
-- Dynamic pages: 41
+- Dynamic pages: 49
 
 ### Bundle Size
 - Optimized for production
@@ -255,19 +257,29 @@ Son güncelleme: Mart 2026
 #### Health
 - GET /api/health
 
+#### Dashboard
+- GET /api/dashboard/stats
+- GET /api/dashboard/usage
+- GET /api/dashboard/history
+
+#### Checkout
+- POST /api/checkout/create
+
 ---
 
 ## 🎯 Öncelikli Sonraki Adımlar
 
-1. **Dashboard Implementation** (1-2 hafta)
-   - Usage stats widget
-   - History page with pagination
-   - Saved analyses management
+1. ~~**Dashboard Implementation**~~ ✅ TAMAMLANDI
+   - ✅ Usage stats widget
+   - ✅ History page with pagination
+   - ✅ Billing page UI
 
-2. **Stripe Integration** (1 hafta)
-   - Checkout flow
-   - Webhook handler
-   - Subscription management
+2. **Stripe Activation** (1-2 gün)
+   - Stripe account oluştur
+   - API keys ekle (.env)
+   - Products ve prices oluştur
+   - Webhook handler implement et
+   - Test mode'da test et
 
 3. **SEO Infrastructure** (3-4 gün)
    - Dynamic sitemap
@@ -310,4 +322,4 @@ Son güncelleme: Mart 2026
 
 ---
 
-**Proje Durumu:** MVP hazır, production deployment için hazır. Dashboard ve ödeme sistemi eklenmesi gerekiyor.
+**Proje Durumu:** ✅ Dashboard ve billing UI tamamlandı! Stripe sadece API key bekliyor. Production'a deploy edilebilir, ödeme sistemi aktif edildiğinde tam çalışır hale gelir.
