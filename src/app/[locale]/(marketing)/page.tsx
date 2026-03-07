@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
+import { WebApplicationSchema, FAQSchema, BreadcrumbSchema } from "@/components/seo/json-ld";
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -186,6 +187,34 @@ export default function HomePage() {
 
   return (
     <div className="relative">
+      {/* Structured Data for SEO */}
+      <WebApplicationSchema url={process.env.NEXT_PUBLIC_APP_URL || "https://seotools.com"} />
+      <FAQSchema
+        faqs={[
+          {
+            question: "SEO araçları ücretsiz mi?",
+            answer: "Evet, temel SEO araçlarımız tamamen ücretsiz. Kayıt olmadan kullanabilirsiniz. Pro plan ile daha fazla özellik ve yüksek kullanım limitleri elde edebilirsiniz.",
+          },
+          {
+            question: "Hangi SEO araçları mevcut?",
+            answer: "Meta tag analizi, anahtar kelime yoğunluğu, sitemap oluşturucu, backlink analizi, sayfa hızı testi, görsel optimizasyonu, robots.txt validator ve daha fazlası. Toplam 30+ araç.",
+          },
+          {
+            question: "AI destekli özellikler nelerdir?",
+            answer: "Claude AI ile meta tag oluşturma, içerik optimizasyonu, SEO önerileri ve otomatik raporlama. AI araçları Pro plan ile kullanılabilir.",
+          },
+          {
+            question: "Verilerim güvende mi?",
+            answer: "Evet, tüm veriler şifrelenir ve saklanmaz. GDPR uyumlu güvenli platform. Analiz sonuçları sadece sizinle paylaşılır.",
+          },
+        ]}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: process.env.NEXT_PUBLIC_APP_URL || "https://seotools.com" },
+        ]}
+      />
+      
       {/* Hero Section - SEO Optimized */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-bg-base via-bg-base to-bg-elevated">
         {/* Animated Grid Background */}
