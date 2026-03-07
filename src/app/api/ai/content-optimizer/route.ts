@@ -4,12 +4,18 @@ import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
 import { aiContentOptimizerSchema } from "@/lib/validation";
 
 interface ContentOptimizerResult {
-  score: number;
+  optimizedContent: string;
+  originalLength: number;
+  optimizedLength: number;
   keywordDensity: number;
-  missingKeywords: string[];
-  headingRecommendations: string[];
-  contentGaps: string[];
-  optimizedIntro: string;
+  readabilityScore: number;
+  seoScore: number;
+  improvements: {
+    category: string;
+    before: string;
+    after: string;
+    impact: "high" | "medium" | "low";
+  }[];
   suggestions: string[];
   processingTime: number;
 }
@@ -48,37 +54,31 @@ async function handler(
     ? `\n\nCompetitor URLs for reference:\n${competitorUrls.join("\n")}`
     : "";
 
-  const prompt = `You are an SEO content optimization expert. Analyze the following content and provide detailed SEO recommendations in ${targetLang}.
+  const prompt = `You are an SEO content optimization expert. Analyze and optimize the following content for SEO in ${targetLang}.
 
 TARGET KEYWORD: ${targetKeyword}
 
-CONTENT TO ANALYZE:
+ORIGINAL CONTENT:
 ${content.substring(0, 3000)}${competitorInfo}
 
-Please provide a comprehensive SEO analysis in the following format:
+Please provide:
+1. An optimized version of the entire content
+2. Detailed analysis and improvements
+3. SEO recommendations
 
-SCORE: [0-100 overall SEO score]
-KEYWORD_DENSITY: [percentage as decimal, e.g., 0.02 for 2%]
+Respond in the following format:
 
-MISSING_KEYWORDS:
-- [LSI keyword 1]
-- [LSI keyword 2]
-- [LSI keyword 3]
-- [LSI keyword 4]
-- [LSI keyword 5]
+OPTIMIZED_CONTENT:
+[Write the complete optimized version of the content here. Make it SEO-friendly while maintaining readability and natural flow. Include the target keyword naturally 2-3 times.]
 
-HEADING_RECOMMENDATIONS:
-- [Heading structure recommendation 1]
-- [Heading structure recommendation 2]
-- [Heading structure recommendation 3]
+SEO_SCORE: [0-100]
+READABILITY_SCORE: [0-100]
+KEYWORD_DENSITY: [percentage as decimal, e.g., 0.025 for 2.5%]
 
-CONTENT_GAPS:
-- [Missing topic 1]
-- [Missing topic 2]
-- [Missing topic 3]
-
-OPTIMIZED_INTRO:
-[Write an optimized version of the first 200 words that includes the target keyword naturally and hooks the reader]
+IMPROVEMENTS:
+CATEGORY: Keyword Usage | BEFORE: [original text snippet] | AFTER: [improved text snippet] | IMPACT: high
+CATEGORY: Readability | BEFORE: [original text snippet] | AFTER: [improved text snippet] | IMPACT: medium
+CATEGORY: Structure | BEFORE: [original text snippet] | AFTER: [improved text snippet] | IMPACT: high
 
 SUGGESTIONS:
 - [Actionable SEO suggestion 1]
@@ -107,62 +107,72 @@ IMPORTANT: Respond in ${targetLang} language.`;
 
   // Parse the response
   const lines = responseText.split("\n");
-  let score = 0;
+  let optimizedContent = "";
+  let seoScore = 0;
+  let readabilityScore = 0;
   let keywordDensity = 0;
-  const missingKeywords: string[] = [];
-  const headingRecommendations: string[] = [];
-  const contentGaps: string[] = [];
-  let optimizedIntro = "";
+  const improvements: any[] = [];
   const suggestions: string[] = [];
 
   let currentSection = "";
+  let currentImprovement: any = {};
 
   lines.forEach((line: string) => {
     const trimmedLine = line.trim();
 
-    if (trimmedLine.startsWith("SCORE:")) {
+    if (trimmedLine === "OPTIMIZED_CONTENT:") {
+      currentSection = "content";
+    } else if (trimmedLine.startsWith("SEO_SCORE:")) {
+      currentSection = "";
       const scoreMatch = trimmedLine.match(/\d+/);
       if (scoreMatch) {
-        score = parseInt(scoreMatch[0]);
+        seoScore = parseInt(scoreMatch[0]);
+      }
+    } else if (trimmedLine.startsWith("READABILITY_SCORE:")) {
+      const scoreMatch = trimmedLine.match(/\d+/);
+      if (scoreMatch) {
+        readabilityScore = parseInt(scoreMatch[0]);
       }
     } else if (trimmedLine.startsWith("KEYWORD_DENSITY:")) {
       const densityMatch = trimmedLine.match(/[\d.]+/);
       if (densityMatch) {
-        keywordDensity = parseFloat(densityMatch[0]);
+        keywordDensity = parseFloat(densityMatch[0]) * 100; // Convert to percentage
       }
-    } else if (trimmedLine === "MISSING_KEYWORDS:") {
-      currentSection = "missing";
-    } else if (trimmedLine === "HEADING_RECOMMENDATIONS:") {
-      currentSection = "headings";
-    } else if (trimmedLine === "CONTENT_GAPS:") {
-      currentSection = "gaps";
-    } else if (trimmedLine === "OPTIMIZED_INTRO:") {
-      currentSection = "intro";
+    } else if (trimmedLine === "IMPROVEMENTS:") {
+      currentSection = "improvements";
     } else if (trimmedLine === "SUGGESTIONS:") {
       currentSection = "suggestions";
-    } else if (trimmedLine.startsWith("-")) {
-      const item = trimmedLine.substring(1).trim();
-      if (currentSection === "missing") {
-        missingKeywords.push(item);
-      } else if (currentSection === "headings") {
-        headingRecommendations.push(item);
-      } else if (currentSection === "gaps") {
-        contentGaps.push(item);
-      } else if (currentSection === "suggestions") {
-        suggestions.push(item);
+    } else if (currentSection === "content" && trimmedLine.length > 0 && !trimmedLine.startsWith("SEO_SCORE")) {
+      optimizedContent += (optimizedContent ? "\n" : "") + trimmedLine;
+    } else if (currentSection === "improvements" && trimmedLine.startsWith("CATEGORY:")) {
+      // Parse improvement line: CATEGORY: X | BEFORE: Y | AFTER: Z | IMPACT: W
+      const parts = trimmedLine.split("|").map(p => p.trim());
+      if (parts.length >= 4) {
+        improvements.push({
+          category: parts[0].replace("CATEGORY:", "").trim(),
+          before: parts[1].replace("BEFORE:", "").trim(),
+          after: parts[2].replace("AFTER:", "").trim(),
+          impact: parts[3].replace("IMPACT:", "").trim() as "high" | "medium" | "low",
+        });
       }
-    } else if (currentSection === "intro" && trimmedLine.length > 0) {
-      optimizedIntro += (optimizedIntro ? " " : "") + trimmedLine;
+    } else if (currentSection === "suggestions" && trimmedLine.startsWith("-")) {
+      suggestions.push(trimmedLine.substring(1).trim());
     }
   });
 
+  // If no optimized content, use original
+  if (!optimizedContent) {
+    optimizedContent = content;
+  }
+
   const result: ContentOptimizerResult = {
-    score,
+    optimizedContent,
+    originalLength: content.length,
+    optimizedLength: optimizedContent.length,
     keywordDensity,
-    missingKeywords,
-    headingRecommendations,
-    contentGaps,
-    optimizedIntro,
+    readabilityScore: readabilityScore || 75,
+    seoScore: seoScore || 70,
+    improvements,
     suggestions,
     processingTime: Date.now() - startTime,
   };

@@ -81,7 +81,15 @@ IMPORTANT: Respond in ${targetLang} language.`;
   // Parse the response
   const lines = responseText.split("\n");
   const result: any = {
+    title: "",
+    description: "",
+    keywords: [],
+    ogTitle: "",
+    ogDescription: "",
+    twitterTitle: "",
+    twitterDescription: "",
     suggestions: [],
+    processingTime: Date.now() - Date.now(),
   };
 
   lines.forEach((line: string) => {
@@ -90,7 +98,8 @@ IMPORTANT: Respond in ${targetLang} language.`;
     } else if (line.startsWith("DESCRIPTION:")) {
       result.description = line.replace("DESCRIPTION:", "").trim();
     } else if (line.startsWith("KEYWORDS:")) {
-      result.keywords = line.replace("KEYWORDS:", "").trim();
+      const keywordsStr = line.replace("KEYWORDS:", "").trim();
+      result.keywords = keywordsStr.split(",").map((k: string) => k.trim());
     } else if (line.startsWith("OG_TITLE:")) {
       result.ogTitle = line.replace("OG_TITLE:", "").trim();
     } else if (line.startsWith("OG_DESCRIPTION:")) {
@@ -103,6 +112,12 @@ IMPORTANT: Respond in ${targetLang} language.`;
       result.suggestions.push(line.trim().substring(1).trim());
     }
   });
+
+  // Set defaults if not provided
+  result.ogTitle = result.ogTitle || result.title;
+  result.ogDescription = result.ogDescription || result.description;
+  result.twitterTitle = result.twitterTitle || result.title;
+  result.twitterDescription = result.twitterDescription || result.description;
 
   return successResponse(result);
 }
