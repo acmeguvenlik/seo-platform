@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { AlertCircle, CheckCircle2, Search, TrendingUp, TrendingDown } from "lucide-react";
+import { AlertCircle, CheckCircle2, Search, TrendingUp, Sparkles } from "lucide-react";
+import { ModernToolInput } from "./modern-tool-input";
 
 interface MetaAnalysisResult {
   url: string;
@@ -42,26 +42,13 @@ interface MetaAnalysisResult {
 
 export function MetaAnalyzerTool() {
   const t = useTranslations("tools.metaAnalyzer");
-  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [result, setResult] = useState<MetaAnalysisResult | null>(null);
   const [aiSuggestions, setAiSuggestions] = useState<any>(null);
   const [error, setError] = useState("");
 
-  const handleAnalyze = async () => {
-    if (!url) {
-      setError(t("errors.invalidUrl"));
-      return;
-    }
-
-    try {
-      new URL(url);
-    } catch {
-      setError(t("errors.invalidUrl"));
-      return;
-    }
-
+  const handleAnalyze = async (url: string) => {
     setLoading(true);
     setError("");
     setResult(null);
@@ -149,50 +136,26 @@ export function MetaAnalyzerTool() {
       </div>
 
       {/* Input Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("inputLabel")}</CardTitle>
-          <CardDescription>
-            Web sitenizin meta etiketlerini analiz edin ve SEO skorunuzu öğrenin
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <Input
-                type="url"
-                variant="url"
-                placeholder={t("inputPlaceholder")}
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
-                error={error}
-              />
-            </div>
-            <Button
-              onClick={handleAnalyze}
-              loading={loading}
-              disabled={loading}
-              size="lg"
-            >
-              {loading ? t("analyzing") : t("analyze")}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <ModernToolInput
+        placeholder="https://example.com"
+        buttonText="Analiz Et"
+        onAnalyze={handleAnalyze}
+        loading={loading}
+        error={error}
+      />
 
       {/* Results */}
       {result && (
         <div className="space-y-6 animate-fadeUp">
           {/* Score Card */}
-          <Card>
+          <Card className="border-2 hover:border-accent-teal/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent-teal/10">
             <CardContent className="pt-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-text-secondary mb-1">{t("score")}</p>
                     <div className="flex items-center gap-3">
-                      <span className={`text-5xl font-bold ${getScoreColor(result.score)}`}>
+                      <span className={`text-5xl font-bold ${getScoreColor(result.score)} transition-all duration-500`}>
                         {result.score}
                       </span>
                       <span className="text-2xl text-text-muted">/100</span>
@@ -211,21 +174,27 @@ export function MetaAnalyzerTool() {
                     result.score >= 60 ? "warning" : 
                     "error"
                   }
+                  className="h-3"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* Title Analysis */}
-          <Card>
+          <Card className="hover:border-accent-teal/20 transition-all duration-300 group">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">Title Tag</CardTitle>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-accent-teal-dim flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Search className="h-4 w-4 text-accent-teal" />
+                  </div>
+                  Title Tag
+                </CardTitle>
                 {getStatusIcon(result.title.status)}
               </div>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="p-3 rounded-md bg-bg-subtle border border-border-default">
+              <div className="p-4 rounded-lg bg-bg-subtle border border-border-default hover:border-accent-teal/30 transition-colors">
                 <p className="text-sm text-text-primary font-mono">{result.title.content || "Bulunamadı"}</p>
               </div>
               <div className="flex items-center justify-between text-sm">
@@ -238,15 +207,20 @@ export function MetaAnalyzerTool() {
           </Card>
 
           {/* Description Analysis */}
-          <Card>
+          <Card className="hover:border-accent-teal/20 transition-all duration-300 group">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">Meta Description</CardTitle>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-accent-amber/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Search className="h-4 w-4 text-accent-amber" />
+                  </div>
+                  Meta Description
+                </CardTitle>
                 {getStatusIcon(result.description.status)}
               </div>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="p-3 rounded-md bg-bg-subtle border border-border-default">
+              <div className="p-4 rounded-lg bg-bg-subtle border border-border-default hover:border-accent-teal/30 transition-colors">
                 <p className="text-sm text-text-primary font-mono">{result.description.content || "Bulunamadı"}</p>
               </div>
               <div className="flex items-center justify-between text-sm">
@@ -259,14 +233,14 @@ export function MetaAnalyzerTool() {
           </Card>
 
           {/* Open Graph Tags */}
-          <Card>
+          <Card className="hover:border-accent-teal/20 transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-lg">Open Graph Tags</CardTitle>
               <CardDescription>Sosyal medya paylaşımları için</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.ogTags.hasOgTitle ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -274,7 +248,7 @@ export function MetaAnalyzerTool() {
                   )}
                   <span className="text-sm text-text-secondary">og:title</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.ogTags.hasOgDescription ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -282,7 +256,7 @@ export function MetaAnalyzerTool() {
                   )}
                   <span className="text-sm text-text-secondary">og:description</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.ogTags.hasOgImage ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -290,7 +264,7 @@ export function MetaAnalyzerTool() {
                   )}
                   <span className="text-sm text-text-secondary">og:image</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.ogTags.hasOgUrl ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -303,14 +277,14 @@ export function MetaAnalyzerTool() {
           </Card>
 
           {/* Twitter Tags */}
-          <Card>
+          <Card className="hover:border-accent-teal/20 transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-lg">Twitter Card Tags</CardTitle>
               <CardDescription>Twitter paylaşımları için</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.twitterTags.hasTwitterCard ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -318,7 +292,7 @@ export function MetaAnalyzerTool() {
                   )}
                   <span className="text-sm text-text-secondary">twitter:card</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.twitterTags.hasTwitterTitle ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -326,7 +300,7 @@ export function MetaAnalyzerTool() {
                   )}
                   <span className="text-sm text-text-secondary">twitter:title</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.twitterTags.hasTwitterDescription ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -334,7 +308,7 @@ export function MetaAnalyzerTool() {
                   )}
                   <span className="text-sm text-text-secondary">twitter:description</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-bg-subtle hover:bg-bg-overlay transition-colors">
                   {result.twitterTags.hasTwitterImage ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -348,7 +322,7 @@ export function MetaAnalyzerTool() {
 
           {/* Suggestions */}
           {result.suggestions.length > 0 && (
-            <Card>
+            <Card className="hover:border-accent-teal/20 transition-all duration-300">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg">{t("suggestions")}</CardTitle>
@@ -358,8 +332,9 @@ export function MetaAnalyzerTool() {
                     onClick={handleAiSuggestions}
                     loading={aiLoading}
                     disabled={aiLoading}
+                    className="group/ai"
                   >
-                    <TrendingUp className="h-4 w-4 mr-2" />
+                    <Sparkles className="h-4 w-4 mr-2 group-hover/ai:rotate-12 transition-transform" />
                     AI Önerileri Al
                   </Button>
                 </div>
@@ -367,7 +342,7 @@ export function MetaAnalyzerTool() {
               <CardContent>
                 <ul className="space-y-2">
                   {result.suggestions.map((suggestion, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-text-secondary">
+                    <li key={index} className="flex items-start gap-2 text-sm text-text-secondary p-2 rounded-lg hover:bg-bg-subtle transition-colors">
                       <TrendingUp className="h-4 w-4 text-accent-teal mt-0.5 flex-shrink-0" />
                       <span>{suggestion}</span>
                     </li>
@@ -379,11 +354,11 @@ export function MetaAnalyzerTool() {
 
           {/* AI Suggestions */}
           {aiSuggestions && (
-            <Card className="border-accent-teal/20 bg-gradient-to-br from-accent-teal-dim to-transparent">
+            <Card className="border-2 border-accent-teal/30 bg-gradient-to-br from-accent-teal-dim to-transparent hover:border-accent-teal/50 transition-all duration-300 animate-fadeUp">
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-lg bg-accent-teal flex items-center justify-center">
-                    <TrendingUp className="h-4 w-4 text-bg-base" />
+                  <div className="h-8 w-8 rounded-lg bg-accent-teal flex items-center justify-center animate-pulse">
+                    <Sparkles className="h-4 w-4 text-bg-base" />
                   </div>
                   <CardTitle className="text-lg">AI Destekli Öneriler</CardTitle>
                 </div>
@@ -392,7 +367,7 @@ export function MetaAnalyzerTool() {
                 {aiSuggestions.title && (
                   <div className="space-y-2">
                     <p className="text-sm font-semibold text-text-primary">Önerilen Title:</p>
-                    <div className="p-3 rounded-md bg-bg-elevated border border-border-default">
+                    <div className="p-4 rounded-lg bg-bg-elevated border border-border-default hover:border-accent-teal/30 transition-colors">
                       <p className="text-sm text-text-primary">{aiSuggestions.title}</p>
                     </div>
                   </div>
@@ -401,7 +376,7 @@ export function MetaAnalyzerTool() {
                 {aiSuggestions.description && (
                   <div className="space-y-2">
                     <p className="text-sm font-semibold text-text-primary">Önerilen Description:</p>
-                    <div className="p-3 rounded-md bg-bg-elevated border border-border-default">
+                    <div className="p-4 rounded-lg bg-bg-elevated border border-border-default hover:border-accent-teal/30 transition-colors">
                       <p className="text-sm text-text-primary">{aiSuggestions.description}</p>
                     </div>
                   </div>
@@ -412,7 +387,7 @@ export function MetaAnalyzerTool() {
                     <p className="text-sm font-semibold text-text-primary">Anahtar Kelimeler:</p>
                     <div className="flex flex-wrap gap-2">
                       {aiSuggestions.keywords.split(",").map((keyword: string, index: number) => (
-                        <Badge key={index} variant="teal">
+                        <Badge key={index} variant="teal" className="hover:scale-105 transition-transform">
                           {keyword.trim()}
                         </Badge>
                       ))}
@@ -425,7 +400,7 @@ export function MetaAnalyzerTool() {
                     <p className="text-sm font-semibold text-text-primary">Ek Öneriler:</p>
                     <ul className="space-y-2">
                       {aiSuggestions.suggestions.map((suggestion: string, index: number) => (
-                        <li key={index} className="flex items-start gap-2 text-sm text-text-secondary">
+                        <li key={index} className="flex items-start gap-2 text-sm text-text-secondary p-2 rounded-lg hover:bg-bg-elevated transition-colors">
                           <CheckCircle2 className="h-4 w-4 text-accent-teal mt-0.5 flex-shrink-0" />
                           <span>{suggestion}</span>
                         </li>

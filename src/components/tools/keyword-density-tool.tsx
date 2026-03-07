@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { FileText, TrendingUp, AlertCircle } from "lucide-react";
+import { FileText, TrendingUp, AlertCircle, Sparkles } from "lucide-react";
+import { ModernToolInput } from "./modern-tool-input";
 
 interface KeywordData {
   keyword: string;
@@ -25,24 +25,11 @@ interface AnalysisResult {
 }
 
 export function KeywordDensityTool() {
-  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState("");
 
-  const handleAnalyze = async () => {
-    if (!url) {
-      setError("Lütfen geçerli bir URL girin");
-      return;
-    }
-
-    try {
-      new URL(url);
-    } catch {
-      setError("Lütfen geçerli bir URL girin");
-      return;
-    }
-
+  const handleAnalyze = async (url: string) => {
     setLoading(true);
     setError("");
     setResult(null);
@@ -104,54 +91,33 @@ export function KeywordDensityTool() {
       </div>
 
       {/* Input Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle>URL Girin</CardTitle>
-          <CardDescription>
-            Analiz etmek istediğiniz web sayfasının URL'sini girin
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <Input
-                type="url"
-                variant="url"
-                placeholder="https://example.com"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
-                error={error}
-              />
-            </div>
-            <Button
-              onClick={handleAnalyze}
-              loading={loading}
-              disabled={loading}
-              size="lg"
-            >
-              {loading ? "Analiz Ediliyor..." : "Analiz Et"}
-            </Button>
-          </div>
+      <ModernToolInput
+        placeholder="https://example.com"
+        buttonText="Analiz Et"
+        onAnalyze={handleAnalyze}
+        loading={loading}
+        error={error}
+      />
 
-          <Alert variant="info" icon={false}>
-            <AlertDescription>
-              <strong>İpucu:</strong> İdeal anahtar kelime yoğunluğu %2-3 arasındadır. 
-              Çok düşük veya çok yüksek yoğunluk SEO performansını olumsuz etkileyebilir.
-            </AlertDescription>
-          </Alert>
-        </CardContent>
-      </Card>
+      <Alert variant="info" icon={false} className="border-accent-teal/20 bg-accent-teal-dim">
+        <AlertDescription className="flex items-start gap-2">
+          <Sparkles className="h-4 w-4 text-accent-teal mt-0.5 flex-shrink-0" />
+          <span>
+            <strong>İpucu:</strong> İdeal anahtar kelime yoğunluğu %2-3 arasındadır. 
+            Çok düşük veya çok yüksek yoğunluk SEO performansını olumsuz etkileyebilir.
+          </span>
+        </AlertDescription>
+      </Alert>
 
       {/* Results */}
       {result && (
         <div className="space-y-6 animate-fadeUp">
           {/* Stats */}
           <div className="grid md:grid-cols-3 gap-4">
-            <Card>
+            <Card className="hover:scale-[1.02] transition-transform duration-300 hover:border-accent-teal/30">
               <CardContent className="pt-6">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-accent-teal">
+                  <p className="text-3xl font-bold text-accent-teal transition-all duration-500">
                     {result.totalWords.toLocaleString()}
                   </p>
                   <p className="text-sm text-text-muted mt-1">Toplam Kelime</p>
@@ -159,10 +125,10 @@ export function KeywordDensityTool() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="hover:scale-[1.02] transition-transform duration-300 hover:border-accent-amber/30">
               <CardContent className="pt-6">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-accent-amber">
+                  <p className="text-3xl font-bold text-accent-amber transition-all duration-500">
                     {result.uniqueWords.toLocaleString()}
                   </p>
                   <p className="text-sm text-text-muted mt-1">Benzersiz Kelime</p>
@@ -170,10 +136,10 @@ export function KeywordDensityTool() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="hover:scale-[1.02] transition-transform duration-300 hover:border-success/30">
               <CardContent className="pt-6">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-success">
+                  <p className="text-3xl font-bold text-success transition-all duration-500">
                     {result.topKeywords.length}
                   </p>
                   <p className="text-sm text-text-muted mt-1">Önemli Anahtar Kelime</p>
@@ -183,9 +149,14 @@ export function KeywordDensityTool() {
           </div>
 
           {/* Top Keywords */}
-          <Card>
+          <Card className="hover:border-accent-teal/20 transition-all duration-300">
             <CardHeader>
-              <CardTitle>En Çok Kullanılan Anahtar Kelimeler</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-lg bg-accent-teal-dim flex items-center justify-center">
+                  <FileText className="h-4 w-4 text-accent-teal" />
+                </div>
+                En Çok Kullanılan Anahtar Kelimeler
+              </CardTitle>
               <CardDescription>
                 Sayfanızda en sık geçen anahtar kelimeler ve yoğunlukları
               </CardDescription>
@@ -193,10 +164,10 @@ export function KeywordDensityTool() {
             <CardContent>
               <div className="space-y-4">
                 {result.topKeywords.slice(0, 10).map((keyword, index) => (
-                  <div key={index} className="space-y-2">
+                  <div key={index} className="space-y-2 p-3 rounded-lg hover:bg-bg-subtle transition-colors group">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <Badge variant="default" className="w-8 justify-center">
+                        <Badge variant="default" className="w-8 justify-center group-hover:scale-110 transition-transform">
                           {index + 1}
                         </Badge>
                         <span className="font-medium text-text-primary">
@@ -216,6 +187,7 @@ export function KeywordDensityTool() {
                       value={keyword.density}
                       max={5}
                       variant={getDensityVariant(keyword.density)}
+                      className="h-2"
                     />
                   </div>
                 ))}
@@ -224,25 +196,28 @@ export function KeywordDensityTool() {
           </Card>
 
           {/* Density Guide */}
-          <Card>
+          <Card className="border-2 border-border-default hover:border-accent-teal/20 transition-all duration-300">
             <CardHeader>
-              <CardTitle>Yoğunluk Rehberi</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-accent-teal" />
+                Yoğunluk Rehberi
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="h-3 w-3 rounded-full bg-success" />
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-success/10 hover:bg-success/20 transition-colors">
+                  <div className="h-3 w-3 rounded-full bg-success animate-pulse" />
                   <span className="text-sm text-text-secondary">
                     <strong>%2-3:</strong> İdeal yoğunluk - SEO için optimize
                   </span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-accent-amber/10 hover:bg-accent-amber/20 transition-colors">
                   <div className="h-3 w-3 rounded-full bg-accent-amber" />
                   <span className="text-sm text-text-secondary">
                     <strong>%1-2 veya %3-5:</strong> Kabul edilebilir - İyileştirilebilir
                   </span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-error/10 hover:bg-error/20 transition-colors">
                   <div className="h-3 w-3 rounded-full bg-error" />
                   <span className="text-sm text-text-secondary">
                     <strong>%1'den az veya %5'ten fazla:</strong> Sorunlu - Optimizasyon gerekli
@@ -254,14 +229,17 @@ export function KeywordDensityTool() {
 
           {/* Suggestions */}
           {result.suggestions.length > 0 && (
-            <Card>
+            <Card className="hover:border-accent-teal/20 transition-all duration-300">
               <CardHeader>
-                <CardTitle>Öneriler</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-accent-teal" />
+                  Öneriler
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   {result.suggestions.map((suggestion, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-text-secondary">
+                    <li key={index} className="flex items-start gap-2 text-sm text-text-secondary p-2 rounded-lg hover:bg-bg-subtle transition-colors">
                       <TrendingUp className="h-4 w-4 text-accent-teal mt-0.5 flex-shrink-0" />
                       <span>{suggestion}</span>
                     </li>
