@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { SavedAnalysesContent } from "@/components/analyses/saved-analyses-content";
 
@@ -8,9 +8,9 @@ export const metadata = {
 };
 
 export default async function SavedAnalysesPage() {
-  const { userId } = await auth();
+  const user = await getCurrentUser();
 
-  if (!userId) {
+  if (!user) {
     redirect("/sign-in");
   }
 

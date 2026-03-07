@@ -1,9 +1,9 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { AuthProvider } from "@/contexts/auth-context";
 
 const geistSans = Geist({
   variable: "--font-geist",
@@ -32,10 +32,10 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <ClerkProvider>
-      <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider messages={messages}>
+      <AuthProvider>
         {children}
-      </NextIntlClientProvider>
-    </ClerkProvider>
+      </AuthProvider>
+    </NextIntlClientProvider>
   );
 }

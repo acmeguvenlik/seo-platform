@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 
 export async function generateMetadata({
@@ -18,9 +18,9 @@ export async function generateMetadata({
 }
 
 export default async function DashboardPage() {
-  const { userId } = await auth();
+  const user = await getCurrentUser();
 
-  if (!userId) {
+  if (!user) {
     redirect("/sign-in");
   }
 

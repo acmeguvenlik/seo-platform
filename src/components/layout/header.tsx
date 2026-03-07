@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@/contexts/auth-context";
 import { LanguageSwitcher } from "./language-switcher";
 import { MobileMenu } from "./mobile-menu";
 

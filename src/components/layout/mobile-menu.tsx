@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Menu, X } from "lucide-react";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 
 export function MobileMenu() {
