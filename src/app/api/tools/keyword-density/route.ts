@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
+import { keywordDensitySchema } from "@/lib/validation";
 
 interface KeywordData {
   keyword: string;
@@ -7,51 +9,49 @@ interface KeywordData {
   density: number;
 }
 
-export async function POST(request: NextRequest) {
+async function handler(
+  request: NextRequest,
+  context: any,
+  validatedData: { url?: string; content?: string }
+): Promise<NextResponse> {
   const startTime = Date.now();
+  const { url, content } = validatedData;
 
   try {
-    const { url } = await request.json();
+    let text: string;
 
-    if (!url) {
+    if (url) {
+      // Fetch from URL
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; SEOToolsBot/1.0)",
+        },
+      });
+
+      if (!response.ok) {
+        return NextResponse.json(
+          { error: "Web sayfası yüklenemedi" },
+          { status: 400 }
+        );
+      }
+
+      const html = await response.text();
+      const $ = cheerio.load(html);
+
+      // Remove script, style, and other non-content elements
+      $("script, style, noscript, iframe").remove();
+
+      // Get text content
+      text = $("body").text();
+    } else if (content) {
+      // Use provided content
+      text = content;
+    } else {
       return NextResponse.json(
-        { error: "URL gereklidir" },
+        { error: "URL veya içerik gereklidir" },
         { status: 400 }
       );
     }
-
-    // URL validation
-    try {
-      new URL(url);
-    } catch {
-      return NextResponse.json(
-        { error: "Geçersiz URL formatı" },
-        { status: 400 }
-      );
-    }
-
-    // Fetch the webpage
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; SEOToolsBot/1.0)",
-      },
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Web sayfası yüklenemedi" },
-        { status: 400 }
-      );
-    }
-
-    const html = await response.text();
-    const $ = cheerio.load(html);
-
-    // Remove script, style, and other non-content elements
-    $("script, style, noscript, iframe").remove();
-
-    // Get text content
-    const text = $("body").text();
 
     // Clean and process text
     const cleanText = text
@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
     const processingTime = Date.now() - startTime;
 
     const result = {
-      url,
+      url: url || undefined,
       totalWords,
       uniqueWords,
       keywords: topKeywords,
@@ -162,7 +162,7 @@ export async function POST(request: NextRequest) {
       processingTime,
     };
 
-    return NextResponse.json(result);
+    return successResponse(result);
   } catch (error: any) {
     console.error("Keyword density error:", error);
     return NextResponse.json(
@@ -171,3 +171,12 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Export with middleware
+export const POST = withApiMiddleware(handler, {
+  requireAuth: false,
+  toolType: "tools",
+  enableCache: true,
+  cacheTTL: 3600,
+  validationSchema: keywordDensitySchema,
+});

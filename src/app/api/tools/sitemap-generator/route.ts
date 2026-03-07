@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
+import { sitemapGeneratorSchema } from "@/lib/validation";
 
 interface SitemapEntry {
   url: string;
@@ -18,19 +20,15 @@ interface SitemapResult {
   processingTime: number;
 }
 
-export async function POST(request: NextRequest) {
+async function handler(
+  request: NextRequest,
+  context: any,
+  validatedData: { url: string; maxPages: number; includeImages: boolean }
+): Promise<NextResponse> {
   const startTime = Date.now();
+  const { url, maxPages, includeImages } = validatedData;
 
   try {
-    const { url, maxDepth = 2, includeImages = false } = await request.json();
-
-    if (!url) {
-      return NextResponse.json(
-        { error: "URL gereklidir" },
-        { status: 400 }
-      );
-    }
-
     // URL validation
     let baseUrl: URL;
     try {
@@ -47,8 +45,9 @@ export async function POST(request: NextRequest) {
     const issues: string[] = [];
     const suggestions: string[] = [];
 
-    // Crawl the website
-    await crawlUrl(baseUrl.href, baseUrl, visitedUrls, sitemapEntries, 0, maxDepth);
+    // Crawl the website (max 2 levels deep for performance)
+    const maxDepth = 2;
+    await crawlUrl(baseUrl.href, baseUrl, visitedUrls, sitemapEntries, 0, maxDepth, maxPages);
 
     // Analyze and generate suggestions
     if (sitemapEntries.length === 0) {
@@ -79,7 +78,7 @@ export async function POST(request: NextRequest) {
       processingTime,
     };
 
-    return NextResponse.json(result);
+    return successResponse(result);
   } catch (error: any) {
     console.error("Sitemap generator error:", error);
     return NextResponse.json(
@@ -95,9 +94,10 @@ async function crawlUrl(
   visitedUrls: Set<string>,
   sitemapEntries: SitemapEntry[],
   depth: number,
-  maxDepth: number
+  maxDepth: number,
+  maxPages: number
 ): Promise<void> {
-  if (depth > maxDepth || visitedUrls.has(url) || visitedUrls.size >= 100) {
+  if (depth > maxDepth || visitedUrls.has(url) || visitedUrls.size >= maxPages) {
     return;
   }
 
@@ -143,7 +143,7 @@ async function crawlUrl(
             !absoluteUrl.hash && 
             !visitedUrls.has(absoluteUrl.href)) {
           promises.push(
-            crawlUrl(absoluteUrl.href, baseUrl, visitedUrls, sitemapEntries, depth + 1, maxDepth)
+            crawlUrl(absoluteUrl.href, baseUrl, visitedUrls, sitemapEntries, depth + 1, maxDepth, maxPages)
           );
         }
       } catch {
@@ -189,3 +189,12 @@ function escapeXml(unsafe: string): string {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
 }
+
+// Export with middleware
+export const POST = withApiMiddleware(handler, {
+  requireAuth: false,
+  toolType: "tools",
+  enableCache: true,
+  cacheTTL: 3600,
+  validationSchema: sitemapGeneratorSchema,
+});

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
+import { pageSpeedSchema } from "@/lib/validation";
 
 interface ResourceTiming {
   type: string;
@@ -31,31 +33,118 @@ interface PageSpeedResult {
   issues: string[];
   suggestions: string[];
   processingTime: number;
+  usingRealApi: boolean;
 }
 
-export async function POST(request: NextRequest) {
+async function handler(
+  request: NextRequest,
+  context: any,
+  validatedData: { url: string; strategy: "mobile" | "desktop" }
+): Promise<NextResponse> {
   const startTime = Date.now();
+  const { url, strategy } = validatedData;
 
   try {
-    const { url } = await request.json();
-
-    if (!url) {
-      return NextResponse.json(
-        { error: "URL gereklidir" },
-        { status: 400 }
-      );
+    // Try to use Google PageSpeed Insights API if key is available
+    const apiKey = process.env.GOOGLE_PAGESPEED_API_KEY;
+    
+    if (apiKey) {
+      return await analyzeWithGoogleAPI(url, strategy, apiKey, startTime);
     }
 
-    // URL validation
-    try {
-      new URL(url);
-    } catch {
-      return NextResponse.json(
-        { error: "Geçersiz URL formatı" },
-        { status: 400 }
-      );
-    }
+    // Fallback to manual analysis
+    return await analyzeManually(url, startTime);
+  } catch (error: any) {
+    console.error("Page speed analyzer error:", error);
+    return NextResponse.json(
+      { error: error.message || "Sayfa hızı analizi sırasında bir hata oluştu" },
+      { status: 500 }
+    );
+  }
+}
 
+async function analyzeWithGoogleAPI(
+  url: string,
+  strategy: string,
+  apiKey: string,
+  startTime: number
+): Promise<NextResponse> {
+  const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=${strategy}&key=${apiKey}`;
+  
+  const response = await fetch(apiUrl);
+  
+  if (!response.ok) {
+    throw new Error("Google PageSpeed API çağrısı başarısız");
+  }
+
+  const data = await response.json();
+  
+  // Extract metrics from Lighthouse data
+  const lighthouseResult = data.lighthouseResult;
+  const audits = lighthouseResult.audits;
+  
+  const score = Math.round(lighthouseResult.categories.performance.score * 100);
+  const lcp = audits["largest-contentful-paint"]?.numericValue || 0;
+  const fid = audits["max-potential-fid"]?.numericValue || 0;
+  const cls = audits["cumulative-layout-shift"]?.numericValue || 0;
+  const ttfb = audits["server-response-time"]?.numericValue || 0;
+  
+  // Determine grade
+  let grade: "A" | "B" | "C" | "D" | "F";
+  if (score >= 90) grade = "A";
+  else if (score >= 80) grade = "B";
+  else if (score >= 70) grade = "C";
+  else if (score >= 60) grade = "D";
+  else grade = "F";
+
+  // Extract opportunities (suggestions)
+  const suggestions: string[] = [];
+  const issues: string[] = [];
+  
+  Object.values(audits).forEach((audit: any) => {
+    if (audit.score !== null && audit.score < 0.9 && audit.title) {
+      if (audit.score < 0.5) {
+        issues.push(audit.title);
+      } else {
+        suggestions.push(audit.title);
+      }
+    }
+  });
+
+  const processingTime = Date.now() - startTime;
+
+  const result: PageSpeedResult = {
+    url,
+    loadTime: Math.round(lcp),
+    score,
+    grade,
+    metrics: {
+      ttfb: Math.round(ttfb),
+      domContentLoaded: 0,
+      totalResources: 0,
+      totalSize: 0,
+      scripts: 0,
+      stylesheets: 0,
+      images: 0,
+      fonts: 0,
+    },
+    coreWebVitals: {
+      lcp: Math.round(lcp),
+      fid: Math.round(fid),
+      cls: Math.round(cls * 100) / 100,
+    },
+    resources: [],
+    issues: issues.slice(0, 5),
+    suggestions: suggestions.slice(0, 10),
+    processingTime,
+    usingRealApi: true,
+  };
+
+  return successResponse(result);
+}
+
+async function analyzeManually(url: string, startTime: number): Promise<NextResponse> {
+  try {
     // Measure load time
     const fetchStart = Date.now();
     const response = await fetch(url, {
@@ -216,14 +305,21 @@ export async function POST(request: NextRequest) {
       issues,
       suggestions,
       processingTime,
+      usingRealApi: false,
     };
 
-    return NextResponse.json(result);
+    return successResponse(result);
   } catch (error: any) {
-    console.error("Page speed analyzer error:", error);
-    return NextResponse.json(
-      { error: error.message || "Sayfa hızı analizi sırasında bir hata oluştu" },
-      { status: 500 }
-    );
+    console.error("Manual page speed analysis error:", error);
+    throw error;
   }
 }
+
+// Export with middleware
+export const POST = withApiMiddleware(handler, {
+  requireAuth: false,
+  toolType: "tools",
+  enableCache: true,
+  cacheTTL: 1800, // 30 minutes for page speed
+  validationSchema: pageSpeedSchema,
+});
