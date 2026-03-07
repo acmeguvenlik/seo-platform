@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "tools": "Outils",
+    "analyses": "Analyses",
+    "pricing": "Tarifs",
+    "docs": "Documentation",
+    "dashboard": "Tableau de bord",
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "signOut": "Se déconnecter"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "copy": "Copier",
+    "copied": "Copié!",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "import": "Importer",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submit": "Soumettre",
+    "reset": "Réinitialiser"
+  },
+  "tools": {
+    "metaAnalyzer": {
+      "title": "Analyseur de Balises Meta",
+      "description": "Analysez et optimisez les balises meta de votre site web pour de meilleures performances SEO",
+      "inputLabel": "Entrez l'URL",
+      "inputPlaceholder": "https://exemple.fr",
+      "analyze": "Analyser",
+      "analyzing": "Analyse en cours...",
+      "results": "Résultats de l'Analyse",
+      "score": "Score SEO",
+      "issues": "Problèmes Trouvés",
+      "suggestions": "Suggestions",
+      "noIssues": "Aucun problème trouvé",
+      "errors": {
+        "invalidUrl": "Veuillez entrer une URL valide",
+        "fetchFailed": "Échec de la récupération de l'URL",
+        "rateLimitExceeded": "Limite de taux dépassée. Veuillez réessayer plus tard."
+      }
+    }
+  },
+  "auth": {
+    "signInTitle": "Connectez-vous à votre compte",
+    "signUpTitle": "Créez votre compte",
+    "signInDescription": "Accédez à vos outils SEO et analyses sauvegardées",
+    "signUpDescription": "Commencez à optimiser le SEO de votre site web aujourd'hui"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "welcome": "Bon retour",
+    "recentAnalyses": "Analyses Récentes",
+    "toolUsage": "Utilisation des Outils",
+    "apiUsage": "Utilisation de l'API",
+    "plan": "Plan Actuel",
+    "upgrade": "Améliorer le Plan",
+    "noAnalyses": "Aucune analyse pour le moment. Commencez en utilisant l'un de nos outils."
+  },
+  "pricing": {
+    "title": "Tarifs Simples et Transparents",
+    "description": "Choisissez le plan qui correspond à vos besoins",
+    "free": {
+      "name": "Gratuit",
+      "price": "0€",
+      "period": "pour toujours",
+      "features": [
+        "10 analyses par heure",
+        "Outils SEO de base",
+        "Support communautaire"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "29€",
+      "period": "par mois",
+      "features": [
+        "100 analyses par heure",
+        "Tous les outils SEO",
+        "Suggestions alimentées par l'IA",
+        "Support prioritaire",
+        "Exporter les rapports"
+      ]
+    },
+    "enterprise": {
+      "name": "Entreprise",
+      "price": "Personnalisé",
+      "period": "contactez-nous",
+      "features": [
+        "1000+ analyses par heure",
+        "Toutes les fonctionnalités Pro",
+        "Accès API",
+        "Intégrations personnalisées",
+        "Support dédié",
+        "Garantie SLA"
+      ]
+    }
+  },
+  "errors": {
+    "generic": "Quelque chose s'est mal passé. Veuillez réessayer.",
+    "notFound": "Page non trouvée",
+    "unauthorized": "Vous n'êtes pas autorisé à accéder à cette page",
+    "serverError": "Erreur du serveur. Veuillez réessayer plus tard."
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "tools": "Outils",
+    "analyses": "Analyses",
+    "analytics": "Analytique",
+    "billing": "Facturation",
+    "settings": "Paramètres",
+    "upgradeTitle": "Passer à Pro",
+    "upgradeDesc": "Obtenez plus de fonctionnalités et d'analyses illimitées",
+    "upgradeButton": "Améliorer le plan"
+  },
+  "analytics": {
+    "title": "Analytique",
+    "description": "Suivez les performances et les métriques SEO de votre site web",
+    "comingSoon": "Bientôt disponible",
+    "comingSoonDesc": "Nous travaillons sur des fonctionnalités d'analyse avancées. Elles seront bientôt là!",
+    "notify": "Me notifier quand c'est prêt",
+    "features": {
+      "performance": "Métriques de Performance",
+      "performanceDesc": "Vitesse de page, temps de chargement et Core Web Vitals",
+      "trends": "Tendances SEO",
+      "trendsDesc": "Changements de classement et de trafic au fil du temps",
+      "audience": "Analyse d'Audience",
+      "audienceDesc": "Comportement et démographie des visiteurs",
+      "geographic": "Distribution Géographique",
+      "geographicDesc": "Voyez d'où provient votre trafic"
+    }
+  },
+  "billing": {
+    "title": "Facturation",
+    "description": "Gérez votre abonnement et vos méthodes de paiement",
+    "currentPlan": "Plan Actuel",
+    "planDesc": "Vous êtes actuellement sur le plan Gratuit",
+    "upgradePlan": "Améliorer le plan",
+    "managePlan": "Gérer le plan",
+    "comingSoon": "Bientôt disponible",
+    "comingSoonDesc": "Nous travaillons sur les fonctionnalités de facturation et de paiement.",
+    "features": {
+      "payment": "Méthodes de Paiement",
+      "paymentDesc": "Carte de crédit et autres options de paiement",
+      "invoices": "Factures",
+      "invoicesDesc": "Voir et télécharger les factures précédentes",
+      "subscription": "Gestion de l'Abonnement",
+      "subscriptionDesc": "Modifiez ou annulez votre plan"
+    }
+  }
+}

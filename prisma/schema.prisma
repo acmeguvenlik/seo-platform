@@ -1,0 +1,81 @@
+// Prisma Schema for SEO Tools Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  plan      Plan     @default(FREE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  toolUsages      ToolUsage[]
+  savedAnalyses   SavedAnalysis[]
+  apiKeys         ApiKey[]
+
+  @@index([clerkId])
+  @@index([email])
+}
+
+model ToolUsage {
+  id           String   @id @default(cuid())
+  userId       String?
+  toolSlug     String
+  inputHash    String
+  result       Json
+  processingMs Int
+  createdAt    DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([toolSlug])
+  @@index([createdAt])
+  @@index([inputHash])
+}
+
+model SavedAnalysis {
+  id         String   @id @default(cuid())
+  userId     String
+  name       String
+  toolSlug   String
+  inputData  Json
+  resultData Json
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([toolSlug])
+  @@index([createdAt])
+}
+
+model ApiKey {
+  id          String    @id @default(cuid())
+  userId      String
+  name        String
+  keyHash     String    @unique
+  lastUsedAt  DateTime?
+  usageCount  Int       @default(0)
+  createdAt   DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([keyHash])
+}

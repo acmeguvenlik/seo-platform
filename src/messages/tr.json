@@ -1,0 +1,301 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "tools": "Araçlar",
+    "analyses": "Analizler",
+    "pricing": "Fiyatlandırma",
+    "docs": "Dokümantasyon",
+    "dashboard": "Kontrol Paneli",
+    "signIn": "Giriş Yap",
+    "signUp": "Kayıt Ol",
+    "signOut": "Çıkış Yap"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı!",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "export": "Dışa Aktar",
+    "import": "İçe Aktar",
+    "close": "Kapat",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki",
+    "submit": "Gönder",
+    "reset": "Sıfırla"
+  },
+  "tools": {
+    "metaAnalyzer": {
+      "title": "Meta Etiket Analizi",
+      "description": "Web sitenizin meta etiketlerini analiz edin ve SEO performansını optimize edin",
+      "inputLabel": "URL Girin",
+      "inputPlaceholder": "https://ornek.com",
+      "analyze": "Analiz Et",
+      "analyzing": "Analiz Ediliyor...",
+      "results": "Analiz Sonuçları",
+      "score": "SEO Skoru",
+      "issues": "Bulunan Sorunlar",
+      "suggestions": "Öneriler",
+      "noIssues": "Sorun bulunamadı",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "URL alınamadı",
+        "rateLimitExceeded": "Oran sınırı aşıldı. Lütfen daha sonra tekrar deneyin."
+      }
+    },
+    "sitemapGenerator": {
+      "title": "Sitemap Oluşturucu",
+      "description": "Web siteniz için otomatik XML sitemap oluşturun",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "maxDepthLabel": "Tarama Derinliği",
+      "generate": "Sitemap Oluştur",
+      "generating": "Oluşturuluyor...",
+      "download": "XML İndir",
+      "results": "Sitemap Sonuçları",
+      "totalUrls": "Toplam URL",
+      "issues": "Sorunlar",
+      "processingTime": "İşlem Süresi",
+      "issuesFound": "Bulunan Sorunlar",
+      "suggestions": "Öneriler",
+      "urlList": "URL Listesi",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "Sitemap oluşturulamadı"
+      }
+    },
+    "backlinkAnalyzer": {
+      "title": "Backlink Analizi",
+      "description": "Backlink profilinizi ve link kalitenizi analiz edin",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "analyze": "Backlink Analiz Et",
+      "analyzing": "Analiz Ediliyor...",
+      "domainAuthority": "Domain Authority",
+      "daDescription": "Backlink profiline göre tahmini domain authority",
+      "statistics": "Backlink İstatistikleri",
+      "totalBacklinks": "Toplam Backlink",
+      "dofollowLinks": "Dofollow Linkler",
+      "nofollowLinks": "Nofollow Linkler",
+      "externalLinks": "Harici Linkler",
+      "internalLinks": "Dahili Linkler",
+      "processingTime": "İşlem Süresi",
+      "issues": "Bulunan Sorunlar",
+      "suggestions": "Öneriler",
+      "backlinksList": "Backlink Listesi",
+      "quality": {
+        "excellent": "Mükemmel",
+        "good": "İyi",
+        "fair": "Orta",
+        "poor": "Zayıf"
+      },
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "Backlink analizi yapılamadı"
+      }
+    },
+    "imageOptimizer": {
+      "title": "Görsel Optimizasyonu",
+      "description": "Görselleri SEO için optimize edin, alt text ve boyut önerileri alın",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "analyze": "Görselleri Analiz Et",
+      "analyzing": "Analiz Ediliyor...",
+      "optimizationScore": "Optimizasyon Skoru",
+      "scoreDescription": "Alt text, lazy loading ve format bazında genel görsel optimizasyon skoru",
+      "statistics": "Görsel İstatistikleri",
+      "totalImages": "Toplam Görsel",
+      "withAlt": "Alt Text Var",
+      "withoutAlt": "Alt Text Yok",
+      "lazyLoaded": "Lazy Loaded",
+      "altCoverage": "Alt Kapsama",
+      "processingTime": "İşlem Süresi",
+      "issues": "Bulunan Sorunlar",
+      "suggestions": "Optimizasyon Önerileri",
+      "imagesList": "Görsel Listesi",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "Görsel analizi yapılamadı"
+      }
+    },
+    "pageSpeed": {
+      "title": "Sayfa Hızı Analizi",
+      "description": "Sayfa hızını analiz edin ve performans önerileri alın",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "analyze": "Hızı Analiz Et",
+      "analyzing": "Analiz Ediliyor...",
+      "performanceScore": "Performans Skoru",
+      "loadTime": "Yükleme Süresi",
+      "coreWebVitals": "Core Web Vitals",
+      "issues": "Bulunan Sorunlar",
+      "suggestions": "Performans Önerileri",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "Sayfa hızı analizi yapılamadı"
+      }
+    },
+    "robotsValidator": {
+      "title": "Robots.txt Doğrulayıcı",
+      "description": "Robots.txt dosyanızı doğrulayın ve optimize edin",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "validate": "Robots.txt Doğrula",
+      "validating": "Doğrulanıyor...",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "Robots.txt doğrulanamadı"
+      }
+    },
+    "schemaGenerator": {
+      "title": "Schema Markup Oluşturucu",
+      "description": "Zengin snippet'ler için structured data oluşturun",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "generate": "Schema Oluştur",
+      "generating": "Oluşturuluyor...",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "Schema oluşturulamadı"
+      }
+    },
+    "headingAnalyzer": {
+      "title": "Başlık Yapısı Analizi",
+      "description": "H1-H6 başlık yapısını ve hiyerarşisini analiz edin",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "analyze": "Başlıkları Analiz Et",
+      "analyzing": "Analiz Ediliyor...",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "Başlık analizi yapılamadı"
+      }
+    },
+    "internalLinks": {
+      "title": "İç Link Analizi",
+      "description": "İç link yapısını ve SEO gücünü analiz edin",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://ornek.com",
+      "analyze": "Linkleri Analiz Et",
+      "analyzing": "Analiz Ediliyor...",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "İç link analizi yapılamadı"
+      }
+    }
+  },
+  "auth": {
+    "signInTitle": "Hesabınıza giriş yapın",
+    "signUpTitle": "Hesap oluşturun",
+    "signInDescription": "SEO araçlarınıza ve kayıtlı analizlerinize erişin",
+    "signUpDescription": "Web sitenizin SEO'sunu bugün optimize etmeye başlayın"
+  },
+  "dashboard": {
+    "title": "Kontrol Paneli",
+    "welcome": "Tekrar hoş geldiniz",
+    "recentAnalyses": "Son Analizler",
+    "toolUsage": "Araç Kullanımı",
+    "apiUsage": "API Kullanımı",
+    "plan": "Mevcut Plan",
+    "upgrade": "Planı Yükselt",
+    "noAnalyses": "Henüz analiz yok. Araçlarımızdan birini kullanarak başlayın."
+  },
+  "pricing": {
+    "title": "Basit, Şeffaf Fiyatlandırma",
+    "description": "İhtiyaçlarınıza uygun planı seçin",
+    "free": {
+      "name": "Ücretsiz",
+      "price": "₺0",
+      "period": "süresiz",
+      "features": [
+        "Saatte 10 analiz",
+        "Temel SEO araçları",
+        "Topluluk desteği"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "₺899",
+      "period": "aylık",
+      "features": [
+        "Saatte 100 analiz",
+        "Tüm SEO araçları",
+        "AI destekli öneriler",
+        "Öncelikli destek",
+        "Rapor dışa aktarma"
+      ]
+    },
+    "enterprise": {
+      "name": "Kurumsal",
+      "price": "Özel",
+      "period": "bize ulaşın",
+      "features": [
+        "Saatte 1000+ analiz",
+        "Tüm Pro özellikler",
+        "API erişimi",
+        "Özel entegrasyonlar",
+        "Özel destek",
+        "SLA garantisi"
+      ]
+    }
+  },
+  "errors": {
+    "generic": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin.",
+    "notFound": "Sayfa bulunamadı",
+    "unauthorized": "Bu sayfaya erişim yetkiniz yok",
+    "serverError": "Sunucu hatası. Lütfen daha sonra tekrar deneyin."
+  },
+  "sidebar": {
+    "dashboard": "Kontrol Paneli",
+    "tools": "Araçlar",
+    "analyses": "Analizler",
+    "analytics": "Analitik",
+    "billing": "Faturalama",
+    "settings": "Ayarlar",
+    "upgradeTitle": "Pro'ya Yükselt",
+    "upgradeDesc": "Daha fazla özellik ve sınırsız analiz için",
+    "upgradeButton": "Planı Yükselt"
+  },
+  "analytics": {
+    "title": "Analitik",
+    "description": "Web sitenizin performansını ve SEO metriklerini takip edin",
+    "comingSoon": "Çok Yakında",
+    "comingSoonDesc": "Gelişmiş analitik özellikleri üzerinde çalışıyoruz. Yakında burada olacak!",
+    "notify": "Hazır olduğunda bilgilendir",
+    "features": {
+      "performance": "Performans Metrikleri",
+      "performanceDesc": "Sayfa hızı, yükleme süreleri ve Core Web Vitals",
+      "trends": "SEO Trendleri",
+      "trendsDesc": "Zaman içinde sıralama ve trafik değişimleri",
+      "audience": "Kitle Analizi",
+      "audienceDesc": "Ziyaretçi davranışları ve demografik bilgiler",
+      "geographic": "Coğrafi Dağılım",
+      "geographicDesc": "Trafiğinizin nereden geldiğini görün"
+    }
+  },
+  "billing": {
+    "title": "Faturalama",
+    "description": "Aboneliğinizi ve ödeme yöntemlerinizi yönetin",
+    "currentPlan": "Mevcut Plan",
+    "planDesc": "Şu anda Ücretsiz plandasınız",
+    "upgradePlan": "Planı Yükselt",
+    "managePlan": "Planı Yönet",
+    "comingSoon": "Çok Yakında",
+    "comingSoonDesc": "Faturalama ve ödeme özellikleri üzerinde çalışıyoruz.",
+    "features": {
+      "payment": "Ödeme Yöntemleri",
+      "paymentDesc": "Kredi kartı ve diğer ödeme seçenekleri",
+      "invoices": "Faturalar",
+      "invoicesDesc": "Geçmiş faturaları görüntüleyin ve indirin",
+      "subscription": "Abonelik Yönetimi",
+      "subscriptionDesc": "Planınızı değiştirin veya iptal edin"
+    }
+  }
+}

@@ -1,0 +1,301 @@
+{
+  "nav": {
+    "home": "Home",
+    "tools": "Tools",
+    "analyses": "Analyses",
+    "pricing": "Pricing",
+    "docs": "Documentation",
+    "dashboard": "Dashboard",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset"
+  },
+  "tools": {
+    "metaAnalyzer": {
+      "title": "Meta Tag Analyzer",
+      "description": "Analyze and optimize your website's meta tags for better SEO performance",
+      "inputLabel": "Enter URL",
+      "inputPlaceholder": "https://example.com",
+      "analyze": "Analyze",
+      "analyzing": "Analyzing...",
+      "results": "Analysis Results",
+      "score": "SEO Score",
+      "issues": "Issues Found",
+      "suggestions": "Suggestions",
+      "noIssues": "No issues found",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to fetch URL",
+        "rateLimitExceeded": "Rate limit exceeded. Please try again later."
+      }
+    },
+    "sitemapGenerator": {
+      "title": "Sitemap Generator",
+      "description": "Generate XML sitemap for your website automatically",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "maxDepthLabel": "Crawl Depth",
+      "generate": "Generate Sitemap",
+      "generating": "Generating...",
+      "download": "Download XML",
+      "results": "Sitemap Results",
+      "totalUrls": "Total URLs",
+      "issues": "Issues",
+      "processingTime": "Processing Time",
+      "issuesFound": "Issues Found",
+      "suggestions": "Suggestions",
+      "urlList": "URL List",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to generate sitemap"
+      }
+    },
+    "backlinkAnalyzer": {
+      "title": "Backlink Analyzer",
+      "description": "Analyze your backlink profile and link quality",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "analyze": "Analyze Backlinks",
+      "analyzing": "Analyzing...",
+      "domainAuthority": "Domain Authority",
+      "daDescription": "Estimated domain authority based on backlink profile",
+      "statistics": "Backlink Statistics",
+      "totalBacklinks": "Total Backlinks",
+      "dofollowLinks": "Dofollow Links",
+      "nofollowLinks": "Nofollow Links",
+      "externalLinks": "External Links",
+      "internalLinks": "Internal Links",
+      "processingTime": "Processing Time",
+      "issues": "Issues Found",
+      "suggestions": "Suggestions",
+      "backlinksList": "Backlinks List",
+      "quality": {
+        "excellent": "Excellent",
+        "good": "Good",
+        "fair": "Fair",
+        "poor": "Poor"
+      },
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to analyze backlinks"
+      }
+    },
+    "imageOptimizer": {
+      "title": "Image Optimizer",
+      "description": "Optimize images for SEO with alt text and size recommendations",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "analyze": "Analyze Images",
+      "analyzing": "Analyzing...",
+      "optimizationScore": "Optimization Score",
+      "scoreDescription": "Overall image optimization score based on alt text, lazy loading, and format",
+      "statistics": "Image Statistics",
+      "totalImages": "Total Images",
+      "withAlt": "With Alt Text",
+      "withoutAlt": "Without Alt",
+      "lazyLoaded": "Lazy Loaded",
+      "altCoverage": "Alt Coverage",
+      "processingTime": "Processing Time",
+      "issues": "Issues Found",
+      "suggestions": "Optimization Suggestions",
+      "imagesList": "Images List",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to analyze images"
+      }
+    },
+    "pageSpeed": {
+      "title": "Page Speed Analyzer",
+      "description": "Analyze page speed and get performance recommendations",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "analyze": "Analyze Speed",
+      "analyzing": "Analyzing...",
+      "performanceScore": "Performance Score",
+      "loadTime": "Load Time",
+      "coreWebVitals": "Core Web Vitals",
+      "issues": "Issues Found",
+      "suggestions": "Performance Suggestions",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to analyze page speed"
+      }
+    },
+    "robotsValidator": {
+      "title": "Robots.txt Validator",
+      "description": "Validate and optimize your robots.txt file",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "validate": "Validate Robots.txt",
+      "validating": "Validating...",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to validate robots.txt"
+      }
+    },
+    "schemaGenerator": {
+      "title": "Schema Markup Generator",
+      "description": "Generate structured data for rich snippets",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "generate": "Generate Schema",
+      "generating": "Generating...",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to generate schema"
+      }
+    },
+    "headingAnalyzer": {
+      "title": "Heading Structure Analyzer",
+      "description": "Analyze H1-H6 heading structure and hierarchy",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "analyze": "Analyze Headings",
+      "analyzing": "Analyzing...",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to analyze headings"
+      }
+    },
+    "internalLinks": {
+      "title": "Internal Link Analyzer",
+      "description": "Analyze internal link structure and SEO power",
+      "inputLabel": "Website URL",
+      "inputPlaceholder": "https://example.com",
+      "analyze": "Analyze Links",
+      "analyzing": "Analyzing...",
+      "errors": {
+        "invalidUrl": "Please enter a valid URL",
+        "fetchFailed": "Failed to analyze internal links"
+      }
+    }
+  },
+  "auth": {
+    "signInTitle": "Sign in to your account",
+    "signUpTitle": "Create your account",
+    "signInDescription": "Access your SEO tools and saved analyses",
+    "signUpDescription": "Start optimizing your website's SEO today"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "recentAnalyses": "Recent Analyses",
+    "toolUsage": "Tool Usage",
+    "apiUsage": "API Usage",
+    "plan": "Current Plan",
+    "upgrade": "Upgrade Plan",
+    "noAnalyses": "No analyses yet. Start by using one of our tools."
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "description": "Choose the plan that fits your needs",
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "period": "forever",
+      "features": [
+        "10 analyses per hour",
+        "Basic SEO tools",
+        "Community support"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$29",
+      "period": "per month",
+      "features": [
+        "100 analyses per hour",
+        "All SEO tools",
+        "AI-powered suggestions",
+        "Priority support",
+        "Export reports"
+      ]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Custom",
+      "period": "contact us",
+      "features": [
+        "1000+ analyses per hour",
+        "All Pro features",
+        "API access",
+        "Custom integrations",
+        "Dedicated support",
+        "SLA guarantee"
+      ]
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "notFound": "Page not found",
+    "unauthorized": "You are not authorized to access this page",
+    "serverError": "Server error. Please try again later."
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "tools": "Tools",
+    "analyses": "Analyses",
+    "analytics": "Analytics",
+    "billing": "Billing",
+    "settings": "Settings",
+    "upgradeTitle": "Upgrade to Pro",
+    "upgradeDesc": "Get more features and unlimited analyses",
+    "upgradeButton": "Upgrade Plan"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "description": "Track your website's performance and SEO metrics",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "We're working on advanced analytics features. They'll be here soon!",
+    "notify": "Notify me when ready",
+    "features": {
+      "performance": "Performance Metrics",
+      "performanceDesc": "Page speed, load times, and Core Web Vitals",
+      "trends": "SEO Trends",
+      "trendsDesc": "Ranking and traffic changes over time",
+      "audience": "Audience Analysis",
+      "audienceDesc": "Visitor behavior and demographics",
+      "geographic": "Geographic Distribution",
+      "geographicDesc": "See where your traffic comes from"
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "description": "Manage your subscription and payment methods",
+    "currentPlan": "Current Plan",
+    "planDesc": "You are currently on the Free plan",
+    "upgradePlan": "Upgrade Plan",
+    "managePlan": "Manage Plan",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "We're working on billing and payment features.",
+    "features": {
+      "payment": "Payment Methods",
+      "paymentDesc": "Credit card and other payment options",
+      "invoices": "Invoices",
+      "invoicesDesc": "View and download past invoices",
+      "subscription": "Subscription Management",
+      "subscriptionDesc": "Change or cancel your plan"
+    }
+  }
+}

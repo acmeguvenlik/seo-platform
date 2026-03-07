@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "tools": "Werkzeuge",
+    "analyses": "Analysen",
+    "pricing": "Preise",
+    "docs": "Dokumentation",
+    "dashboard": "Dashboard",
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "signOut": "Abmelden"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige",
+    "submit": "Absenden",
+    "reset": "Zurücksetzen"
+  },
+  "tools": {
+    "metaAnalyzer": {
+      "title": "Meta-Tag-Analyse",
+      "description": "Analysieren und optimieren Sie die Meta-Tags Ihrer Website für bessere SEO-Leistung",
+      "inputLabel": "URL eingeben",
+      "inputPlaceholder": "https://beispiel.de",
+      "analyze": "Analysieren",
+      "analyzing": "Analysiere...",
+      "results": "Analyseergebnisse",
+      "score": "SEO-Score",
+      "issues": "Gefundene Probleme",
+      "suggestions": "Vorschläge",
+      "noIssues": "Keine Probleme gefunden",
+      "errors": {
+        "invalidUrl": "Bitte geben Sie eine gültige URL ein",
+        "fetchFailed": "URL konnte nicht abgerufen werden",
+        "rateLimitExceeded": "Ratenlimit überschritten. Bitte versuchen Sie es später erneut."
+      }
+    }
+  },
+  "auth": {
+    "signInTitle": "Bei Ihrem Konto anmelden",
+    "signUpTitle": "Konto erstellen",
+    "signInDescription": "Greifen Sie auf Ihre SEO-Tools und gespeicherten Analysen zu",
+    "signUpDescription": "Beginnen Sie noch heute mit der Optimierung Ihrer Website-SEO"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen zurück",
+    "recentAnalyses": "Letzte Analysen",
+    "toolUsage": "Tool-Nutzung",
+    "apiUsage": "API-Nutzung",
+    "plan": "Aktueller Plan",
+    "upgrade": "Plan upgraden",
+    "noAnalyses": "Noch keine Analysen. Beginnen Sie mit einem unserer Tools."
+  },
+  "pricing": {
+    "title": "Einfache, transparente Preise",
+    "description": "Wählen Sie den Plan, der zu Ihren Bedürfnissen passt",
+    "free": {
+      "name": "Kostenlos",
+      "price": "0€",
+      "period": "für immer",
+      "features": [
+        "10 Analysen pro Stunde",
+        "Basis-SEO-Tools",
+        "Community-Support"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "29€",
+      "period": "pro Monat",
+      "features": [
+        "100 Analysen pro Stunde",
+        "Alle SEO-Tools",
+        "KI-gestützte Vorschläge",
+        "Prioritäts-Support",
+        "Berichte exportieren"
+      ]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Individuell",
+      "period": "kontaktieren Sie uns",
+      "features": [
+        "1000+ Analysen pro Stunde",
+        "Alle Pro-Funktionen",
+        "API-Zugriff",
+        "Individuelle Integrationen",
+        "Dedizierter Support",
+        "SLA-Garantie"
+      ]
+    }
+  },
+  "errors": {
+    "generic": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
+    "notFound": "Seite nicht gefunden",
+    "unauthorized": "Sie sind nicht berechtigt, auf diese Seite zuzugreifen",
+    "serverError": "Serverfehler. Bitte versuchen Sie es später erneut."
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "tools": "Werkzeuge",
+    "analyses": "Analysen",
+    "analytics": "Analytik",
+    "billing": "Abrechnung",
+    "settings": "Einstellungen",
+    "upgradeTitle": "Auf Pro upgraden",
+    "upgradeDesc": "Erhalten Sie mehr Funktionen und unbegrenzte Analysen",
+    "upgradeButton": "Plan upgraden"
+  },
+  "analytics": {
+    "title": "Analytik",
+    "description": "Verfolgen Sie die Leistung und SEO-Metriken Ihrer Website",
+    "comingSoon": "Demnächst",
+    "comingSoonDesc": "Wir arbeiten an erweiterten Analysefunktionen. Sie werden bald hier sein!",
+    "notify": "Benachrichtigen Sie mich, wenn bereit",
+    "features": {
+      "performance": "Leistungsmetriken",
+      "performanceDesc": "Seitengeschwindigkeit, Ladezeiten und Core Web Vitals",
+      "trends": "SEO-Trends",
+      "trendsDesc": "Ranking- und Traffic-Änderungen im Laufe der Zeit",
+      "audience": "Zielgruppenanalyse",
+      "audienceDesc": "Besucherverhalten und Demografie",
+      "geographic": "Geografische Verteilung",
+      "geographicDesc": "Sehen Sie, woher Ihr Traffic kommt"
+    }
+  },
+  "billing": {
+    "title": "Abrechnung",
+    "description": "Verwalten Sie Ihr Abonnement und Zahlungsmethoden",
+    "currentPlan": "Aktueller Plan",
+    "planDesc": "Sie befinden sich derzeit im kostenlosen Plan",
+    "upgradePlan": "Plan upgraden",
+    "managePlan": "Plan verwalten",
+    "comingSoon": "Demnächst",
+    "comingSoonDesc": "Wir arbeiten an Abrechnungs- und Zahlungsfunktionen.",
+    "features": {
+      "payment": "Zahlungsmethoden",
+      "paymentDesc": "Kreditkarte und andere Zahlungsoptionen",
+      "invoices": "Rechnungen",
+      "invoicesDesc": "Frühere Rechnungen anzeigen und herunterladen",
+      "subscription": "Abonnementverwaltung",
+      "subscriptionDesc": "Ändern oder kündigen Sie Ihren Plan"
+    }
+  }
+}
