@@ -48,24 +48,34 @@ export default function HomePage() {
     <div className="relative">
       {/* Hero Section */}
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center overflow-hidden">
-        {/* Grid Background */}
+        {/* Animated Grid Background */}
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px)
+              linear-gradient(rgba(0, 212, 180, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 212, 180, 0.1) 1px, transparent 1px)
             `,
             backgroundSize: "80px 80px",
+            animation: "gridMove 20s linear infinite",
           }}
         />
 
-        {/* Radial Gradient Glow */}
+        {/* Multiple Gradient Glows */}
         <div
-          className="absolute right-0 top-0 h-[600px] w-[600px] opacity-20"
+          className="absolute right-0 top-0 h-[800px] w-[800px] opacity-30 blur-3xl"
           style={{
             background:
-              "radial-gradient(circle, rgba(0, 212, 180, 0.15) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(0, 212, 180, 0.3) 0%, transparent 70%)",
+            animation: "float 8s ease-in-out infinite",
+          }}
+        />
+        <div
+          className="absolute left-0 bottom-0 h-[600px] w-[600px] opacity-20 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255, 193, 7, 0.2) 0%, transparent 70%)",
+            animation: "float 10s ease-in-out infinite reverse",
           }}
         />
 
@@ -73,85 +83,99 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="space-y-8">
-              {/* Eyebrow */}
+              {/* Eyebrow with pulse animation */}
               <div
                 className="animate-fadeUp"
                 style={{ animationDelay: "0ms" }}
               >
-                <Badge variant="teal">
+                <Badge variant="teal" className="animate-pulse">
                   <Zap className="h-3 w-3 mr-1" />
                   AI-Powered SEO Analysis
                 </Badge>
               </div>
 
-              {/* Heading */}
+              {/* Heading with gradient */}
               <h1
                 className="font-display text-5xl md:text-6xl lg:text-7xl text-text-primary leading-tight animate-fadeUp"
                 style={{ animationDelay: "100ms" }}
               >
                 Professional SEO Tools for{" "}
-                <span className="text-accent-teal">Modern Teams</span>
+                <span className="bg-gradient-to-r from-accent-teal to-accent-amber bg-clip-text text-transparent">
+                  Modern Teams
+                </span>
               </h1>
 
               {/* Subtext */}
               <p
-                className="text-lg text-text-secondary max-w-xl animate-fadeUp"
+                className="text-lg text-text-secondary max-w-xl animate-fadeUp leading-relaxed"
                 style={{ animationDelay: "200ms" }}
               >
                 Analyze, optimize, and dominate search rankings with our
                 suite of precision-engineered SEO tools powered by Claude AI.
               </p>
 
-              {/* CTAs */}
+              {/* CTAs with hover effects */}
               <div
                 className="flex flex-wrap gap-4 animate-fadeUp"
                 style={{ animationDelay: "300ms" }}
               >
                 <Link href="/tools">
-                  <Button size="lg" variant="primary">
+                  <Button size="lg" variant="primary" className="group">
                     Start Analyzing
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
                 <Link href="/pricing">
-                  <Button size="lg" variant="secondary">
+                  <Button size="lg" variant="secondary" className="hover:scale-105 transition-transform">
                     View Pricing
                   </Button>
                 </Link>
               </div>
 
-              {/* Trust Signals */}
+              {/* Trust Signals with icons */}
               <div
                 className="flex flex-wrap gap-6 pt-4 animate-fadeUp"
                 style={{ animationDelay: "400ms" }}
               >
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <CheckCircle2 className="h-5 w-5 text-success" />
-                  <span className="text-sm">No credit card required</span>
+                <div className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+                  <div className="h-8 w-8 rounded-full bg-success/10 flex items-center justify-center">
+                    <CheckCircle2 className="h-4 w-4 text-success" />
+                  </div>
+                  <span className="text-sm font-medium">No credit card required</span>
                 </div>
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <Shield className="h-5 w-5 text-accent-teal" />
-                  <span className="text-sm">Enterprise-grade security</span>
+                <div className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+                  <div className="h-8 w-8 rounded-full bg-accent-teal-dim flex items-center justify-center">
+                    <Shield className="h-4 w-4 text-accent-teal" />
+                  </div>
+                  <span className="text-sm font-medium">Enterprise-grade security</span>
                 </div>
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <Zap className="h-5 w-5 text-accent-amber" />
-                  <span className="text-sm">Real-time analysis</span>
+                <div className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+                  <div className="h-8 w-8 rounded-full bg-accent-amber/10 flex items-center justify-center">
+                    <Zap className="h-4 w-4 text-accent-amber" />
+                  </div>
+                  <span className="text-sm font-medium">Real-time analysis</span>
                 </div>
               </div>
             </div>
 
-            {/* Right - Tool Preview Placeholder */}
+            {/* Right - Animated Tool Preview */}
             <div
               className="animate-fadeUp"
               style={{ animationDelay: "500ms" }}
             >
-              <div className="relative aspect-[4/3] rounded-lg border-2 border-dashed border-border-default bg-bg-elevated flex items-center justify-center">
-                <div className="text-center space-y-2">
-                  <div className="text-6xl">🎯</div>
-                  <p className="text-text-muted font-mono text-sm">
-                    Tool Preview Card
+              <div className="relative aspect-[4/3] rounded-2xl border border-border-default bg-gradient-to-br from-bg-elevated to-bg-subtle flex items-center justify-center overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+                {/* Animated border gradient */}
+                <div className="absolute inset-0 bg-gradient-to-r from-accent-teal via-accent-amber to-accent-teal opacity-0 group-hover:opacity-20 transition-opacity duration-500" 
+                     style={{ animation: "gradientShift 3s ease infinite" }} />
+                
+                <div className="text-center space-y-4 z-10">
+                  <div className="text-7xl animate-bounce">🎯</div>
+                  <p className="text-text-primary font-semibold text-lg">
+                    Interactive Tool Preview
                   </p>
-                  <p className="text-text-muted text-xs">Phase 2</p>
+                  <p className="text-text-muted text-sm">
+                    Coming in Phase 2
+                  </p>
                 </div>
               </div>
             </div>
