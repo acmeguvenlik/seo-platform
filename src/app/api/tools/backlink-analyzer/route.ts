@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
+import { backlinkAnalyzerSchema } from "@/lib/validation";
 
 interface Backlink {
   sourceUrl: string;
@@ -23,19 +25,15 @@ interface BacklinkResult {
   processingTime: number;
 }
 
-export async function POST(request: NextRequest) {
+async function handler(
+  request: NextRequest,
+  context: any,
+  validatedData: { url: string }
+): Promise<NextResponse> {
   const startTime = Date.now();
+  const { url } = validatedData;
 
   try {
-    const { url } = await request.json();
-
-    if (!url) {
-      return NextResponse.json(
-        { error: "URL gereklidir" },
-        { status: 400 }
-      );
-    }
-
     // URL validation
     let targetUrl: URL;
     try {
@@ -159,7 +157,7 @@ export async function POST(request: NextRequest) {
       processingTime,
     };
 
-    return NextResponse.json(result);
+    return successResponse(result);
   } catch (error: any) {
     console.error("Backlink analyzer error:", error);
     return NextResponse.json(
@@ -168,3 +166,12 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Export with middleware
+export const POST = withApiMiddleware(handler, {
+  requireAuth: false,
+  toolType: "tools",
+  enableCache: true,
+  cacheTTL: 3600,
+  validationSchema: backlinkAnalyzerSchema,
+});

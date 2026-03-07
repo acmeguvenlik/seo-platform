@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
+import { headingAnalyzerSchema } from "@/lib/validation";
 
 interface Heading {
   level: number;
@@ -8,7 +10,7 @@ interface Heading {
 }
 
 interface HeadingResult {
-  url: string;
+  url?: string;
   headings: Heading[];
   structure: {
     h1Count: number;
@@ -25,42 +27,41 @@ interface HeadingResult {
   processingTime: number;
 }
 
-export async function POST(request: NextRequest) {
+async function handler(
+  request: NextRequest,
+  context: any,
+  validatedData: { url?: string; content?: string }
+): Promise<NextResponse> {
   const startTime = Date.now();
+  const { url, content } = validatedData;
 
   try {
-    const { url } = await request.json();
+    let html: string;
 
-    if (!url) {
+    if (url) {
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; SEOToolsBot/1.0)",
+        },
+      });
+
+      if (!response.ok) {
+        return NextResponse.json(
+          { error: "Web sayfası yüklenemedi" },
+          { status: 400 }
+        );
+      }
+
+      html = await response.text();
+    } else if (content) {
+      html = content;
+    } else {
       return NextResponse.json(
-        { error: "URL gereklidir" },
+        { error: "URL veya içerik gereklidir" },
         { status: 400 }
       );
     }
 
-    try {
-      new URL(url);
-    } catch {
-      return NextResponse.json(
-        { error: "Geçersiz URL formatı" },
-        { status: 400 }
-      );
-    }
-
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; SEOToolsBot/1.0)",
-      },
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Web sayfası yüklenemedi" },
-        { status: 400 }
-      );
-    }
-
-    const html = await response.text();
     const $ = cheerio.load(html);
 
     const headings: Heading[] = [];
@@ -183,7 +184,7 @@ export async function POST(request: NextRequest) {
     const processingTime = Date.now() - startTime;
 
     const result: HeadingResult = {
-      url,
+      url: url || undefined,
       headings,
       structure,
       score,
@@ -192,7 +193,7 @@ export async function POST(request: NextRequest) {
       processingTime,
     };
 
-    return NextResponse.json(result);
+    return successResponse(result);
   } catch (error: any) {
     console.error("Heading analyzer error:", error);
     return NextResponse.json(
@@ -201,3 +202,12 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Export with middleware
+export const POST = withApiMiddleware(handler, {
+  requireAuth: false,
+  toolType: "tools",
+  enableCache: true,
+  cacheTTL: 3600,
+  validationSchema: headingAnalyzerSchema,
+});
