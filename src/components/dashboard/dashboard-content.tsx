@@ -89,7 +89,7 @@ export function DashboardContent() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-display text-text-primary">
-            {t("welcome")}, {user?.firstName || user?.emailAddresses[0]?.emailAddress}
+            {t("welcome")}, {user?.name || user?.email}
           </h1>
           <p className="text-text-secondary mt-1">
             SEO araçlarınızı yönetin ve performansınızı takip edin

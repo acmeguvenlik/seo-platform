@@ -69,13 +69,13 @@ export function SettingsContent() {
               <CardContent className="space-y-4">
                 <Input
                   label="Ad Soyad"
-                  defaultValue={user?.fullName || ""}
+                  defaultValue={user?.name || ""}
                   placeholder="Adınız Soyadınız"
                 />
                 <Input
                   label="E-posta"
                   type="email"
-                  defaultValue={user?.emailAddresses[0]?.emailAddress || ""}
+                  defaultValue={user?.email || ""}
                   disabled
                   helperText="E-posta adresinizi değiştirmek için destek ekibiyle iletişime geçin"
                 />

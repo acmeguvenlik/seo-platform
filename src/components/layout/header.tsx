@@ -94,7 +94,7 @@ export function Header() {
               </Link>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-text-secondary hidden md:inline">
-                  {user?.firstName || user?.emailAddresses[0]?.emailAddress}
+                  {user?.name || user?.email}
                 </span>
               </div>
             </>
