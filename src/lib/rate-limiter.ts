@@ -1,49 +1,125 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { redis } from "./redis";
 
-// Free tier: 10 requests per hour
-export const freeTierLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, "1 h"),
-  analytics: true,
-  prefix: "@ratelimit/free",
-});
+// Plan-based rate limits
+export const RATE_LIMITS = {
+  FREE: {
+    tools: 10, // per day
+    ai: 3, // per day
+  },
+  PRO: {
+    tools: 500,
+    ai: 100,
+  },
+  ENTERPRISE: {
+    tools: -1, // unlimited
+    ai: -1,
+  },
+} as const;
 
-// Pro tier: 100 requests per hour
-export const proTierLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(100, "1 h"),
-  analytics: true,
-  prefix: "@ratelimit/pro",
-});
+// Create rate limiters for different plans
+export const rateLimiters = {
+  free: {
+    tools: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(10, "1 d"),
+      analytics: true,
+      prefix: "ratelimit:free:tools",
+    }),
+    ai: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(3, "1 d"),
+      analytics: true,
+      prefix: "ratelimit:free:ai",
+    }),
+  },
+  pro: {
+    tools: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(500, "1 d"),
+      analytics: true,
+      prefix: "ratelimit:pro:tools",
+    }),
+    ai: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(100, "1 d"),
+      analytics: true,
+      prefix: "ratelimit:pro:ai",
+    }),
+  },
+};
 
-// Enterprise tier: 1000 requests per hour
-export const enterpriseTierLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(1000, "1 h"),
-  analytics: true,
-  prefix: "@ratelimit/enterprise",
-});
+export type UserPlan = "FREE" | "PRO" | "ENTERPRISE";
+export type ToolType = "tools" | "ai";
 
-// Anonymous users: 3 requests per hour
-export const anonymousLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(3, "1 h"),
-  analytics: true,
-  prefix: "@ratelimit/anonymous",
-});
-
-export function getRateLimiter(plan: "FREE" | "PRO" | "ENTERPRISE" | null) {
-  if (!plan) return anonymousLimiter;
-  
-  switch (plan) {
-    case "FREE":
-      return freeTierLimiter;
-    case "PRO":
-      return proTierLimiter;
-    case "ENTERPRISE":
-      return enterpriseTierLimiter;
-    default:
-      return anonymousLimiter;
+export async function checkRateLimit(
+  userId: string,
+  plan: UserPlan,
+  toolType: ToolType
+): Promise<{
+  success: boolean;
+  limit: number;
+  remaining: number;
+  reset: number;
+}> {
+  // Enterprise has unlimited access
+  if (plan === "ENTERPRISE") {
+    return {
+      success: true,
+      limit: -1,
+      remaining: -1,
+      reset: 0,
+    };
   }
+
+  const limiter =
+    plan === "PRO"
+      ? rateLimiters.pro[toolType]
+      : rateLimiters.free[toolType];
+
+  const result = await limiter.limit(userId);
+
+  return {
+    success: result.success,
+    limit: result.limit,
+    remaining: result.remaining,
+    reset: result.reset,
+  };
+}
+
+// Get current usage for a user
+export async function getUserUsage(
+  userId: string,
+  plan: UserPlan
+): Promise<{
+  tools: { used: number; limit: number };
+  ai: { used: number; limit: number };
+}> {
+  if (plan === "ENTERPRISE") {
+    return {
+      tools: { used: 0, limit: -1 },
+      ai: { used: 0, limit: -1 },
+    };
+  }
+
+  const toolsKey = `ratelimit:${plan.toLowerCase()}:tools:${userId}`;
+  const aiKey = `ratelimit:${plan.toLowerCase()}:ai:${userId}`;
+
+  const [toolsUsed, aiUsed] = await Promise.all([
+    redis.get<number>(toolsKey),
+    redis.get<number>(aiKey),
+  ]);
+
+  const limits = RATE_LIMITS[plan];
+
+  return {
+    tools: {
+      used: toolsUsed || 0,
+      limit: limits.tools,
+    },
+    ai: {
+      used: aiUsed || 0,
+      limit: limits.ai,
+    },
+  };
 }
