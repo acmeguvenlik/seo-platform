@@ -64,6 +64,24 @@ export async function generateMetadata({
 export default function HomePage() {
   const seoTools = [
     {
+      name: "AI Meta Tag Generator",
+      description: "Claude AI ile optimize edilmiş meta tag'ler oluşturun. Title, description, Open Graph ve Twitter Card tag'leri otomatik oluşturma.",
+      icon: Sparkles,
+      href: "/tools/ai-meta-generator",
+      color: "purple",
+      features: ["AI powered", "Multi-language", "OG tags", "Twitter cards"],
+      badge: "AI"
+    },
+    {
+      name: "AI Content Optimizer",
+      description: "Claude AI ile içeriğinizi SEO için optimize edin. Keyword density, readability score ve SEO score analizi.",
+      icon: Sparkles,
+      href: "/tools/ai-content-optimizer",
+      color: "blue",
+      features: ["AI optimization", "SEO score", "Readability", "Improvements"],
+      badge: "AI"
+    },
+    {
       name: "Meta Tag Analyzer",
       description: "Title, description ve Open Graph etiketlerinizi analiz edin. SEO skorunuzu öğrenin ve eksiklikleri tespit edin.",
       icon: Search,
@@ -147,7 +165,7 @@ export default function HomePage() {
 
   const stats = [
     { value: "2.4M+", label: "Analiz Yapıldı", icon: BarChart3 },
-    { value: "30+", label: "SEO Aracı", icon: Zap },
+    { value: "13", label: "SEO Aracı", icon: Zap },
     { value: "5", label: "Dil Desteği", icon: Globe },
     { value: "<200ms", label: "Ortalama Yanıt", icon: Clock },
   ];
@@ -357,7 +375,14 @@ export default function HomePage() {
                       <div className={`h-12 w-12 rounded-lg bg-${tool.color}-500/10 flex items-center justify-center group-hover:scale-110 transition-transform`}>
                         <tool.icon className="h-6 w-6 text-accent-teal" />
                       </div>
-                      <ArrowRight className="h-5 w-5 text-text-muted group-hover:text-accent-teal group-hover:translate-x-1 transition-all" />
+                      <div className="flex gap-2">
+                        {tool.badge && (
+                          <Badge variant="default" className="bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0 text-xs">
+                            {tool.badge}
+                          </Badge>
+                        )}
+                        <ArrowRight className="h-5 w-5 text-text-muted group-hover:text-accent-teal group-hover:translate-x-1 transition-all" />
+                      </div>
                     </div>
                     
                     <div>

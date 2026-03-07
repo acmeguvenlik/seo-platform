@@ -16,11 +16,35 @@ import {
   Shield,
   Code,
   Heading,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Sparkles,
+  Wand2
 } from "lucide-react";
 
 export function ToolsGrid() {
   const tools = [
+    {
+      name: "AI Meta Tag Generator",
+      description: "Claude AI ile optimize edilmiş meta tag'ler oluşturun - title, description, OG tags",
+      icon: Sparkles,
+      href: "/tools/ai-meta-generator",
+      color: "text-purple-600 dark:text-purple-400",
+      bgColor: "bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-950/30 dark:to-pink-950/30",
+      category: "AI Tools",
+      available: true,
+      badge: "AI",
+    },
+    {
+      name: "AI Content Optimizer",
+      description: "Claude AI ile içeriğinizi SEO için optimize edin - keyword density, readability, SEO score",
+      icon: Wand2,
+      href: "/tools/ai-content-optimizer",
+      color: "text-blue-600 dark:text-blue-400",
+      bgColor: "bg-gradient-to-br from-blue-100 to-teal-100 dark:from-blue-950/30 dark:to-teal-950/30",
+      category: "AI Tools",
+      available: true,
+      badge: "AI",
+    },
     {
       name: "Meta Tag Analyzer",
       description: "Web sitenizin meta etiketlerini analiz edin, title ve description optimizasyonu yapın",
@@ -235,11 +259,18 @@ export function ToolsGrid() {
                           >
                             <Icon className={`h-6 w-6 ${tool.color}`} />
                           </div>
-                          {!tool.available && (
-                            <Badge variant="amber" className="text-xs">
-                              Yakında
-                            </Badge>
-                          )}
+                          <div className="flex gap-2">
+                            {tool.badge && (
+                              <Badge variant="default" className="text-xs bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0">
+                                {tool.badge}
+                              </Badge>
+                            )}
+                            {!tool.available && (
+                              <Badge variant="amber" className="text-xs">
+                                Yakında
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                         <CardTitle className="text-xl">{tool.name}</CardTitle>
                         <CardDescription>{tool.description}</CardDescription>
