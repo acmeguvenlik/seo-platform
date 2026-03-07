@@ -100,59 +100,71 @@ export function DashboardContent() {
         </Badge>
       </div>
 
-      {/* Stats Grid */}
+      {/* Stats Grid with animations */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
+        <Card className="group hover:scale-[1.02] transition-all duration-300 hover:shadow-lg hover:shadow-accent-teal/10">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-text-muted">Toplam Analiz</p>
-                <p className="text-2xl font-bold text-text-primary mt-1">{stats.totalAnalyses}</p>
+                <p className="text-2xl font-bold text-text-primary mt-1 group-hover:text-accent-teal transition-colors">
+                  {stats.totalAnalyses}
+                </p>
+                <p className="text-xs text-success mt-1">+12% bu ay</p>
               </div>
-              <div className="h-12 w-12 rounded-lg bg-accent-teal-dim flex items-center justify-center">
-                <BarChart3 className="h-6 w-6 text-accent-teal" />
+              <div className="h-12 w-12 rounded-lg bg-accent-teal-dim flex items-center justify-center group-hover:bg-accent-teal group-hover:scale-110 transition-all">
+                <BarChart3 className="h-6 w-6 text-accent-teal group-hover:text-bg-base transition-colors" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="group hover:scale-[1.02] transition-all duration-300 hover:shadow-lg hover:shadow-accent-amber/10">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-text-muted">Bu Ay</p>
-                <p className="text-2xl font-bold text-text-primary mt-1">{stats.thisMonth}</p>
+                <p className="text-2xl font-bold text-text-primary mt-1 group-hover:text-accent-amber transition-colors">
+                  {stats.thisMonth}
+                </p>
+                <p className="text-xs text-text-muted mt-1">Son 30 gün</p>
               </div>
-              <div className="h-12 w-12 rounded-lg bg-accent-amber/10 flex items-center justify-center">
-                <Clock className="h-6 w-6 text-accent-amber" />
+              <div className="h-12 w-12 rounded-lg bg-accent-amber/10 flex items-center justify-center group-hover:bg-accent-amber group-hover:scale-110 transition-all">
+                <Clock className="h-6 w-6 text-accent-amber group-hover:text-bg-base transition-colors" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="group hover:scale-[1.02] transition-all duration-300 hover:shadow-lg hover:shadow-success/10">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-text-muted">Ortalama Skor</p>
-                <p className="text-2xl font-bold text-text-primary mt-1">{stats.avgScore}/100</p>
+                <p className="text-2xl font-bold text-text-primary mt-1 group-hover:text-success transition-colors">
+                  {stats.avgScore}/100
+                </p>
+                <p className="text-xs text-success mt-1">+5 puan</p>
               </div>
-              <div className="h-12 w-12 rounded-lg bg-success/10 flex items-center justify-center">
-                <Activity className="h-6 w-6 text-success" />
+              <div className="h-12 w-12 rounded-lg bg-success/10 flex items-center justify-center group-hover:bg-success group-hover:scale-110 transition-all">
+                <Activity className="h-6 w-6 text-success group-hover:text-bg-base transition-colors" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="group hover:scale-[1.02] transition-all duration-300 hover:shadow-lg hover:shadow-accent-teal/10">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-text-muted">Aktif Araçlar</p>
-                <p className="text-2xl font-bold text-text-primary mt-1">1/12</p>
+                <p className="text-2xl font-bold text-text-primary mt-1 group-hover:text-accent-teal transition-colors">
+                  1/12
+                </p>
+                <p className="text-xs text-text-muted mt-1">11 araç daha</p>
               </div>
-              <div className="h-12 w-12 rounded-lg bg-accent-teal-dim flex items-center justify-center">
-                <Zap className="h-6 w-6 text-accent-teal" />
+              <div className="h-12 w-12 rounded-lg bg-accent-teal-dim flex items-center justify-center group-hover:bg-accent-teal group-hover:scale-110 transition-all">
+                <Zap className="h-6 w-6 text-accent-teal group-hover:text-bg-base transition-colors" />
               </div>
             </div>
           </CardContent>
@@ -185,17 +197,18 @@ export function DashboardContent() {
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {recentAnalyses.map((analysis) => (
+                  {recentAnalyses.map((analysis, index) => (
                     <div
                       key={analysis.id}
-                      className="flex items-center justify-between p-4 rounded-lg bg-bg-subtle border border-border-default hover:border-border-strong transition-colors"
+                      className="flex items-center justify-between p-4 rounded-lg bg-bg-subtle border border-border-default hover:border-accent-teal/50 hover:bg-bg-elevated transition-all duration-300 group cursor-pointer"
+                      style={{ animationDelay: `${index * 100}ms` }}
                     >
                       <div className="flex items-center gap-3 flex-1 min-w-0">
-                        <div className="h-10 w-10 rounded-lg bg-accent-teal-dim flex items-center justify-center flex-shrink-0">
-                          <Search className="h-5 w-5 text-accent-teal" />
+                        <div className="h-10 w-10 rounded-lg bg-accent-teal-dim flex items-center justify-center flex-shrink-0 group-hover:bg-accent-teal group-hover:scale-110 transition-all">
+                          <Search className="h-5 w-5 text-accent-teal group-hover:text-bg-base transition-colors" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-text-primary truncate">
+                          <p className="text-sm font-medium text-text-primary truncate group-hover:text-accent-teal transition-colors">
                             {analysis.url}
                           </p>
                           <p className="text-xs text-text-muted">{analysis.tool}</p>
@@ -203,12 +216,20 @@ export function DashboardContent() {
                       </div>
                       <div className="flex items-center gap-4 flex-shrink-0">
                         <div className="text-right">
-                          <p className="text-sm font-semibold text-text-primary">
-                            {analysis.score}/100
-                          </p>
-                          <p className="text-xs text-text-muted">{analysis.date}</p>
+                          <div className="flex items-center gap-2">
+                            <div className="h-2 w-16 bg-bg-base rounded-full overflow-hidden">
+                              <div 
+                                className="h-full bg-gradient-to-r from-accent-teal to-success transition-all duration-500"
+                                style={{ width: `${analysis.score}%` }}
+                              />
+                            </div>
+                            <p className="text-sm font-semibold text-text-primary">
+                              {analysis.score}
+                            </p>
+                          </div>
+                          <p className="text-xs text-text-muted mt-1">{analysis.date}</p>
                         </div>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
                           <ArrowRight className="h-4 w-4" />
                         </Button>
                       </div>
@@ -264,23 +285,29 @@ export function DashboardContent() {
             </CardContent>
           </Card>
 
-          {/* Upgrade Card */}
+          {/* Upgrade Card with gradient animation */}
           {stats.plan === "FREE" && (
-            <Card className="mt-4 border-accent-teal/20 bg-gradient-to-br from-accent-teal-dim to-transparent">
-              <CardContent className="pt-6">
+            <Card className="mt-4 border-accent-teal/30 bg-gradient-to-br from-accent-teal-dim via-bg-elevated to-accent-amber/5 relative overflow-hidden group">
+              {/* Animated gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-accent-teal/20 to-accent-amber/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <CardContent className="pt-6 relative z-10">
                 <div className="space-y-3">
-                  <div className="h-10 w-10 rounded-lg bg-accent-teal flex items-center justify-center">
+                  <div className="h-10 w-10 rounded-lg bg-accent-teal flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Zap className="h-5 w-5 text-bg-base" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-text-primary">Pro'ya Yükselt</h3>
+                    <h3 className="font-semibold text-text-primary group-hover:text-accent-teal transition-colors">
+                      Pro'ya Yükselt
+                    </h3>
                     <p className="text-sm text-text-secondary mt-1">
                       Daha fazla analiz, AI önerileri ve öncelikli destek
                     </p>
                   </div>
                   <Link href="/pricing">
-                    <Button variant="primary" size="sm" className="w-full">
+                    <Button variant="primary" size="sm" className="w-full group-hover:scale-105 transition-transform">
                       Planları Görüntüle
+                      <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
                 </div>
