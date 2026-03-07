@@ -168,7 +168,7 @@ export function BacklinkAnalyzerTool() {
               <div className="flex-1">
                 <Progress 
                   value={result.domainAuthority} 
-                  variant={result.domainAuthority >= 70 ? "success" : result.domainAuthority >= 50 ? "teal" : result.domainAuthority >= 30 ? "amber" : "error"}
+                  variant={result.domainAuthority >= 70 ? "success" : result.domainAuthority >= 50 ? "default" : result.domainAuthority >= 30 ? "warning" : "error"}
                 />
                 <p className="text-sm text-text-muted mt-2">
                   {t("daDescription")}
