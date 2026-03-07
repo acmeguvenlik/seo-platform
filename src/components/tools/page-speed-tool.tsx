@@ -158,7 +158,7 @@ export function PageSpeedTool() {
                 {result.score}
               </div>
               <div className="flex-1">
-                <Progress value={result.score} variant={result.score >= 80 ? "success" : result.score >= 60 ? "teal" : "error"} />
+                <Progress value={result.score} variant={result.score >= 80 ? "success" : result.score >= 60 ? "default" : "error"} />
                 <p className="text-sm text-text-muted mt-2">{t("loadTime")}: {result.loadTime}ms</p>
               </div>
             </div>

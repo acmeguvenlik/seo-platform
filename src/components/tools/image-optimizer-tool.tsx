@@ -84,10 +84,10 @@ export function ImageOptimizerTool() {
     }
   };
 
-  const getScoreColor = (score: number) => {
+  const getScoreColor = (score: number): "default" | "success" | "warning" | "error" => {
     if (score >= 80) return "success";
-    if (score >= 60) return "teal";
-    if (score >= 40) return "amber";
+    if (score >= 60) return "default";
+    if (score >= 40) return "warning";
     return "error";
   };
 
