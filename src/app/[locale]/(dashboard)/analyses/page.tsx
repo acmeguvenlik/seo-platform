@@ -1,18 +1,18 @@
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { SavedAnalysesContent } from "@/components/analyses/saved-analyses-content";
+import { AnalysesContent } from "@/components/dashboard/analyses-content";
 
 export const metadata = {
-  title: "Kayıtlı Analizler - SEO Tools Platform",
-  description: "Kayıtlı SEO analizlerinizi görüntüleyin ve yönetin",
+  title: "Analizler - SEO Tools Platform",
+  description: "Geçmiş SEO analizlerinizi görüntüleyin ve yönetin",
 };
 
-export default async function SavedAnalysesPage() {
+export default async function AnalysesPage() {
   const user = await getCurrentUser();
 
   if (!user) {
     redirect("/sign-in");
   }
 
-  return <SavedAnalysesContent />;
+  return <AnalysesContent />;
 }
