@@ -10,7 +10,6 @@ import type {
   BlogPostSummary,
   PaginatedPosts,
   Locale,
-  PublicationStatus,
   Category,
   CategoryWithCount,
   Tag,
@@ -306,7 +305,7 @@ export class BlogService {
     ]);
 
     return {
-      posts: posts.map((post) => this.mapToBlogPostSummary(post)),
+      posts: posts.map((post: any) => this.mapToBlogPostSummary(post)),
       total,
       page,
       totalPages: Math.ceil(total / limit),
@@ -550,7 +549,7 @@ export class BlogService {
       orderBy: { name: 'asc' },
     });
 
-    return categories.map((cat) => ({
+    return categories.map((cat: any) => ({
       id: cat.id,
       name: cat.name,
       slug: cat.slug,
@@ -633,7 +632,7 @@ export class BlogService {
       orderBy: { name: 'asc' },
     });
 
-    return tags.map((tag) => ({
+    return tags.map((tag: any) => ({
       id: tag.id,
       name: tag.name,
       slug: tag.slug,
