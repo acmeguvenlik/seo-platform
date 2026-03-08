@@ -103,7 +103,7 @@ export default function BlogManagementPage() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Blog Management</h1>
         <Link
-          href="/en/blog/new"
+          href="/en/blog-admin/new"
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Create New Post
@@ -231,7 +231,7 @@ export default function BlogManagementPage() {
                   <td className="px-6 py-4 text-sm">
                     <div className="flex gap-2">
                       <Link
-                        href={`/en/blog/${post.id}/edit`}
+                        href={`/en/blog-admin/${post.id}/edit`}
                         className="text-blue-600 hover:underline"
                       >
                         Edit

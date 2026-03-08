@@ -47,7 +47,7 @@ export default function NewBlogPostPage() {
 
       if (res.ok) {
         alert('Post created successfully!');
-        router.push('/en/blog');
+        router.push('/en/blog-admin');
       } else {
         alert(data.error || 'Failed to create post');
       }

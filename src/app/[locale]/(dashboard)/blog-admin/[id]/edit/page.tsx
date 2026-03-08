@@ -69,7 +69,7 @@ export default function EditBlogPostPage({
 
       if (res.ok) {
         alert('Post updated successfully!');
-        router.push('/en/blog');
+        router.push('/en/blog-admin');
       } else {
         alert(data.error || 'Failed to update post');
       }

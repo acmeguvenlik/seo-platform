@@ -21,7 +21,7 @@ const sidebarItems = [
   },
   {
     key: "blog",
-    href: "/blog",
+    href: "/blog-admin",
     icon: BookOpen,
   },
   {
