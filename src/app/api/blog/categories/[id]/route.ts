@@ -12,13 +12,13 @@ import { z } from 'zod';
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+    
     // 1. Require admin authentication
     await requireAdmin();
-
-    const { id } = params;
 
     // 2. Parse and validate request body
     const body = await request.json();
@@ -93,13 +93,13 @@ export async function PUT(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // 1. Require admin authentication
     await requireAdmin();
 
-    const { id } = params;
+    const { id } = await params;
 
     // 2. Get existing category to check if it exists
     const existingCategory = await blogService.getCategoryById(id);

@@ -10,13 +10,13 @@ import { cacheService } from '@/lib/cache-service';
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // 1. Require admin authentication
     await requireAdmin();
 
-    const { id } = params;
+    const { id } = await params;
 
     // 2. Get existing tag to check if it exists
     const existingTag = await blogService.getTagById(id);
