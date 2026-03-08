@@ -35,6 +35,8 @@ model User {
   savedAnalyses   SavedAnalysis[]
   apiKeys         ApiKey[]
   sessions        Session[]
+  blogPosts       BlogPost[]
+  uploadedImages  Image[]
 
   @@index([email])
   @@index([role])
@@ -101,4 +103,164 @@ model ApiKey {
 
   @@index([userId])
   @@index([keyHash])
+}
+
+// Blog System Models
+
+enum Locale {
+  en
+  tr
+  de
+  es
+  fr
+}
+
+enum PublicationStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ImageFormat {
+  JPEG
+  PNG
+  WEBP
+}
+
+model BlogPost {
+  id              String            @id @default(cuid())
+  title           String
+  content         String            @db.Text
+  excerpt         String?           @db.Text
+  slug            String
+  locale          Locale
+  status          PublicationStatus @default(DRAFT)
+  
+  // SEO
+  seoTitle        String?
+  seoDescription  String?
+  ogImage         String?
+  canonicalUrl    String?
+  
+  // Relationships
+  categoryId      String?
+  category        Category?         @relation(fields: [categoryId], references: [id])
+  tags            BlogPostTag[]
+  featuredImageId String?
+  featuredImage   Image?            @relation(fields: [featuredImageId], references: [id])
+  
+  // Translation linking
+  translationOfId String?
+  translationOf   BlogPost?         @relation("Translations", fields: [translationOfId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  translations    BlogPost[]        @relation("Translations")
+  
+  // Metadata
+  authorId        String
+  author          User              @relation(fields: [authorId], references: [id])
+  readingTime     Int
+  viewCount       Int               @default(0)
+  
+  // Timestamps
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  publishedAt     DateTime?
+  
+  // Analytics
+  views           PostView[]
+  
+  @@unique([slug, locale])
+  @@index([locale])
+  @@index([status])
+  @@index([publishedAt])
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([viewCount])
+  @@index([locale, status, publishedAt])
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String
+  description String?    @db.Text
+  locale      Locale
+  posts       BlogPost[]
+  
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  @@unique([slug, locale])
+  @@index([locale])
+}
+
+model Tag {
+  id        String        @id @default(cuid())
+  name      String
+  slug      String
+  locale    Locale
+  posts     BlogPostTag[]
+  
+  createdAt DateTime      @default(now())
+  
+  @@unique([slug, locale])
+  @@index([locale])
+}
+
+model BlogPostTag {
+  postId String
+  tagId  String
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  
+  @@id([postId, tagId])
+  @@index([tagId])
+}
+
+model Image {
+  id          String      @id @default(cuid())
+  filename    String
+  altText     String
+  url         String
+  width       Int
+  height      Int
+  format      ImageFormat
+  size        Int
+  
+  // Variants
+  thumbnailUrl String
+  mediumUrl    String
+  largeUrl     String
+  ogImageUrl   String
+  
+  // Metadata
+  uploadedBy  String
+  uploader    User       @relation(fields: [uploadedBy], references: [id])
+  uploadedAt  DateTime   @default(now())
+  
+  // Usage
+  posts       BlogPost[]
+  
+  @@index([uploadedBy])
+  @@index([uploadedAt])
+}
+
+model PostView {
+  id            String   @id @default(cuid())
+  postId        String
+  post          BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  sessionId     String
+  
+  // Metadata
+  referrer      String?
+  userAgent     String
+  locale        Locale
+  timeOnPage    Int?
+  
+  // Timestamps
+  viewedAt      DateTime @default(now())
+  
+  @@unique([postId, sessionId])
+  @@index([postId, viewedAt])
+  @@index([sessionId])
 }
