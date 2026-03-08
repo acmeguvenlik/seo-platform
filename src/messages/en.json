@@ -290,6 +290,7 @@
   },
   "sidebar": {
     "dashboard": "Dashboard",
+    "blog": "Blog",
     "tools": "Tools",
     "analyses": "Analyses",
     "analytics": "Analytics",

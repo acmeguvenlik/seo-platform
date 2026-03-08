@@ -9,6 +9,7 @@ import {
   Settings,
   CreditCard,
   BarChart3,
+  BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,11 @@ const sidebarItems = [
     key: "dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    key: "blog",
+    href: "/blog",
+    icon: BookOpen,
   },
   {
     key: "tools",
