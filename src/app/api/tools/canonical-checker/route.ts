@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       try {
         const parsedUrl = new URL(canonicalUrl, url);
         canonicalUrl = parsedUrl.href;
-        isAbsolute = canonicalTag?.startsWith('http');
+        isAbsolute = canonicalTag ? canonicalTag.startsWith('http') : false;
         isValid = true;
       } catch {
         isValid = false;
