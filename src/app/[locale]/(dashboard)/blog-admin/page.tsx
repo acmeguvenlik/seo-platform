@@ -242,7 +242,7 @@ export default function BlogManagementPage() {
                   <th className={theme.table.headerCell}>Actions</th>
                 </tr>
               </thead>
-              <tbody className={theme.table.divider}>
+              <tbody className="divide-y divide-[var(--border-default)]">
                 {filteredPosts.map((post) => (
                   <tr key={post.id} className={theme.table.row}>
                     <td className={theme.table.cell}>
