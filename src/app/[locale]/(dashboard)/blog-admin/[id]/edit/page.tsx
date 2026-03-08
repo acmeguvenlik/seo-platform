@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ArrowLeft, Save } from 'lucide-react';
+import { theme, cn } from '@/lib/theme-classes';
 
 export default function EditBlogPostPage({
   params,
@@ -54,7 +56,7 @@ export default function EditBlogPostPage({
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSaving(true);
 
@@ -83,58 +85,73 @@ export default function EditBlogPostPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-gray-900 dark:text-white">Loading...</div>
+      <div className={theme.page.base}>
+        <div className={cn(theme.page.container, "py-8")}>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className={cn(theme.loading.spinner, "h-12 w-12")}></div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4 py-8">
+    <div className={theme.page.base}>
+      <div className={cn(theme.page.container, "py-8")}>
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Edit Blog Post</h1>
+          {/* Header */}
+          <div className={cn("mb-8", "fade-up")} style={{ "--index": 0 } as React.CSSProperties}>
+            <button
+              onClick={() => router.back()}
+              className={cn(theme.button.ghost, theme.button.withIcon, "mb-4")}
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Blog Management
+            </button>
+            <h1 className={theme.text.title}>Edit Blog Post</h1>
+            <p className={cn(theme.text.secondary, "mt-2")}>
+              Update your blog post content and settings
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className={theme.spacing.section}>
             {/* Basic Info */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Basic Information</h2>
+            <div className={cn(theme.card.base, theme.card.padding.md, "fade-up")} style={{ "--index": 1 } as React.CSSProperties}>
+              <h2 className={cn(theme.text.heading, "mb-6")}>Basic Information</h2>
 
-              <div className="space-y-4">
+              <div className={theme.spacing.stack}>
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Title *</label>
+                  <label className={theme.input.label}>Title *</label>
                   <input
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     required
-                    className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                    className={theme.input.base}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Excerpt</label>
+                  <label className={theme.input.label}>Excerpt</label>
                   <textarea
                     value={formData.excerpt}
                     onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                     rows={3}
-                    className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                    className={theme.input.textarea}
                     maxLength={500}
                   />
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  <p className={theme.input.helper}>
                     {formData.excerpt.length}/500 characters
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Locale *</label>
+                    <label className={theme.input.label}>Locale *</label>
                     <select
                       value={formData.locale}
                       onChange={(e) => setFormData({ ...formData, locale: e.target.value })}
-                      className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                      className={theme.input.select}
                     >
                       <option value="en">English</option>
                       <option value="tr">Turkish</option>
@@ -145,11 +162,11 @@ export default function EditBlogPostPage({
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Status *</label>
+                    <label className={theme.input.label}>Status *</label>
                     <select
                       value={formData.status}
                       onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                      className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                      className={theme.input.select}
                     >
                       <option value="DRAFT">Draft</option>
                       <option value="PUBLISHED">Published</option>
@@ -162,69 +179,79 @@ export default function EditBlogPostPage({
             </div>
 
             {/* Content */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Content</h2>
+            <div className={cn(theme.card.base, theme.card.padding.md, "fade-up")} style={{ "--index": 2 } as React.CSSProperties}>
+              <h2 className={cn(theme.text.heading, "mb-6")}>Content</h2>
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Content (Markdown) *</label>
+                <label className={theme.input.label}>Content (Markdown) *</label>
                 <textarea
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   required
                   rows={20}
-                  className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 font-mono text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                  className={cn(theme.input.textarea, "font-mono text-sm")}
                 />
+                <p className={theme.input.helper}>
+                  Supports Markdown formatting: **bold**, *italic*, ## headings, [links](url), etc.
+                </p>
               </div>
             </div>
 
             {/* SEO */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">SEO Settings</h2>
+            <div className={cn(theme.card.base, theme.card.padding.md, "fade-up")} style={{ "--index": 3 } as React.CSSProperties}>
+              <h2 className={cn(theme.text.heading, "mb-6")}>SEO Settings</h2>
 
-              <div className="space-y-4">
+              <div className={theme.spacing.stack}>
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">SEO Title</label>
+                  <label className={theme.input.label}>SEO Title</label>
                   <input
                     type="text"
                     value={formData.seoTitle}
                     onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
-                    className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                    className={theme.input.base}
                     maxLength={60}
                   />
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    {formData.seoTitle.length}/60 characters
+                  <p className={cn(
+                    theme.input.helper,
+                    formData.seoTitle.length > 60 ? theme.text.error : ""
+                  )}>
+                    {formData.seoTitle.length}/60 characters (optimal: 50-60)
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">SEO Description</label>
+                  <label className={theme.input.label}>SEO Description</label>
                   <textarea
                     value={formData.seoDescription}
                     onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                     rows={3}
-                    className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                    className={theme.input.textarea}
                     maxLength={160}
                   />
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    {formData.seoDescription.length}/160 characters
+                  <p className={cn(
+                    theme.input.helper,
+                    formData.seoDescription.length > 160 ? theme.text.error : ""
+                  )}>
+                    {formData.seoDescription.length}/160 characters (optimal: 120-160)
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-4">
+            <div className={cn("flex justify-end gap-4", "fade-up")} style={{ "--index": 4 } as React.CSSProperties}>
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors"
+                className={theme.button.secondary}
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors"
+                className={cn(theme.button.primary, theme.button.withIcon)}
               >
+                <Save className="w-4 h-4" />
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
