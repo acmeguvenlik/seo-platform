@@ -465,7 +465,7 @@ export class BlogService {
     locale: Locale;
   }): Promise<Category> {
     // Check slug uniqueness within locale
-    const existing = await prisma.category.findUnique({
+    const existing = await db.category.findUnique({
       where: {
         slug_locale: {
           slug: data.slug,
@@ -478,7 +478,7 @@ export class BlogService {
       throw new Error(`Category with slug "${data.slug}" already exists for locale ${data.locale}`);
     }
 
-    const category = await prisma.category.create({
+    const category = await db.category.create({
       data: {
         name: data.name,
         slug: data.slug,
@@ -501,7 +501,7 @@ export class BlogService {
       locale?: Locale;
     }
   ): Promise<Category> {
-    const category = await prisma.category.update({
+    const category = await db.category.update({
       where: { id },
       data,
     });
@@ -514,13 +514,13 @@ export class BlogService {
    */
   async deleteCategory(id: string): Promise<void> {
     // First, set all posts' categoryId to null
-    await prisma.blogPost.updateMany({
+    await db.blogPost.updateMany({
       where: { categoryId: id },
       data: { categoryId: null },
     });
 
     // Then delete the category
-    await prisma.category.delete({
+    await db.category.delete({
       where: { id },
     });
   }
@@ -529,7 +529,7 @@ export class BlogService {
    * Get category by ID
    */
   async getCategoryById(id: string): Promise<Category | null> {
-    const category = await prisma.category.findUnique({
+    const category = await db.category.findUnique({
       where: { id },
     });
 
@@ -540,7 +540,7 @@ export class BlogService {
    * List categories by locale with post counts
    */
   async listCategories(locale: Locale): Promise<CategoryWithCount[]> {
-    const categories = await prisma.category.findMany({
+    const categories = await db.category.findMany({
       where: { locale },
       include: {
         _count: {
@@ -575,7 +575,7 @@ export class BlogService {
     locale: Locale;
   }): Promise<Tag> {
     // Check slug uniqueness within locale
-    const existing = await prisma.tag.findUnique({
+    const existing = await db.tag.findUnique({
       where: {
         slug_locale: {
           slug: data.slug,
@@ -588,7 +588,7 @@ export class BlogService {
       throw new Error(`Tag with slug "${data.slug}" already exists for locale ${data.locale}`);
     }
 
-    const tag = await prisma.tag.create({
+    const tag = await db.tag.create({
       data: {
         name: data.name,
         slug: data.slug,
@@ -603,7 +603,7 @@ export class BlogService {
    * Delete a tag (cascade deletes BlogPostTag relations)
    */
   async deleteTag(id: string): Promise<void> {
-    await prisma.tag.delete({
+    await db.tag.delete({
       where: { id },
     });
   }
@@ -612,7 +612,7 @@ export class BlogService {
    * Get tag by ID
    */
   async getTagById(id: string): Promise<Tag | null> {
-    const tag = await prisma.tag.findUnique({
+    const tag = await db.tag.findUnique({
       where: { id },
     });
 
@@ -623,7 +623,7 @@ export class BlogService {
    * List tags by locale with post counts
    */
   async listTags(locale: Locale): Promise<TagWithCount[]> {
-    const tags = await prisma.tag.findMany({
+    const tags = await db.tag.findMany({
       where: { locale },
       include: {
         _count: {
