@@ -11,7 +11,7 @@ import {
   BarChart3,
   BookOpen,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { theme, cn } from "@/lib/theme-classes";
 
 const sidebarItems = [
   {
@@ -58,7 +58,11 @@ export function DashboardSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-64 border-r border-border-default bg-bg-elevated">
+    <aside className={cn(
+      "hidden lg:flex lg:flex-col lg:w-64",
+      "border-r border-[var(--border-default)]",
+      "bg-[var(--bg-elevated)]"
+    )}>
       <div className="flex-1 flex flex-col gap-1 p-4">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
@@ -70,12 +74,13 @@ export function DashboardSidebar() {
               key={item.key}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors relative group",
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all relative group",
+                theme.text.body,
                 isActive
-                  ? "bg-accent-teal-dim text-accent-teal border border-border-focus"
+                  ? "bg-[var(--accent-teal-dim)] text-[var(--accent-teal)] border-l-2 border-[var(--accent-teal)]"
                   : isDisabled
-                  ? "text-text-muted cursor-not-allowed opacity-50"
-                  : "text-text-secondary hover:text-text-primary hover:bg-bg-subtle"
+                  ? "text-[var(--text-muted)] cursor-not-allowed opacity-50"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]"
               )}
               onClick={(e) => {
                 if (isDisabled) e.preventDefault();
@@ -84,7 +89,10 @@ export function DashboardSidebar() {
               <Icon className="h-5 w-5 flex-shrink-0" />
               <span className="flex-1">{t(item.key)}</span>
               {item.badge && (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-bg-overlay text-text-muted border border-border-default">
+                <span className={cn(
+                  theme.badge.base,
+                  "text-xs bg-[var(--bg-overlay)] text-[var(--text-muted)] border border-[var(--border-default)]"
+                )}>
                   {item.badge}
                 </span>
               )}
@@ -94,14 +102,24 @@ export function DashboardSidebar() {
       </div>
 
       {/* Upgrade Card */}
-      <div className="p-4 border-t border-border-default">
-        <div className="p-4 rounded-lg bg-gradient-to-br from-accent-teal-dim to-bg-overlay border border-border-default">
-          <h3 className="text-sm font-medium text-text-primary mb-1">
+      <div className="p-4 border-t border-[var(--border-default)]">
+        <div className={cn(
+          "p-4 rounded-lg",
+          "bg-gradient-to-br from-[var(--accent-teal-dim)] to-[var(--bg-overlay)]",
+          "border border-[var(--border-default)]"
+        )}>
+          <h3 className={cn(theme.text.body, "font-medium mb-1")}>
             {t("upgradeTitle")}
           </h3>
-          <p className="text-xs text-text-muted mb-3">{t("upgradeDesc")}</p>
+          <p className={cn(theme.text.small, theme.text.muted, "mb-3")}>
+            {t("upgradeDesc")}
+          </p>
           <Link href="/pricing">
-            <button className="w-full px-3 py-1.5 text-xs font-medium rounded-md bg-accent-teal text-bg-base hover:bg-accent-teal/90 transition-colors">
+            <button className={cn(
+              "w-full px-3 py-1.5 text-xs font-medium rounded-md",
+              "bg-[var(--accent-teal)] text-[#080C0F]",
+              "hover:opacity-90 transition-opacity"
+            )}>
               {t("upgradeButton")}
             </button>
           </Link>
