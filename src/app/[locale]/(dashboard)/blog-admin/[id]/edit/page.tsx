@@ -101,23 +101,23 @@ export default function EditBlogPostPage({
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Title *</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">Title *</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   required
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Excerpt</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">Excerpt</label>
                 <textarea
                   value={formData.excerpt}
                   onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                   rows={3}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   maxLength={500}
                 />
                 <p className="text-sm text-gray-500 mt-1">
@@ -127,11 +127,11 @@ export default function EditBlogPostPage({
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Locale *</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">Locale *</label>
                   <select
                     value={formData.locale}
                     onChange={(e) => setFormData({ ...formData, locale: e.target.value })}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="en">English</option>
                     <option value="tr">Turkish</option>
@@ -142,11 +142,11 @@ export default function EditBlogPostPage({
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Status *</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">Status *</label>
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="DRAFT">Draft</option>
                     <option value="PUBLISHED">Published</option>
@@ -162,13 +162,13 @@ export default function EditBlogPostPage({
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Content</h2>
             <div>
-              <label className="block text-sm font-medium mb-2">Content (Markdown) *</label>
+              <label className="block text-sm font-medium mb-2 text-gray-700">Content (Markdown) *</label>
               <textarea
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 required
                 rows={20}
-                className="w-full border rounded px-3 py-2 font-mono text-sm"
+                className="w-full border border-gray-300 rounded px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -179,12 +179,12 @@ export default function EditBlogPostPage({
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">SEO Title</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">SEO Title</label>
                 <input
                   type="text"
                   value={formData.seoTitle}
                   onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   maxLength={60}
                 />
                 <p className="text-sm text-gray-500 mt-1">
@@ -193,12 +193,12 @@ export default function EditBlogPostPage({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">SEO Description</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">SEO Description</label>
                 <textarea
                   value={formData.seoDescription}
                   onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                   rows={3}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   maxLength={160}
                 />
                 <p className="text-sm text-gray-500 mt-1">

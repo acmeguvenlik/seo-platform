@@ -114,11 +114,11 @@ export default function BlogManagementPage() {
       <div className="bg-white p-4 rounded-lg shadow mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Locale</label>
+            <label className="block text-sm font-medium mb-2 text-gray-700">Locale</label>
             <select
               value={filter.locale}
               onChange={(e) => setFilter({ ...filter, locale: e.target.value })}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="en">English</option>
               <option value="tr">Turkish</option>
@@ -129,11 +129,11 @@ export default function BlogManagementPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Status</label>
+            <label className="block text-sm font-medium mb-2 text-gray-700">Status</label>
             <select
               value={filter.status}
               onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">All</option>
               <option value="DRAFT">Draft</option>
@@ -144,13 +144,13 @@ export default function BlogManagementPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Search</label>
+            <label className="block text-sm font-medium mb-2 text-gray-700">Search</label>
             <input
               type="text"
               value={filter.search}
               onChange={(e) => setFilter({ ...filter, search: e.target.value })}
               placeholder="Search by title..."
-              className="w-full border rounded px-3 py-2"
+              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function BlogManagementPage() {
                     <select
                       value={post.status}
                       onChange={(e) => handleStatusChange(post.id, e.target.value)}
-                      className="text-sm border rounded px-2 py-1"
+                      className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="DRAFT">Draft</option>
                       <option value="PUBLISHED">Published</option>
