@@ -7,7 +7,7 @@ import {
   Search, TrendingUp, FileText, Link2, Image, Globe, BarChart3, Zap, ArrowRight,
   Shield, Code, Heading, Link as LinkIcon, Sparkles, Wand2, Copy, Eye, BookOpen,
   Smartphone, Lock, Users, FileCheck, Bot, Server, Activity, Share, Twitter,
-  Share2, Database, Gauge, AlertCircle, CheckCircle, Map
+  Share2, Database, Gauge, AlertCircle, CheckCircle, Map, Lightbulb, Key
 } from "lucide-react";
 import { tools as toolsConfig } from "@/config/tools";
 import { theme, cn } from "@/lib/theme-classes";
@@ -16,7 +16,7 @@ const iconMap: Record<string, any> = {
   Search, TrendingUp, FileText, Link2, Image, Globe, BarChart3, Zap, Shield, Code,
   Heading, Link: LinkIcon, Sparkles, Wand2, Copy, Eye, BookOpen, Smartphone, Lock,
   Users, FileCheck, Bot, Server, Activity, Share, Twitter, Share2, Database, Gauge,
-  AlertCircle, CheckCircle, Map, ArrowRight: ArrowRight,
+  AlertCircle, CheckCircle, Map, ArrowRight: ArrowRight, Lightbulb, Key,
 };
 
 export function ToolsGrid() {
@@ -224,6 +224,11 @@ function getToolDescription(slug: string): string {
     'sitemap-generator': 'XML sitemap oluşturun',
     'ai-meta-generator': 'AI ile meta tag oluşturun',
     'ai-content-optimizer': 'AI ile içerik optimize edin',
+    'ai-seo-audit': 'AI ile kapsamlı SEO denetimi yapın',
+    'ai-title-generator': 'AI ile başlık önerileri alın',
+    'ai-blog-outline': 'AI ile blog yazısı taslağı oluşturun',
+    'ai-content-ideas': 'AI ile içerik fikirleri üretin',
+    'ai-keyword-suggestions': 'AI ile anahtar kelime önerileri alın',
     'url-slug-generator': 'SEO dostu URL slug oluşturun',
     'redirect-checker': 'Redirect zincirlerini kontrol edin',
     'broken-link-checker': 'Kırık linkleri tespit edin',
