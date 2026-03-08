@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/contexts/auth-context";
 import { AlertCircle, TrendingUp } from "lucide-react";
-import { themeClasses } from "@/lib/theme-classes";
+import { theme, cn, formatProgress, getProgressColor } from "@/lib/theme-classes";
 
 interface UsageData {
   tools: { used: number; limit: number };
@@ -39,58 +39,52 @@ export function UsageWidget() {
 
   if (loading) {
     return (
-      <div className={themeClasses.card.base + ' ' + themeClasses.card.padding}>
+      <div className={cn(theme.card.base, theme.card.padding.md)}>
         <div className="animate-pulse space-y-4">
-          <div className={themeClasses.loading.skeleton + ' h-4 w-1/4'}></div>
-          <div className={themeClasses.loading.skeleton + ' h-24'}></div>
+          <div className={cn(theme.loading.skeleton, "h-4 w-1/4")}></div>
+          <div className={cn(theme.loading.skeleton, "h-24")}></div>
         </div>
       </div>
     );
   }
 
-  const toolsPercentage = usage?.tools.limit === -1 
-    ? 0 
-    : ((usage?.tools.used || 0) / (usage?.tools.limit || 1)) * 100;
-  
-  const aiPercentage = usage?.ai.limit === -1 
-    ? 0 
-    : ((usage?.ai.used || 0) / (usage?.ai.limit || 1)) * 100;
-
+  const toolsPercentage = formatProgress(usage?.tools.used || 0, usage?.tools.limit || 0);
+  const aiPercentage = formatProgress(usage?.ai.used || 0, usage?.ai.limit || 0);
   const isNearLimit = toolsPercentage > 80 || aiPercentage > 80;
 
   return (
-    <div className={themeClasses.card.base + ' ' + themeClasses.card.padding}>
+    <div className={cn(theme.card.base, theme.card.padding.md)}>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className={themeClasses.text.subheading + ' mb-1'}>
+          <h2 className={cn(theme.text.heading, "mb-1")}>
             {t("dailyUsage")}
           </h2>
-          <p className={themeClasses.text.secondary}>
+          <p className={theme.text.secondary}>
             {t("resetsDaily")}
           </p>
         </div>
         {user?.plan && (
-          <div className={themeClasses.badge.primary}>
+          <div className={user.plan === "FREE" ? theme.badge.free : user.plan === "PRO" ? theme.badge.pro : theme.badge.enterprise}>
             {user.plan}
           </div>
         )}
       </div>
 
       {isNearLimit && user?.plan === "FREE" && (
-        <div className={themeClasses.alert.warning + ' mb-6 flex items-start gap-3'}>
+        <div className={cn(theme.alert.warning, "mb-6")}>
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-medium mb-1">
               {t("nearLimit")}
             </p>
-            <p className="text-sm">
+            <p className={theme.text.small}>
               {t("upgradeMessage")}
             </p>
           </div>
         </div>
       )}
 
-      <div className="space-y-6">
+      <div className={theme.spacing.stack}>
         <UsageBar
           label={t("toolsUsage")}
           used={usage?.tools.used || 0}
@@ -107,10 +101,10 @@ export function UsageWidget() {
       </div>
 
       {user?.plan === "FREE" && (
-        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div className={cn("mt-6 pt-6", theme.divider.horizontal)}>
           <a
             href="/pricing"
-            className={themeClasses.button.primary + ' flex items-center justify-center gap-2 w-full'}
+            className={cn(theme.button.primary, theme.button.withIcon, "w-full justify-center")}
           >
             <TrendingUp className="w-4 h-4" />
             {t("upgradePlan")}
@@ -130,22 +124,15 @@ interface UsageBarProps {
 
 function UsageBar({ label, used, limit, percentage }: UsageBarProps) {
   const isUnlimited = limit === -1;
-  const isNearLimit = percentage > 80;
-  const isAtLimit = percentage >= 100;
-
-  const barColor = isAtLimit
-    ? "bg-red-600"
-    : isNearLimit
-    ? "bg-yellow-600"
-    : "bg-blue-600";
+  const barColorClass = getProgressColor(percentage);
 
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-medium text-gray-900 dark:text-white">{label}</span>
-        <span className="text-sm text-gray-600 dark:text-gray-400">
+        <span className={cn(theme.text.body, "font-medium")}>{label}</span>
+        <span className={theme.text.mono}>
           {isUnlimited ? (
-            <span className="text-blue-600 dark:text-blue-400 font-medium">Unlimited</span>
+            <span className={cn(theme.text.accent, "font-medium")}>Unlimited</span>
           ) : (
             <>
               {used} / {limit}
@@ -153,9 +140,9 @@ function UsageBar({ label, used, limit, percentage }: UsageBarProps) {
           )}
         </span>
       </div>
-      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div className={theme.progress.container}>
         <div
-          className={`h-full ${barColor} transition-all duration-500 ease-out`}
+          className={barColorClass}
           style={{ width: isUnlimited ? "0%" : `${Math.min(percentage, 100)}%` }}
         />
       </div>

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Plus, Search as SearchIcon, Eye, Edit, Trash2 } from 'lucide-react';
+import { theme, cn } from '@/lib/theme-classes';
 
 interface BlogPost {
   id: string;
@@ -16,7 +17,6 @@ interface BlogPost {
 }
 
 export default function BlogManagementPage() {
-  const router = useRouter();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState({
@@ -98,28 +98,45 @@ export default function BlogManagementPage() {
     return true;
   });
 
+  const getStatusBadge = (status: string) => {
+    const badges: Record<string, string> = {
+      PUBLISHED: theme.badge.success,
+      DRAFT: theme.badge.info,
+      SCHEDULED: theme.badge.warning,
+      ARCHIVED: theme.badge.error,
+    };
+    return badges[status] || theme.badge.base;
+  };
+
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Blog Management</h1>
+    <div className={theme.page.base}>
+      <div className={cn(theme.page.container, "py-8")}>
+        {/* Header */}
+        <div className={cn("flex justify-between items-center mb-8", "fade-up")} style={{ "--index": 0 } as React.CSSProperties}>
+          <div>
+            <h1 className={theme.text.title}>Blog Management</h1>
+            <p className={cn(theme.text.secondary, "mt-2")}>
+              Create and manage your blog posts
+            </p>
+          </div>
           <Link
             href="/en/blog-admin/new"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors"
+            className={cn(theme.button.primary, theme.button.withIcon)}
           >
+            <Plus className="w-5 h-5" />
             Create New Post
           </Link>
         </div>
 
         {/* Filters */}
-        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
+        <div className={cn(theme.card.base, theme.card.padding.md, "mb-6", "fade-up")} style={{ "--index": 1 } as React.CSSProperties}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Locale</label>
+              <label className={theme.input.label}>Locale</label>
               <select
                 value={filter.locale}
                 onChange={(e) => setFilter({ ...filter, locale: e.target.value })}
-                className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                className={theme.input.select}
               >
                 <option value="en">English</option>
                 <option value="tr">Turkish</option>
@@ -130,11 +147,11 @@ export default function BlogManagementPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Status</label>
+              <label className={theme.input.label}>Status</label>
               <select
                 value={filter.status}
                 onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-                className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                className={theme.input.select}
               >
                 <option value="">All</option>
                 <option value="DRAFT">Draft</option>
@@ -145,110 +162,134 @@ export default function BlogManagementPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Search</label>
-              <input
-                type="text"
-                value={filter.search}
-                onChange={(e) => setFilter({ ...filter, search: e.target.value })}
-                placeholder="Search by title..."
-                className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-              />
+              <label className={theme.input.label}>Search</label>
+              <div className="relative">
+                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
+                <input
+                  type="text"
+                  value={filter.search}
+                  onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+                  placeholder="Search by title..."
+                  className={cn(theme.input.base, "pl-10")}
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="text-sm text-gray-600 dark:text-gray-400">Total Posts</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{posts.length}</div>
+        <div className={cn("grid grid-cols-1 md:grid-cols-4 gap-4 mb-6", "fade-up")} style={{ "--index": 2 } as React.CSSProperties}>
+          <div className={theme.stat.card}>
+            <div className={theme.stat.label}>Total Posts</div>
+            <div className={theme.stat.value}>{posts.length}</div>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="text-sm text-gray-600 dark:text-gray-400">Published</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div className={theme.stat.card}>
+            <div className={theme.stat.label}>Published</div>
+            <div className={cn(theme.stat.value, theme.text.success)}>
               {posts.filter(p => p.status === 'PUBLISHED').length}
             </div>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="text-sm text-gray-600 dark:text-gray-400">Drafts</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div className={theme.stat.card}>
+            <div className={theme.stat.label}>Drafts</div>
+            <div className={cn(theme.stat.value, theme.text.info)}>
               {posts.filter(p => p.status === 'DRAFT').length}
             </div>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="text-sm text-gray-600 dark:text-gray-400">Total Views</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">
-              {posts.reduce((sum, p) => sum + p.viewCount, 0)}
+          <div className={theme.stat.card}>
+            <div className={theme.stat.label}>Total Views</div>
+            <div className={theme.stat.value}>
+              {posts.reduce((sum, p) => sum + p.viewCount, 0).toLocaleString()}
             </div>
           </div>
         </div>
 
         {/* Posts Table */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className={cn(theme.table.container, "fade-up")} style={{ "--index": 3 } as React.CSSProperties}>
           {loading ? (
-            <div className="p-8 text-center text-gray-900 dark:text-white">Loading...</div>
+            <div className="p-8 text-center">
+              <div className={cn(theme.loading.spinner, "h-12 w-12 mx-auto")}></div>
+            </div>
           ) : filteredPosts.length === 0 ? (
-            <div className="p-8 text-center text-gray-500 dark:text-gray-400">
-              No posts found. Create your first post!
+            <div className={theme.empty.container}>
+              <div className={theme.empty.icon}>
+                <SearchIcon className="w-8 h-8" />
+              </div>
+              <p className={theme.empty.title}>No posts found</p>
+              <p className={theme.empty.description}>
+                {filter.search || filter.status
+                  ? 'Try adjusting your filters'
+                  : 'Create your first blog post to get started'}
+              </p>
+              {!filter.search && !filter.status && (
+                <Link
+                  href="/en/blog-admin/new"
+                  className={cn(theme.button.primary, theme.button.withIcon, "mt-4")}
+                >
+                  <Plus className="w-4 h-4" />
+                  Create New Post
+                </Link>
+              )}
             </div>
           ) : (
             <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+              <thead className={theme.table.header}>
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Title</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Locale</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Views</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Published</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
+                  <th className={theme.table.headerCell}>Title</th>
+                  <th className={theme.table.headerCell}>Status</th>
+                  <th className={theme.table.headerCell}>Locale</th>
+                  <th className={theme.table.headerCell}>Views</th>
+                  <th className={theme.table.headerCell}>Published</th>
+                  <th className={theme.table.headerCell}>Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className={theme.table.divider}>
                 {filteredPosts.map((post) => (
-                  <tr key={post.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                    <td className="px-6 py-4">
-                      <div className="font-medium text-gray-900 dark:text-white">{post.title}</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">{post.slug}</div>
+                  <tr key={post.id} className={theme.table.row}>
+                    <td className={theme.table.cell}>
+                      <div className={cn(theme.text.body, "font-medium")}>{post.title}</div>
+                      <div className={cn(theme.text.small, theme.text.muted)}>{post.slug}</div>
                     </td>
-                    <td className="px-6 py-4">
-                      <select
-                        value={post.status}
-                        onChange={(e) => handleStatusChange(post.id, e.target.value)}
-                        className="text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-                      >
-                        <option value="DRAFT">Draft</option>
-                        <option value="PUBLISHED">Published</option>
-                        <option value="SCHEDULED">Scheduled</option>
-                        <option value="ARCHIVED">Archived</option>
-                      </select>
+                    <td className={theme.table.cell}>
+                      <span className={getStatusBadge(post.status)}>
+                        {post.status}
+                      </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">{post.locale.toUpperCase()}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">{post.viewCount}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
-                      {post.publishedAt
-                        ? new Date(post.publishedAt).toLocaleDateString()
-                        : '-'}
+                    <td className={theme.table.cell}>
+                      <span className={theme.text.mono}>{post.locale.toUpperCase()}</span>
                     </td>
-                    <td className="px-6 py-4 text-sm">
-                      <div className="flex gap-2">
+                    <td className={theme.table.cell}>
+                      <span className={theme.text.mono}>{post.viewCount.toLocaleString()}</span>
+                    </td>
+                    <td className={theme.table.cell}>
+                      <span className={theme.text.small}>
+                        {post.publishedAt
+                          ? new Date(post.publishedAt).toLocaleDateString()
+                          : '-'}
+                      </span>
+                    </td>
+                    <td className={theme.table.cell}>
+                      <div className="flex items-center gap-3">
                         <Link
                           href={`/en/blog-admin/${post.id}/edit`}
-                          className="text-blue-600 dark:text-blue-400 hover:underline"
+                          className={cn(theme.text.accent, "hover:underline inline-flex items-center gap-1")}
+                          title="Edit"
                         >
-                          Edit
+                          <Edit className="w-4 h-4" />
                         </Link>
                         <Link
                           href={`/${post.locale}/blog/${post.slug}`}
                           target="_blank"
-                          className="text-green-600 dark:text-green-400 hover:underline"
+                          className={cn(theme.text.success, "hover:underline inline-flex items-center gap-1")}
+                          title="View"
                         >
-                          View
+                          <Eye className="w-4 h-4" />
                         </Link>
                         <button
                           onClick={() => handleDelete(post.id)}
-                          className="text-red-600 dark:text-red-400 hover:underline"
+                          className={cn(theme.text.error, "hover:underline inline-flex items-center gap-1")}
+                          title="Delete"
                         >
-                          Delete
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </td>

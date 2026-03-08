@@ -1,97 +1,278 @@
 /**
- * Theme utility classes for consistent styling across the application
- * Based on white/dark theme design system
+ * Comprehensive Theme System
+ * Based on UI Design System with light mode as default
+ * Teal accent (#00D4B4) as primary brand color
  */
 
-export const themeClasses = {
-  // Page layouts
+export const theme = {
+  // Page Layouts
   page: {
-    container: 'min-h-screen bg-white dark:bg-gray-900',
-    section: 'container mx-auto px-4 py-8',
+    base: 'min-h-screen bg-bg-base text-text-primary',
+    container: 'container mx-auto px-4 py-8',
+    section: 'py-12 md:py-16 lg:py-20',
   },
 
   // Cards
   card: {
-    base: 'bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700',
-    hover: 'bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow',
-    padding: 'p-6',
+    base: 'card-base',
+    hover: 'card-base card-hover',
+    padding: {
+      sm: 'p-4',
+      md: 'p-6',
+      lg: 'p-8',
+    },
+    interactive: 'card-base card-hover cursor-pointer',
   },
 
   // Typography
   text: {
-    primary: 'text-gray-900 dark:text-white',
-    secondary: 'text-gray-600 dark:text-gray-400',
-    muted: 'text-gray-500 dark:text-gray-500',
-    heading: 'text-3xl font-bold text-gray-900 dark:text-white',
-    subheading: 'text-xl font-semibold text-gray-900 dark:text-white',
-    label: 'block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300',
-  },
-
-  // Form elements
-  input: {
-    base: 'w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors',
-    textarea: 'w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors',
-    select: 'w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors',
+    display: 'text-display text-text-primary',
+    title: 'text-title text-text-primary',
+    heading: 'text-heading text-text-primary',
+    body: 'text-body text-text-primary',
+    small: 'text-small text-text-secondary',
+    mono: 'text-mono text-text-primary',
+    label: 'text-label text-text-secondary',
+    
+    // Color variants
+    primary: 'text-text-primary',
+    secondary: 'text-text-secondary',
+    muted: 'text-text-muted',
+    disabled: 'text-text-disabled',
+    accent: 'text-[var(--accent-teal)]',
+    success: 'text-[var(--success)]',
+    warning: 'text-[var(--warning)]',
+    error: 'text-[var(--error)]',
+    info: 'text-[var(--info)]',
   },
 
   // Buttons
   button: {
-    primary: 'px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors',
-    secondary: 'px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors',
-    danger: 'px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors',
-    success: 'px-6 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors',
+    base: 'btn-base',
+    primary: 'btn-base btn-primary',
+    secondary: 'btn-base btn-secondary',
+    ghost: 'btn-base btn-ghost',
+    danger: 'btn-base btn-danger',
+    
+    // Sizes
+    sm: 'px-4 py-2 text-sm',
+    md: 'px-6 py-2.5 text-base',
+    lg: 'px-8 py-3 text-lg',
+    
+    // With icon
+    withIcon: 'inline-flex items-center gap-2',
   },
 
-  // Links
-  link: {
-    primary: 'text-blue-600 dark:text-blue-400 hover:underline',
-    secondary: 'text-gray-600 dark:text-gray-400 hover:underline',
-    success: 'text-green-600 dark:text-green-400 hover:underline',
-    danger: 'text-red-600 dark:text-red-400 hover:underline',
-  },
-
-  // Tables
-  table: {
-    container: 'bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden',
-    header: 'bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600',
-    headerCell: 'px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase',
-    row: 'hover:bg-gray-50 dark:hover:bg-gray-700/50',
-    cell: 'px-6 py-4',
-    divider: 'divide-y divide-gray-200 dark:divide-gray-700',
-  },
-
-  // Stats/Metrics
-  stat: {
-    card: 'bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700',
-    label: 'text-sm text-gray-600 dark:text-gray-400',
-    value: 'text-2xl font-bold text-gray-900 dark:text-white',
+  // Form Elements
+  input: {
+    base: 'input-base w-full',
+    error: 'input-base w-full border-[var(--error)]',
+    success: 'input-base w-full border-[var(--success)]',
+    
+    // Variants
+    textarea: 'input-base w-full min-h-[120px] font-mono resize-y',
+    select: 'input-base w-full cursor-pointer',
+    
+    // Label
+    label: 'text-label text-text-secondary mb-2 block',
+    helper: 'text-small text-text-muted mt-1',
+    errorText: 'text-small text-[var(--error)] mt-1',
   },
 
   // Badges
   badge: {
-    base: 'px-3 py-1 rounded-full text-sm font-medium',
-    primary: 'px-3 py-1 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300',
-    success: 'px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300',
-    warning: 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300',
-    danger: 'px-3 py-1 rounded-full text-sm font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300',
+    base: 'badge-base',
+    teal: 'badge-base badge-teal',
+    success: 'badge-base badge-success',
+    warning: 'badge-base badge-warning',
+    error: 'badge-base badge-error',
+    info: 'badge-base badge-info',
+    
+    // Plan badges
+    free: 'badge-base bg-[var(--bg-muted)] text-text-muted border border-[var(--border-default)]',
+    pro: 'badge-base badge-teal',
+    enterprise: 'badge-base badge-warning',
   },
 
   // Alerts
   alert: {
-    info: 'p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300',
-    success: 'p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300',
-    warning: 'p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-300',
-    danger: 'p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300',
+    base: 'p-4 rounded-lg border flex items-start gap-3',
+    success: 'p-4 rounded-lg border flex items-start gap-3 bg-[rgba(16,185,129,0.1)] border-[var(--success)] text-[var(--success)]',
+    warning: 'p-4 rounded-lg border flex items-start gap-3 bg-[var(--accent-amber-dim)] border-[var(--accent-amber)] text-[var(--accent-amber)]',
+    error: 'p-4 rounded-lg border flex items-start gap-3 bg-[rgba(239,68,68,0.1)] border-[var(--error)] text-[var(--error)]',
+    info: 'p-4 rounded-lg border flex items-start gap-3 bg-[rgba(59,130,246,0.1)] border-[var(--info)] text-[var(--info)]',
   },
 
-  // Loading states
+  // Tables
+  table: {
+    container: 'table-container',
+    header: 'table-header',
+    headerCell: 'px-6 py-3 text-left text-label text-text-secondary',
+    row: 'table-row',
+    cell: 'px-6 py-4 text-body',
+    
+    // Sortable
+    sortable: 'cursor-pointer hover:text-text-primary transition-colors',
+    sortIcon: 'inline-block ml-1 w-4 h-4',
+  },
+
+  // Stats/Metrics
+  stat: {
+    card: 'card-base p-6',
+    label: 'text-small text-text-secondary mb-1',
+    value: 'text-3xl font-semibold text-text-primary font-mono',
+    change: 'text-small flex items-center gap-1 mt-2',
+    changePositive: 'text-[var(--success)]',
+    changeNegative: 'text-[var(--error)]',
+  },
+
+  // Score Display (SEO-specific)
+  score: {
+    ring: 'relative inline-flex items-center justify-center',
+    number: 'text-4xl font-bold font-mono',
+    label: 'text-label text-text-secondary mt-2',
+    
+    // Score colors
+    excellent: 'text-[var(--score-excellent)]',
+    good: 'text-[var(--score-good)]',
+    average: 'text-[var(--score-average)]',
+    poor: 'text-[var(--score-poor)]',
+  },
+
+  // Progress Bars
+  progress: {
+    container: 'h-2 bg-[var(--bg-muted)] rounded-full overflow-hidden',
+    bar: 'h-full transition-all duration-500 ease-out',
+    barTeal: 'h-full bg-[var(--accent-teal)] transition-all duration-500 ease-out',
+    barSuccess: 'h-full bg-[var(--success)] transition-all duration-500 ease-out',
+    barWarning: 'h-full bg-[var(--warning)] transition-all duration-500 ease-out',
+    barError: 'h-full bg-[var(--error)] transition-all duration-500 ease-out',
+  },
+
+  // Loading States
   loading: {
-    spinner: 'animate-spin rounded-full border-b-2 border-blue-600',
-    skeleton: 'animate-pulse bg-gray-200 dark:bg-gray-700 rounded',
+    spinner: 'animate-spin rounded-full border-2 border-[var(--bg-muted)] border-t-[var(--accent-teal)]',
+    skeleton: 'shimmer rounded',
+    overlay: 'absolute inset-0 bg-[var(--bg-base)] bg-opacity-50 flex items-center justify-center',
+  },
+
+  // Navigation
+  nav: {
+    header: 'h-16 border-b border-[var(--border-default)] bg-[var(--bg-elevated)]',
+    sidebar: 'w-60 border-r border-[var(--border-default)] bg-[var(--bg-elevated)]',
+    item: 'px-4 py-2 rounded-lg text-body text-text-secondary hover:text-text-primary hover:bg-[var(--bg-subtle)] transition-colors',
+    itemActive: 'px-4 py-2 rounded-lg text-body text-text-primary bg-[var(--bg-subtle)] border-l-2 border-[var(--accent-teal)]',
+    groupLabel: 'text-label text-text-muted px-4 py-2',
+  },
+
+  // Modals
+  modal: {
+    overlay: 'fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40',
+    container: 'fixed inset-0 flex items-center justify-center z-50 p-4',
+    content: 'card-base max-w-2xl w-full max-h-[90vh] overflow-y-auto',
+    header: 'p-6 border-b border-[var(--border-default)]',
+    body: 'p-6',
+    footer: 'p-6 border-t border-[var(--border-default)] flex items-center justify-end gap-3',
+  },
+
+  // Dropdowns
+  dropdown: {
+    trigger: 'btn-base btn-secondary',
+    menu: 'absolute mt-2 card-base min-w-[200px] py-2 z-50',
+    item: 'px-4 py-2 text-body text-text-primary hover:bg-[var(--bg-subtle)] cursor-pointer transition-colors',
+    divider: 'my-2 border-t border-[var(--border-default)]',
+  },
+
+  // Tooltips
+  tooltip: {
+    base: 'absolute z-50 px-3 py-2 text-small bg-[var(--bg-overlay)] border border-[var(--border-default)] rounded-lg shadow-lg',
+  },
+
+  // Empty States
+  empty: {
+    container: 'text-center py-12',
+    icon: 'w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--bg-muted)] flex items-center justify-center text-text-muted',
+    title: 'text-heading text-text-primary mb-2',
+    description: 'text-body text-text-secondary mb-4',
+  },
+
+  // Tool Cards (SEO-specific)
+  tool: {
+    card: 'card-base card-hover p-6 group',
+    icon: 'w-8 h-8 p-2 rounded-lg bg-[var(--accent-teal-dim)] text-[var(--accent-teal)] mb-4',
+    name: 'text-heading text-text-primary mb-2',
+    description: 'text-small text-text-secondary mb-4',
+    arrow: 'text-[var(--accent-teal)] opacity-0 group-hover:opacity-100 transition-opacity',
+  },
+
+  // Animations
+  animation: {
+    fadeUp: 'fade-up',
+    fadeIn: 'animate-[fadeIn_400ms_ease-out]',
+    float: 'animate-[float_6s_ease-in-out_infinite]',
+    pulseGlow: 'animate-[pulse-glow_2s_ease-in-out_infinite]',
+  },
+
+  // Backgrounds
+  background: {
+    grid: 'grid-pattern',
+    glow: 'gradient-glow',
+  },
+
+  // Dividers
+  divider: {
+    horizontal: 'border-t border-[var(--border-default)] my-6',
+    vertical: 'border-l border-[var(--border-default)] mx-6',
+  },
+
+  // Spacing
+  spacing: {
+    section: 'space-y-8',
+    stack: 'space-y-4',
+    inline: 'space-x-4',
   },
 } as const;
 
-// Helper function to combine classes
+/**
+ * Helper function to combine class names
+ */
 export function cn(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(' ');
+}
+
+/**
+ * Get score color based on value
+ */
+export function getScoreColor(score: number): string {
+  if (score >= 80) return theme.score.excellent;
+  if (score >= 60) return theme.score.good;
+  if (score >= 40) return theme.score.average;
+  return theme.score.poor;
+}
+
+/**
+ * Get score badge variant based on value
+ */
+export function getScoreBadge(score: number): string {
+  if (score >= 80) return theme.badge.success;
+  if (score >= 60) return theme.badge.info;
+  if (score >= 40) return theme.badge.warning;
+  return theme.badge.error;
+}
+
+/**
+ * Format percentage for progress bars
+ */
+export function formatProgress(used: number, limit: number): number {
+  if (limit === -1) return 0; // Unlimited
+  return Math.min((used / limit) * 100, 100);
+}
+
+/**
+ * Get progress bar color based on percentage
+ */
+export function getProgressColor(percentage: number): string {
+  if (percentage >= 100) return theme.progress.barError;
+  if (percentage >= 80) return theme.progress.barWarning;
+  return theme.progress.barTeal;
 }

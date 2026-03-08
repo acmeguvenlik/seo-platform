@@ -6,6 +6,7 @@ import { Activity, TrendingUp, Zap, Clock } from "lucide-react";
 import { UsageWidget } from "./usage-widget";
 import { RecentAnalyses } from "./recent-analyses";
 import { QuickActions } from "./quick-actions";
+import { theme, cn } from "@/lib/theme-classes";
 
 interface DashboardStats {
   todayUsage: number;
@@ -41,23 +42,23 @@ export function DashboardContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900">
+      <div className={theme.page.base}>
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className={cn(theme.loading.spinner, "h-12 w-12")}></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 p-8">
-      <div className="space-y-8">
+    <div className={cn(theme.page.base, "p-8")}>
+      <div className={theme.spacing.section}>
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-semibold mb-2 text-gray-900 dark:text-white">
+        <div className="fade-up" style={{ "--index": 0 } as React.CSSProperties}>
+          <h1 className={cn(theme.text.title, "mb-2")}>
             {t("welcome")}
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className={theme.text.secondary}>
             {t("subtitle")}
           </p>
         </div>
@@ -69,35 +70,45 @@ export function DashboardContent() {
             label={t("todayUsage")}
             value={stats?.todayUsage || 0}
             color="accent"
+            index={1}
           />
           <StatCard
             icon={<TrendingUp className="w-5 h-5" />}
             label={t("totalUsage")}
             value={stats?.totalUsage || 0}
             color="success"
+            index={2}
           />
           <StatCard
             icon={<Zap className="w-5 h-5" />}
             label={t("mostUsedTool")}
             value={stats?.toolBreakdown[0]?.toolSlug || "-"}
             color="warning"
+            index={3}
           />
           <StatCard
             icon={<Clock className="w-5 h-5" />}
             label={t("avgResponseTime")}
             value="<200ms"
             color="info"
+            index={4}
           />
         </div>
 
         {/* Usage Widget */}
-        <UsageWidget />
+        <div className="fade-up" style={{ "--index": 5 } as React.CSSProperties}>
+          <UsageWidget />
+        </div>
 
         {/* Quick Actions */}
-        <QuickActions />
+        <div className="fade-up" style={{ "--index": 6 } as React.CSSProperties}>
+          <QuickActions />
+        </div>
 
         {/* Recent Analyses */}
-        <RecentAnalyses />
+        <div className="fade-up" style={{ "--index": 7 } as React.CSSProperties}>
+          <RecentAnalyses />
+        </div>
       </div>
     </div>
   );
@@ -108,26 +119,30 @@ interface StatCardProps {
   label: string;
   value: string | number;
   color: "accent" | "success" | "warning" | "info";
+  index: number;
 }
 
-function StatCard({ icon, label, value, color }: StatCardProps) {
+function StatCard({ icon, label, value, color, index }: StatCardProps) {
   const colorClasses = {
-    accent: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20",
-    success: "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20",
-    warning: "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20",
-    info: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20",
+    accent: "text-[var(--accent-teal)] bg-[var(--accent-teal-dim)]",
+    success: "text-[var(--success)] bg-[rgba(16,185,129,0.1)]",
+    warning: "text-[var(--accent-amber)] bg-[var(--accent-amber-dim)]",
+    info: "text-[var(--info)] bg-[rgba(59,130,246,0.1)]",
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
+    <div 
+      className={cn(theme.stat.card, theme.card.hover, "fade-up")}
+      style={{ "--index": index } as React.CSSProperties}
+    >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{label}</p>
-          <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+          <p className={theme.stat.label}>{label}</p>
+          <p className={theme.stat.value}>
             {typeof value === "number" ? value.toLocaleString() : value}
           </p>
         </div>
-        <div className={`p-3 rounded-lg ${colorClasses[color]}`}>
+        <div className={cn("p-3 rounded-lg", colorClasses[color])}>
           {icon}
         </div>
       </div>
