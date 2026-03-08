@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/contexts/auth-context";
 import { AlertCircle, TrendingUp } from "lucide-react";
+import { themeClasses } from "@/lib/theme-classes";
 
 interface UsageData {
   tools: { used: number; limit: number };
@@ -18,7 +19,6 @@ export function UsageWidget() {
 
   useEffect(() => {
     fetchUsage();
-    // Refresh every 30 seconds
     const interval = setInterval(fetchUsage, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -39,10 +39,10 @@ export function UsageWidget() {
 
   if (loading) {
     return (
-      <div className="card-base p-6">
+      <div className={themeClasses.card.base + ' ' + themeClasses.card.padding}>
         <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-muted/20 rounded w-1/4"></div>
-          <div className="h-24 bg-muted/20 rounded"></div>
+          <div className={themeClasses.loading.skeleton + ' h-4 w-1/4'}></div>
+          <div className={themeClasses.loading.skeleton + ' h-24'}></div>
         </div>
       </div>
     );
@@ -59,31 +59,31 @@ export function UsageWidget() {
   const isNearLimit = toolsPercentage > 80 || aiPercentage > 80;
 
   return (
-    <div className="card-base p-6">
+    <div className={themeClasses.card.base + ' ' + themeClasses.card.padding}>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-heading text-xl font-semibold mb-1">
+          <h2 className={themeClasses.text.subheading + ' mb-1'}>
             {t("dailyUsage")}
           </h2>
-          <p className="text-small text-muted">
+          <p className={themeClasses.text.secondary}>
             {t("resetsDaily")}
           </p>
         </div>
         {user?.plan && (
-          <div className="px-3 py-1 rounded-full bg-accent/10 text-accent text-small font-medium">
+          <div className={themeClasses.badge.primary}>
             {user.plan}
           </div>
         )}
       </div>
 
       {isNearLimit && user?.plan === "FREE" && (
-        <div className="mb-6 p-4 rounded-lg bg-warning/10 border border-warning/20 flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
+        <div className={themeClasses.alert.warning + ' mb-6 flex items-start gap-3'}>
+          <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-body font-medium text-warning mb-1">
+            <p className="font-medium mb-1">
               {t("nearLimit")}
             </p>
-            <p className="text-small text-muted">
+            <p className="text-sm">
               {t("upgradeMessage")}
             </p>
           </div>
@@ -91,7 +91,6 @@ export function UsageWidget() {
       )}
 
       <div className="space-y-6">
-        {/* Tools Usage */}
         <UsageBar
           label={t("toolsUsage")}
           used={usage?.tools.used || 0}
@@ -99,7 +98,6 @@ export function UsageWidget() {
           percentage={toolsPercentage}
         />
 
-        {/* AI Usage */}
         <UsageBar
           label={t("aiUsage")}
           used={usage?.ai.used || 0}
@@ -109,10 +107,10 @@ export function UsageWidget() {
       </div>
 
       {user?.plan === "FREE" && (
-        <div className="mt-6 pt-6 border-t border-border">
+        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
           <a
             href="/pricing"
-            className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg bg-accent text-white hover:bg-accent/90 transition-colors"
+            className={themeClasses.button.primary + ' flex items-center justify-center gap-2 w-full'}
           >
             <TrendingUp className="w-4 h-4" />
             {t("upgradePlan")}
@@ -136,18 +134,18 @@ function UsageBar({ label, used, limit, percentage }: UsageBarProps) {
   const isAtLimit = percentage >= 100;
 
   const barColor = isAtLimit
-    ? "bg-error"
+    ? "bg-red-600"
     : isNearLimit
-    ? "bg-warning"
-    : "bg-accent";
+    ? "bg-yellow-600"
+    : "bg-blue-600";
 
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-body font-medium">{label}</span>
-        <span className="text-small text-muted">
+        <span className="text-sm font-medium text-gray-900 dark:text-white">{label}</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">
           {isUnlimited ? (
-            <span className="text-accent font-medium">Unlimited</span>
+            <span className="text-blue-600 dark:text-blue-400 font-medium">Unlimited</span>
           ) : (
             <>
               {used} / {limit}
@@ -155,7 +153,7 @@ function UsageBar({ label, used, limit, percentage }: UsageBarProps) {
           )}
         </span>
       </div>
-      <div className="h-2 bg-muted/20 rounded-full overflow-hidden">
+      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
         <div
           className={`h-full ${barColor} transition-all duration-500 ease-out`}
           style={{ width: isUnlimited ? "0%" : `${Math.min(percentage, 100)}%` }}
