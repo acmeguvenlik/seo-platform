@@ -45,7 +45,14 @@ export async function GET(request: NextRequest) {
     }
 
     // Generate cache key
-    const cacheKey = cacheService.generatePostListKey(validatedParams);
+    const { locale, page, status, categoryId, tagId, sortBy, sortOrder } = validatedParams;
+    const cacheKey = cacheService.generatePostListKey(locale, page, {
+      status,
+      categoryId,
+      tagId,
+      sortBy,
+      sortOrder,
+    });
 
     // Check cache first
     const cachedResult = await cacheService.getCachedPostList(cacheKey);
