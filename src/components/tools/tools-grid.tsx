@@ -4,233 +4,98 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/routing";
 import { 
-  Search, 
-  TrendingUp, 
-  FileText, 
-  Link2, 
-  Image, 
-  Globe,
-  BarChart3,
-  Zap,
-  ArrowRight,
-  Shield,
-  Code,
-  Heading,
-  Link as LinkIcon,
-  Sparkles,
-  Wand2
+  Search, TrendingUp, FileText, Link2, Image, Globe, BarChart3, Zap, ArrowRight,
+  Shield, Code, Heading, Link as LinkIcon, Sparkles, Wand2, Copy, Eye, BookOpen,
+  Smartphone, Lock, Users, FileCheck, Bot, Server, Activity, Share, Twitter,
+  Share2, Database, Gauge, AlertCircle, CheckCircle, Map
 } from "lucide-react";
+import { tools as toolsConfig } from "@/config/tools";
+import { theme, cn } from "@/lib/theme-classes";
+
+const iconMap: Record<string, any> = {
+  Search, TrendingUp, FileText, Link2, Image, Globe, BarChart3, Zap, Shield, Code,
+  Heading, Link: LinkIcon, Sparkles, Wand2, Copy, Eye, BookOpen, Smartphone, Lock,
+  Users, FileCheck, Bot, Server, Activity, Share, Twitter, Share2, Database, Gauge,
+  AlertCircle, CheckCircle, Map, ArrowRight: ArrowRight,
+};
 
 export function ToolsGrid() {
-  const tools = [
-    {
-      name: "AI Meta Tag Generator",
-      description: "Claude AI ile optimize edilmiş meta tag'ler oluşturun - title, description, OG tags",
-      icon: Sparkles,
-      href: "/tools/ai-meta-generator",
-      color: "text-purple-600 dark:text-purple-400",
-      bgColor: "bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-950/30 dark:to-pink-950/30",
-      category: "AI Tools",
-      available: true,
-      badge: "AI",
-    },
-    {
-      name: "AI Content Optimizer",
-      description: "Claude AI ile içeriğinizi SEO için optimize edin - keyword density, readability, SEO score",
-      icon: Wand2,
-      href: "/tools/ai-content-optimizer",
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-gradient-to-br from-blue-100 to-teal-100 dark:from-blue-950/30 dark:to-teal-950/30",
-      category: "AI Tools",
-      available: true,
-      badge: "AI",
-    },
-    {
-      name: "Meta Tag Analyzer",
-      description: "Web sitenizin meta etiketlerini analiz edin, title ve description optimizasyonu yapın",
-      icon: Search,
-      href: "/tools/meta-analyzer",
-      color: "text-accent-teal",
-      bgColor: "bg-accent-teal-dim",
-      category: "On-Page SEO",
-      available: true,
-    },
-    {
-      name: "Keyword Density Checker",
-      description: "Anahtar kelime yoğunluğunu analiz edin ve SEO için optimize edin",
-      icon: TrendingUp,
-      href: "/tools/keyword-density",
-      color: "text-accent-amber",
-      bgColor: "bg-accent-amber/10",
-      category: "Keyword Tools",
-      available: true,
-    },
-    {
-      name: "Sitemap Generator",
-      description: "XML sitemap oluşturun ve arama motorlarına kolayca gönderin",
-      icon: FileText,
-      href: "/tools/sitemap-generator",
-      color: "text-success",
-      bgColor: "bg-success/10",
-      category: "Technical SEO",
-      available: true,
-    },
-    {
-      name: "Backlink Analyzer",
-      description: "Backlink profilinizi analiz edin ve rakiplerinizle karşılaştırın",
-      icon: Link2,
-      href: "/tools/backlink-analyzer",
-      color: "text-accent-teal",
-      bgColor: "bg-accent-teal-dim",
-      category: "Off-Page SEO",
-      available: true,
-    },
-    {
-      name: "Image Optimizer",
-      description: "Görselleri SEO için optimize edin, alt text ve boyut önerileri alın",
-      icon: Image,
-      href: "/tools/image-optimizer",
-      color: "text-accent-amber",
-      bgColor: "bg-accent-amber/10",
-      category: "On-Page SEO",
-      available: true,
-    },
-    {
-      name: "Page Speed Analyzer",
-      description: "Sayfa hızınızı analiz edin ve performans önerileri alın",
-      icon: Zap,
-      href: "/tools/page-speed",
-      color: "text-success",
-      bgColor: "bg-success/10",
-      category: "Technical SEO",
-      available: true,
-    },
-    {
-      name: "Robots.txt Validator",
-      description: "Robots.txt dosyanızı doğrulayın ve optimize edin",
-      icon: Shield,
-      href: "/tools/robots-validator",
-      color: "text-accent-teal",
-      bgColor: "bg-accent-teal-dim",
-      category: "Technical SEO",
-      available: true,
-    },
-    {
-      name: "Schema Markup Generator",
-      description: "Structured data oluşturun ve zengin snippet'ler kazanın",
-      icon: Code,
-      href: "/tools/schema-generator",
-      color: "text-accent-amber",
-      bgColor: "bg-accent-amber/10",
-      category: "On-Page SEO",
-      available: true,
-    },
-    {
-      name: "Heading Structure Analyzer",
-      description: "H1-H6 başlık yapınızı analiz edin ve optimize edin",
-      icon: Heading,
-      href: "/tools/heading-analyzer",
-      color: "text-success",
-      bgColor: "bg-success/10",
-      category: "On-Page SEO",
-      available: true,
-    },
-    {
-      name: "Internal Link Analyzer",
-      description: "İç link yapınızı analiz edin ve SEO gücünü artırın",
-      icon: LinkIcon,
-      href: "/tools/internal-links",
-      color: "text-accent-teal",
-      bgColor: "bg-accent-teal-dim",
-      category: "On-Page SEO",
-      available: true,
-    },
-    {
-      name: "Competitor Analysis",
-      description: "Rakiplerinizin SEO stratejilerini analiz edin ve karşılaştırın",
-      icon: BarChart3,
-      href: "/tools/competitor-analysis",
-      color: "text-accent-teal",
-      bgColor: "bg-accent-teal-dim",
-      category: "Analysis",
-      available: false,
-    },
-    {
-      name: "Domain Authority Checker",
-      description: "Domain otoritesi ve güvenilirlik skorunu kontrol edin",
-      icon: Globe,
-      href: "/tools/domain-authority",
-      color: "text-accent-amber",
-      bgColor: "bg-accent-amber/10",
-      category: "Analysis",
-      available: false,
-    },
-  ];
+  const tools = toolsConfig.map(tool => ({
+    name: tool.slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+    slug: tool.slug,
+    description: getToolDescription(tool.slug),
+    icon: iconMap[tool.icon] || Search,
+    href: `/tools/${tool.slug}`,
+    color: tool.color,
+    category: getCategoryName(tool.category),
+    available: !tool.isPremium, // Free tools are available
+    badge: tool.isAI ? 'AI' : tool.isPremium ? 'PRO' : undefined,
+  }));
 
   const categories = Array.from(new Set(tools.map(tool => tool.category)));
 
   return (
-    <div className="space-y-12">
+    <div className={theme.spacing.section}>
       {/* Header */}
-      <div className="space-y-4">
+      <div className={cn(theme.spacing.stack, "fade-up")} style={{ "--index": 0 } as React.CSSProperties}>
         <Badge variant="teal">
           <Zap className="h-3 w-3 mr-1" />
           SEO Araçları
         </Badge>
-        <h1 className="text-4xl font-display text-text-primary">
+        <h1 className={theme.text.title}>
           Tüm SEO Araçları
         </h1>
-        <p className="text-lg text-text-secondary max-w-3xl">
+        <p className={cn(theme.text.body, theme.text.secondary, "max-w-3xl")}>
           Web sitenizin SEO performansını artırmak için ihtiyacınız olan tüm araçlar tek bir platformda
         </p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className={cn("grid grid-cols-2 md:grid-cols-4 gap-4", "fade-up")} style={{ "--index": 1 } as React.CSSProperties}>
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent-teal">{tools.length}</p>
-              <p className="text-sm text-text-muted mt-1">Toplam Araç</p>
+              <p className={cn(theme.stat.value, theme.text.accent)}>{tools.length}</p>
+              <p className={cn(theme.text.small, theme.text.muted, "mt-1")}>Toplam Araç</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-success">
+              <p className={cn(theme.stat.value, theme.text.success)}>
                 {tools.filter(t => t.available).length}
               </p>
-              <p className="text-sm text-text-muted mt-1">Aktif Araç</p>
+              <p className={cn(theme.text.small, theme.text.muted, "mt-1")}>Ücretsiz Araç</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent-amber">{categories.length}</p>
-              <p className="text-sm text-text-muted mt-1">Kategori</p>
+              <p className={cn(theme.stat.value, theme.text.warning)}>{categories.length}</p>
+              <p className={cn(theme.text.small, theme.text.muted, "mt-1")}>Kategori</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-text-primary">∞</p>
-              <p className="text-sm text-text-muted mt-1">Analiz Limiti</p>
+              <p className={cn(theme.stat.value, theme.text.primary)}>∞</p>
+              <p className={cn(theme.text.small, theme.text.muted, "mt-1")}>Analiz Limiti</p>
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Tools by Category */}
-      {categories.map((category) => (
-        <div key={category} className="space-y-6">
+      {categories.map((category, catIndex) => (
+        <div key={category} className={cn(theme.spacing.stack, "fade-up")} style={{ "--index": catIndex + 2 } as React.CSSProperties}>
           <div>
-            <h2 className="text-2xl font-display text-text-primary mb-2">
+            <h2 className={cn(theme.text.heading, "text-2xl mb-2")}>
               {category}
             </h2>
-            <div className="h-1 w-20 bg-accent-teal rounded-full" />
+            <div className="h-1 w-20 bg-[var(--accent-teal)] rounded-full" />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -238,31 +103,40 @@ export function ToolsGrid() {
               .filter((tool) => tool.category === category)
               .map((tool) => {
                 const Icon = tool.icon;
+                const colorClasses = {
+                  accent: "text-[var(--accent-teal)] bg-[var(--accent-teal-dim)]",
+                  success: "text-[var(--success)] bg-[rgba(16,185,129,0.1)]",
+                  warning: "text-[var(--accent-amber)] bg-[var(--accent-amber-dim)]",
+                  info: "text-[var(--info)] bg-[rgba(59,130,246,0.1)]",
+                };
+
                 return (
                   <Link
-                    key={tool.name}
+                    key={tool.slug}
                     href={tool.href}
                     className={!tool.available ? "pointer-events-none" : ""}
                   >
                     <Card
                       variant={tool.available ? "interactive" : "default"}
-                      className={`h-full transition-all duration-200 ${
-                        !tool.available
-                          ? "opacity-60"
-                          : "hover:scale-[1.02] hover:shadow-lg"
-                      }`}
+                      className={cn(
+                        "h-full transition-all duration-200",
+                        !tool.available ? "opacity-60" : "hover:scale-[1.02] hover:shadow-lg"
+                      )}
                     >
                       <CardHeader>
                         <div className="flex items-start justify-between mb-3">
-                          <div
-                            className={`h-12 w-12 rounded-lg ${tool.bgColor} flex items-center justify-center`}
-                          >
-                            <Icon className={`h-6 w-6 ${tool.color}`} />
+                          <div className={cn("h-12 w-12 rounded-lg flex items-center justify-center", colorClasses[tool.color])}>
+                            <Icon className="h-6 w-6" />
                           </div>
                           <div className="flex gap-2">
-                            {tool.badge && (
+                            {tool.badge === 'AI' && (
                               <Badge variant="default" className="text-xs bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0">
-                                {tool.badge}
+                                AI
+                              </Badge>
+                            )}
+                            {tool.badge === 'PRO' && (
+                              <Badge variant="amber" className="text-xs">
+                                PRO
                               </Badge>
                             )}
                             {!tool.available && (
@@ -277,7 +151,7 @@ export function ToolsGrid() {
                       </CardHeader>
                       {tool.available && (
                         <CardContent>
-                          <div className="flex items-center text-accent-teal text-sm font-medium">
+                          <div className={cn("flex items-center text-sm font-medium", theme.text.accent)}>
                             Şimdi Kullan
                             <ArrowRight className="h-4 w-4 ml-1" />
                           </div>
@@ -292,17 +166,17 @@ export function ToolsGrid() {
       ))}
 
       {/* Coming Soon Notice */}
-      <Card className="border-accent-teal/20 bg-gradient-to-br from-accent-teal-dim to-transparent">
+      <Card className={cn("border-[var(--accent-teal)]/20 bg-gradient-to-br from-[var(--accent-teal-dim)] to-transparent", "fade-up")} style={{ "--index": categories.length + 2 } as React.CSSProperties}>
         <CardContent className="pt-6">
           <div className="flex items-start gap-4">
-            <div className="h-12 w-12 rounded-lg bg-accent-teal flex items-center justify-center flex-shrink-0">
-              <Zap className="h-6 w-6 text-bg-base" />
+            <div className="h-12 w-12 rounded-lg bg-[var(--accent-teal)] flex items-center justify-center flex-shrink-0">
+              <Zap className="h-6 w-6 text-[#080C0F]" />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-text-primary mb-2">
+              <h3 className={cn(theme.text.heading, "mb-2")}>
                 Daha Fazla Araç Geliyor
               </h3>
-              <p className="text-text-secondary mb-4">
+              <p className={cn(theme.text.secondary, "mb-4")}>
                 Sürekli olarak yeni SEO araçları ekliyoruz. Güncellemelerden haberdar olmak için
                 bültenimize abone olun.
               </p>
@@ -310,9 +184,9 @@ export function ToolsGrid() {
                 <input
                   type="email"
                   placeholder="E-posta adresiniz"
-                  className="flex-1 h-10 px-4 rounded-md border border-border-default bg-bg-elevated text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent-teal"
+                  className={cn(theme.input.base, "flex-1")}
                 />
-                <button className="h-10 px-6 rounded-md bg-accent-teal text-bg-base font-medium text-sm hover:bg-accent-teal/90 transition-colors">
+                <button className={cn(theme.button.primary, "px-6")}>
                   Abone Ol
                 </button>
               </div>
@@ -322,4 +196,56 @@ export function ToolsGrid() {
       </Card>
     </div>
   );
+}
+
+function getCategoryName(category: string): string {
+  const names: Record<string, string> = {
+    seo: 'SEO Analizi',
+    technical: 'Teknik SEO',
+    content: 'İçerik Analizi',
+    social: 'Sosyal Medya',
+    ai: 'AI Araçları',
+  };
+  return names[category] || category;
+}
+
+function getToolDescription(slug: string): string {
+  const descriptions: Record<string, string> = {
+    'meta-analyzer': 'Web sitenizin meta etiketlerini analiz edin',
+    'keyword-density': 'Anahtar kelime yoğunluğunu kontrol edin',
+    'image-optimizer': 'Görselleri SEO için optimize edin',
+    'backlink-analyzer': 'Backlink profilinizi analiz edin',
+    'page-speed': 'Sayfa hızınızı test edin',
+    'heading-analyzer': 'Başlık yapınızı kontrol edin',
+    'internal-links': 'İç link yapınızı analiz edin',
+    'robots-generator': 'Robots.txt dosyası oluşturun',
+    'robots-validator': 'Robots.txt dosyanızı doğrulayın',
+    'schema-generator': 'Structured data oluşturun',
+    'sitemap-generator': 'XML sitemap oluşturun',
+    'ai-meta-generator': 'AI ile meta tag oluşturun',
+    'ai-content-optimizer': 'AI ile içerik optimize edin',
+    'url-slug-generator': 'SEO dostu URL slug oluşturun',
+    'redirect-checker': 'Redirect zincirlerini kontrol edin',
+    'broken-link-checker': 'Kırık linkleri tespit edin',
+    'canonical-checker': 'Canonical tag\'leri doğrulayın',
+    'hreflang-validator': 'Hreflang tag\'leri kontrol edin',
+    'open-graph-checker': 'Open Graph tag\'leri doğrulayın',
+    'twitter-card-validator': 'Twitter Card tag\'leri kontrol edin',
+    'structured-data-validator': 'Structured data doğrulayın',
+    'mobile-friendly-test': 'Mobil uyumluluğu test edin',
+    'ssl-checker': 'SSL sertifikasını kontrol edin',
+    'domain-authority-checker': 'Domain otoritesini ölçün',
+    'competitor-analysis': 'Rakip analizi yapın',
+    'keyword-research': 'Anahtar kelime araştırması yapın',
+    'serp-preview': 'SERP görünümünü önizleyin',
+    'readability-analyzer': 'İçerik okunabilirliğini analiz edin',
+    'duplicate-content-checker': 'Kopya içerik tespit edin',
+    'xml-sitemap-validator': 'XML sitemap doğrulayın',
+    'robots-analyzer': 'Robots.txt analiz edin',
+    'http-header-checker': 'HTTP header\'ları kontrol edin',
+    'website-speed-test': 'Website hızını test edin',
+    'core-web-vitals': 'Core Web Vitals ölçün',
+    'social-share-counter': 'Sosyal paylaşım sayılarını görün',
+  };
+  return descriptions[slug] || 'SEO aracı';
 }
