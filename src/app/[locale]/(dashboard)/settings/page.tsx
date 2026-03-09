@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Settings, Key, Zap, Save, RefreshCw } from "lucide-react";
 import { theme, cn } from "@/lib/theme-classes";
@@ -130,14 +129,16 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="apiKey">Gemini API Key</Label>
+              <label htmlFor="apiKey" className="text-sm font-medium text-text-primary block mb-2">
+                Gemini API Key
+              </label>
               <Input
                 id="apiKey"
                 type="password"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 placeholder="AIzaSy..."
-                className="mt-2 font-mono"
+                className="font-mono"
               />
               <p className={cn(theme.text.small, theme.text.muted, "mt-1")}>
                 API anahtarınızı{" "}
@@ -199,30 +200,20 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="model">Model</Label>
-              <Select value={selectedModel} onValueChange={setSelectedModel}>
-                <SelectTrigger className="mt-2">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {GEMINI_MODELS.map((model) => (
-                    <SelectItem key={model.value} value={model.value}>
-                      <div className="flex items-center gap-2">
-                        {model.label}
-                        {model.recommended && (
-                          <Badge variant="default" className="ml-2">
-                            Önerilen
-                          </Badge>
-                        )}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Select
+                label="Model"
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                options={GEMINI_MODELS.map((model) => ({
+                  value: model.value,
+                  label: model.label + (model.recommended ? ' (Önerilen)' : ''),
+                }))}
+                className="mt-2"
+              />
             </div>
 
             {selectedModelInfo && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-bg-secondary rounded-lg">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-[var(--bg-secondary)] rounded-lg">
                 <div>
                   <p className={cn(theme.text.small, theme.text.muted)}>Versiyon</p>
                   <p className="font-semibold text-text-primary">{selectedModelInfo.version}</p>
@@ -242,7 +233,7 @@ export default function SettingsPage() {
               </div>
             )}
 
-            <div className={cn("p-4 rounded-lg", theme.bg.secondary)}>
+            <div className="p-4 rounded-lg bg-[var(--bg-secondary)]">
               <h4 className="font-semibold text-text-primary mb-2">Model Önerileri:</h4>
               <ul className={cn("space-y-2", theme.text.small, theme.text.secondary)}>
                 <li>• <strong>gemini-flash-latest:</strong> Her zaman en yeni modeli kullanır (Önerilen)</li>
