@@ -9,14 +9,17 @@ if (process.env.GEMINI_API_KEY) {
 
 // Available Gemini Models
 export const GEMINI_MODELS = {
-  // Gemini 2.0 Models (Latest - December 2024)
-  FLASH_2_0: 'gemini-2.0-flash-exp',
-  FLASH_2_0_THINKING: 'gemini-2.0-flash-thinking-exp-1219',
+  // Gemini 2.0 Models (Latest - March 2026)
+  FLASH_2_0_EXP: 'gemini-2.0-flash-exp',
+  FLASH_2_0: 'gemini-2.0-flash',
+  FLASH_2_0_THINKING: 'gemini-2.0-flash-thinking-exp',
   
   // Gemini 1.5 Models (Stable)
   FLASH_1_5: 'gemini-1.5-flash',
+  FLASH_1_5_LATEST: 'gemini-1.5-flash-latest',
   FLASH_1_5_8B: 'gemini-1.5-flash-8b',
   PRO_1_5: 'gemini-1.5-pro',
+  PRO_1_5_LATEST: 'gemini-1.5-pro-latest',
   
   // Legacy Models
   PRO_1_0: 'gemini-1.0-pro',
@@ -24,9 +27,17 @@ export const GEMINI_MODELS = {
 
 // Model configurations with capabilities
 export const MODEL_CONFIGS = {
+  [GEMINI_MODELS.FLASH_2_0_EXP]: {
+    name: 'Gemini 2.0 Flash Experimental',
+    description: 'Latest experimental multimodal model - fastest and most advanced',
+    maxTokens: 8192,
+    features: ['text', 'image', 'audio', 'video', 'tool-use', 'code-execution'],
+    speed: 'fastest',
+    cost: 'low',
+  },
   [GEMINI_MODELS.FLASH_2_0]: {
     name: 'Gemini 2.0 Flash',
-    description: 'Latest multimodal model with native tool use and multimodal live API',
+    description: 'Stable version of Gemini 2.0 Flash - production ready',
     maxTokens: 8192,
     features: ['text', 'image', 'audio', 'video', 'tool-use', 'code-execution'],
     speed: 'fastest',
@@ -48,6 +59,14 @@ export const MODEL_CONFIGS = {
     speed: 'fast',
     cost: 'low',
   },
+  [GEMINI_MODELS.FLASH_1_5_LATEST]: {
+    name: 'Gemini 1.5 Flash Latest',
+    description: 'Always points to the latest 1.5 Flash version',
+    maxTokens: 8192,
+    features: ['text', 'image', 'audio', 'video'],
+    speed: 'fast',
+    cost: 'low',
+  },
   [GEMINI_MODELS.FLASH_1_5_8B]: {
     name: 'Gemini 1.5 Flash-8B',
     description: 'Smaller, faster model for high-volume tasks',
@@ -64,6 +83,14 @@ export const MODEL_CONFIGS = {
     speed: 'medium',
     cost: 'medium',
   },
+  [GEMINI_MODELS.PRO_1_5_LATEST]: {
+    name: 'Gemini 1.5 Pro Latest',
+    description: 'Always points to the latest 1.5 Pro version',
+    maxTokens: 8192,
+    features: ['text', 'image', 'audio', 'video', 'long-context'],
+    speed: 'medium',
+    cost: 'medium',
+  },
   [GEMINI_MODELS.PRO_1_0]: {
     name: 'Gemini 1.0 Pro',
     description: 'Legacy model for text-only tasks',
@@ -74,8 +101,8 @@ export const MODEL_CONFIGS = {
   },
 } as const;
 
-// Default model - Use Gemini 2.0 Flash for best performance
-export const GEMINI_MODEL = process.env.GEMINI_MODEL || GEMINI_MODELS.FLASH_2_0;
+// Default model - Use Gemini 2.0 Flash Experimental for best performance
+export const GEMINI_MODEL = process.env.GEMINI_MODEL || GEMINI_MODELS.FLASH_2_0_EXP;
 
 // Export the AI instance
 export const gemini = genAI;
@@ -195,12 +222,12 @@ export function selectModelForTask(task: 'reasoning' | 'speed' | 'quality' | 'co
     case 'reasoning':
       return GEMINI_MODELS.FLASH_2_0_THINKING;
     case 'speed':
-      return GEMINI_MODELS.FLASH_1_5_8B;
+      return GEMINI_MODELS.FLASH_2_0_EXP; // En hızlı model
     case 'quality':
-      return GEMINI_MODELS.PRO_1_5;
+      return GEMINI_MODELS.PRO_1_5_LATEST; // En kaliteli model
     case 'cost':
-      return GEMINI_MODELS.FLASH_1_5_8B;
+      return GEMINI_MODELS.FLASH_1_5_8B; // En ucuz model
     default:
-      return GEMINI_MODELS.FLASH_2_0;
+      return GEMINI_MODELS.FLASH_2_0_EXP; // Varsayılan: En hızlı ve en iyi
   }
 }
