@@ -32,7 +32,225 @@
     "reset": "Sıfırla"
   },
   "tools": {
+    "meta-analyzer": {
+      "title": "Meta Etiket Analizi",
+      "description": "Web sitenizin meta etiketlerini analiz edin"
+    },
+    "keyword-density": {
+      "title": "Anahtar Kelime Yoğunluğu",
+      "description": "İçeriğinizdeki anahtar kelime yoğunluğunu analiz edin"
+    },
+    "image-optimizer": {
+      "title": "Görsel Optimizasyonu",
+      "description": "Görselleri SEO için optimize edin"
+    },
+    "backlink-analyzer": {
+      "title": "Backlink Analizi",
+      "description": "Backlink profilinizi analiz edin"
+    },
+    "page-speed": {
+      "title": "Sayfa Hızı",
+      "description": "Sayfa hızını ve performansı analiz edin"
+    },
+    "heading-analyzer": {
+      "title": "Başlık Analizi",
+      "description": "H1-H6 başlık yapısını analiz edin"
+    },
+    "internal-links": {
+      "title": "İç Link Analizi",
+      "description": "İç link yapısını analiz edin"
+    },
+    "robots-generator": {
+      "title": "Robots.txt Oluşturucu",
+      "description": "Robots.txt dosyası oluşturun"
+    },
+    "robots-validator": {
+      "title": "Robots.txt Doğrulayıcı",
+      "description": "Robots.txt dosyanızı doğrulayın"
+    },
+    "schema-generator": {
+      "title": "Schema Oluşturucu",
+      "description": "Structured data oluşturun"
+    },
+    "sitemap-generator": {
+      "title": "Sitemap Oluşturucu",
+      "description": "XML sitemap oluşturun"
+    },
+    "ai-meta-generator": {
+      "title": "AI Meta Oluşturucu",
+      "description": "AI ile meta etiketler oluşturun"
+    },
+    "ai-content-optimizer": {
+      "title": "AI İçerik Optimize Edici",
+      "description": "AI ile içeriği optimize edin"
+    },
+    "ai-seo-audit": {
+      "title": "AI SEO Denetimi",
+      "description": "AI ile kapsamlı SEO analizi"
+    },
+    "ai-title-generator": {
+      "title": "AI Başlık Oluşturucu",
+      "description": "AI ile SEO başlıkları oluşturun"
+    },
+    "ai-blog-outline": {
+      "title": "AI Blog Taslağı",
+      "description": "AI ile blog taslağı oluşturun"
+    },
+    "ai-content-ideas": {
+      "title": "AI İçerik Fikirleri",
+      "description": "AI ile içerik fikirleri üretin"
+    },
+    "ai-keyword-suggestions": {
+      "title": "AI Anahtar Kelime Önerileri",
+      "description": "AI ile anahtar kelime önerileri"
+    },
+    "ai-schema-generator": {
+      "title": "AI Schema Oluşturucu",
+      "description": "AI ile schema markup oluşturun"
+    },
+    "ai-faq-generator": {
+      "title": "AI SSS Oluşturucu",
+      "description": "AI ile SSS oluşturun"
+    },
+    "url-slug-generator": {
+      "title": "URL Slug Oluşturucu",
+      "description": "SEO-friendly URL slug'ları oluşturun"
+    },
+    "redirect-checker": {
+      "title": "Yönlendirme Kontrolü",
+      "description": "URL yönlendirmelerini kontrol edin"
+    },
+    "broken-link-checker": {
+      "title": "Kırık Link Kontrolü",
+      "description": "Kırık linkleri tespit edin"
+    },
+    "canonical-checker": {
+      "title": "Canonical Kontrolü",
+      "description": "Canonical etiketleri kontrol edin"
+    },
+    "hreflang-validator": {
+      "title": "Hreflang Doğrulayıcı",
+      "description": "Hreflang etiketlerini doğrulayın"
+    },
+    "open-graph-checker": {
+      "title": "Open Graph Kontrolü",
+      "description": "Open Graph etiketlerini kontrol edin"
+    },
+    "twitter-card-validator": {
+      "title": "Twitter Card Doğrulayıcı",
+      "description": "Twitter Card etiketlerini doğrulayın"
+    },
+    "structured-data-validator": {
+      "title": "Yapılandırılmış Veri Doğrulayıcı",
+      "description": "Structured data'yı doğrulayın"
+    },
+    "mobile-friendly-test": {
+      "title": "Mobil Uyumluluk Testi",
+      "description": "Mobil uyumluluğu test edin"
+    },
+    "ssl-checker": {
+      "title": "SSL Kontrolü",
+      "description": "SSL sertifikasını kontrol edin"
+    },
+    "domain-authority-checker": {
+      "title": "Domain Authority",
+      "description": "Domain authority skorunu kontrol edin"
+    },
+    "competitor-analysis": {
+      "title": "Rakip Analizi",
+      "description": "Rakiplerinizi analiz edin"
+    },
+    "keyword-research": {
+      "title": "Anahtar Kelime Araştırması",
+      "description": "Anahtar kelime araştırması yapın"
+    },
+    "serp-preview": {
+      "title": "SERP Önizleme",
+      "description": "Arama sonuçlarında nasıl görüneceğinizi önizleyin"
+    },
+    "readability-analyzer": {
+      "title": "Okunabilirlik Analizi",
+      "description": "İçerik okunabilirliğini analiz edin"
+    },
+    "duplicate-content-checker": {
+      "title": "Kopya İçerik Kontrolü",
+      "description": "Kopya içeriği tespit edin"
+    },
+    "xml-sitemap-validator": {
+      "title": "XML Sitemap Doğrulayıcı",
+      "description": "XML sitemap'i doğrulayın"
+    },
+    "robots-analyzer": {
+      "title": "Robots.txt Analizi",
+      "description": "Robots.txt dosyasını analiz edin"
+    },
+    "http-header-checker": {
+      "title": "HTTP Header Kontrolü",
+      "description": "HTTP başlıklarını kontrol edin"
+    },
+    "website-speed-test": {
+      "title": "Website Hız Testi",
+      "description": "Website hızını test edin"
+    },
+    "core-web-vitals": {
+      "title": "Core Web Vitals",
+      "description": "Core Web Vitals metriklerini ölçün"
+    },
+    "social-share-counter": {
+      "title": "Sosyal Paylaşım Sayacı",
+      "description": "Sosyal medya paylaşımlarını sayın"
+    },
+    "lighthouse-analyzer": {
+      "title": "Lighthouse Analizi",
+      "description": "Google Lighthouse skorlarını analiz edin"
+    },
+    "security-headers-checker": {
+      "title": "Güvenlik Başlıkları",
+      "description": "Güvenlik başlıklarını kontrol edin"
+    },
+    "favicon-checker": {
+      "title": "Favicon Kontrolü",
+      "description": "Favicon'ları kontrol edin"
+    },
+    "amp-validator": {
+      "title": "AMP Doğrulayıcı",
+      "description": "AMP sayfalarını doğrulayın"
+    },
+    "pagination-checker": {
+      "title": "Sayfalama Kontrolü",
+      "description": "Sayfalama yapısını kontrol edin"
+    },
+    "language-detector": {
+      "title": "Dil Algılayıcı",
+      "description": "İçerik dilini algılayın"
+    },
+    "ai-content-gap-analyzer": {
+      "title": "AI İçerik Boşluk Analizi",
+      "description": "AI ile içerik boşluklarını analiz edin"
+    },
+    "local-seo-checker": {
+      "title": "Yerel SEO Kontrolü",
+      "description": "Yerel SEO'yu kontrol edin"
+    },
     "metaAnalyzer": {
+      "title": "Meta Etiket Analizi",
+      "description": "Web sitenizin meta etiketlerini analiz edin ve SEO performansını optimize edin",
+      "inputLabel": "URL Girin",
+      "inputPlaceholder": "https://ornek.com",
+      "analyze": "Analiz Et",
+      "analyzing": "Analiz Ediliyor...",
+      "results": "Analiz Sonuçları",
+      "score": "SEO Skoru",
+      "issues": "Bulunan Sorunlar",
+      "suggestions": "Öneriler",
+      "noIssues": "Sorun bulunamadı",
+      "errors": {
+        "invalidUrl": "Lütfen geçerli bir URL girin",
+        "fetchFailed": "URL alınamadı",
+        "rateLimitExceeded": "Oran sınırı aşıldı. Lütfen daha sonra tekrar deneyin."
+      }
+    },
+    "sitemapGenerator": {
       "title": "Meta Etiket Analizi",
       "description": "Web sitenizin meta etiketlerini analiz edin ve SEO performansını optimize edin",
       "inputLabel": "URL Girin",
