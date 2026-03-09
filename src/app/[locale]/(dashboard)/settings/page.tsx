@@ -86,14 +86,22 @@ export default function SettingsPage() {
       });
 
       const data = await response.json();
-      setTestResult({
-        success: response.ok,
-        message: data.message || (response.ok ? "API bağlantısı başarılı!" : "API bağlantısı başarısız!"),
-      });
-    } catch (error) {
+      
+      if (response.ok && data.success) {
+        setTestResult({
+          success: true,
+          message: data.message || "API bağlantısı başarılı!",
+        });
+      } else {
+        setTestResult({
+          success: false,
+          message: data.message || data.error || "API bağlantısı başarısız!",
+        });
+      }
+    } catch (error: any) {
       setTestResult({
         success: false,
-        message: "Bağlantı hatası!",
+        message: "Bağlantı hatası: " + (error?.message || "Bilinmeyen hata"),
       });
     } finally {
       setTesting(false);

@@ -45,17 +45,32 @@ Return ONLY a JSON object with this structure:
   }
 }`;
 
-    const responseText = await generateContent(prompt);
+    const responseText = await generateContent(prompt, {
+      temperature: 0.3,
+      maxTokens: 2048,
+    });
+    
     const result = parseJSONFromResponse(responseText);
 
     return NextResponse.json({
       success: true,
       ...result,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('AI Schema Generator error:', error);
+    
+    // Provide more detailed error messages
+    let errorMessage = 'Failed to generate schema';
+    if (error?.message?.includes('quota') || error?.message?.includes('RESOURCE_EXHAUSTED')) {
+      errorMessage = 'API quota exceeded. Please try again later.';
+    } else if (error?.message?.includes('API key')) {
+      errorMessage = 'Invalid API key configuration';
+    } else if (error?.message?.includes('model')) {
+      errorMessage = 'AI model not available';
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to generate schema' },
+      { error: errorMessage, details: error?.message },
       { status: 500 }
     );
   }
