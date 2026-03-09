@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { anthropic, CLAUDE_MODEL } from "@/lib/anthropic";
+import { generateContent } from "@/lib/gemini";
 import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
 import { aiContentOptimizerSchema } from "@/lib/validation";
 
@@ -33,10 +33,10 @@ async function handler(
   const startTime = Date.now();
   const { content, targetKeyword, competitorUrls, language } = validatedData;
 
-  // Check if anthropic is configured
-  if (!anthropic) {
+  // Check if Gemini is configured
+  if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
-      { error: "AI servisi yapılandırılmamış. Lütfen ANTHROPIC_API_KEY ekleyin." },
+      { error: "AI servisi yapılandırılmamış. Lütfen GEMINI_API_KEY ekleyin." },
       { status: 503 }
     );
   }
@@ -89,21 +89,7 @@ SUGGESTIONS:
 
 IMPORTANT: Respond in ${targetLang} language.`;
 
-  const message = await anthropic.messages.create({
-    model: CLAUDE_MODEL,
-    max_tokens: 2048,
-    temperature: 0.3,
-    messages: [
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-  });
-
-  const responseText = message.content[0].type === "text" 
-    ? message.content[0].text 
-    : "";
+  const responseText = await generateContent(prompt);
 
   // Parse the response
   const lines = responseText.split("\n");
@@ -115,7 +101,6 @@ IMPORTANT: Respond in ${targetLang} language.`;
   const suggestions: string[] = [];
 
   let currentSection = "";
-  let currentImprovement: any = {};
 
   lines.forEach((line: string) => {
     const trimmedLine = line.trim();
@@ -136,7 +121,7 @@ IMPORTANT: Respond in ${targetLang} language.`;
     } else if (trimmedLine.startsWith("KEYWORD_DENSITY:")) {
       const densityMatch = trimmedLine.match(/[\d.]+/);
       if (densityMatch) {
-        keywordDensity = parseFloat(densityMatch[0]) * 100; // Convert to percentage
+        keywordDensity = parseFloat(densityMatch[0]) * 100;
       }
     } else if (trimmedLine === "IMPROVEMENTS:") {
       currentSection = "improvements";
@@ -145,7 +130,6 @@ IMPORTANT: Respond in ${targetLang} language.`;
     } else if (currentSection === "content" && trimmedLine.length > 0 && !trimmedLine.startsWith("SEO_SCORE")) {
       optimizedContent += (optimizedContent ? "\n" : "") + trimmedLine;
     } else if (currentSection === "improvements" && trimmedLine.startsWith("CATEGORY:")) {
-      // Parse improvement line: CATEGORY: X | BEFORE: Y | AFTER: Z | IMPACT: W
       const parts = trimmedLine.split("|").map(p => p.trim());
       if (parts.length >= 4) {
         improvements.push({
@@ -160,7 +144,6 @@ IMPORTANT: Respond in ${targetLang} language.`;
     }
   });
 
-  // If no optimized content, use original
   if (!optimizedContent) {
     optimizedContent = content;
   }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { anthropic, CLAUDE_MODEL } from "@/lib/anthropic";
+import { generateContent } from "@/lib/gemini";
 import { withApiMiddleware, successResponse } from "@/lib/api-middleware";
 import { aiMetaGeneratorSchema } from "@/lib/validation";
 
@@ -17,10 +17,10 @@ async function handler(
 ): Promise<NextResponse> {
   const { url, currentTitle, currentDescription, content, targetKeywords, language } = validatedData;
 
-  // Check if anthropic is configured
-  if (!anthropic) {
+  // Check if Gemini is configured
+  if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
-      { error: "AI servisi yapılandırılmamış. Lütfen ANTHROPIC_API_KEY ekleyin." },
+      { error: "AI servisi yapılandırılmamış. Lütfen GEMINI_API_KEY ekleyin." },
       { status: 503 }
     );
   }
@@ -62,21 +62,7 @@ Suggestions:
 
 IMPORTANT: Respond in ${targetLang} language.`;
 
-  const message = await anthropic.messages.create({
-    model: CLAUDE_MODEL,
-    max_tokens: 1024,
-    temperature: 0.7,
-    messages: [
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-  });
-
-  const responseText = message.content[0].type === "text" 
-    ? message.content[0].text 
-    : "";
+  const responseText = await generateContent(prompt);
 
   // Parse the response
   const lines = responseText.split("\n");
@@ -89,7 +75,7 @@ IMPORTANT: Respond in ${targetLang} language.`;
     twitterTitle: "",
     twitterDescription: "",
     suggestions: [],
-    processingTime: Date.now() - Date.now(),
+    processingTime: 0,
   };
 
   lines.forEach((line: string) => {
@@ -122,11 +108,10 @@ IMPORTANT: Respond in ${targetLang} language.`;
   return successResponse(result);
 }
 
-// Export with middleware
 export const POST = withApiMiddleware(handler, {
   requireAuth: true,
   toolType: "ai",
   enableCache: true,
-  cacheTTL: 7200, // 2 hours for AI responses
+  cacheTTL: 7200,
   validationSchema: aiMetaGeneratorSchema,
 });
