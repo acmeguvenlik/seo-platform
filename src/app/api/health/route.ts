@@ -49,8 +49,8 @@ async function checkRedis() {
 
 async function checkAI() {
   try {
-    // Check if Anthropic is configured
-    if (!process.env.ANTHROPIC_API_KEY) {
+    // Check if Gemini is configured
+    if (!process.env.GEMINI_API_KEY) {
       return { status: "not_configured", message: "AI not configured" };
     }
     return { status: "healthy" };
