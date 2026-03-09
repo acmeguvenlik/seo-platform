@@ -101,8 +101,10 @@ export const MODEL_CONFIGS = {
   },
 } as const;
 
-// Default model - Use Gemini 2.0 Flash Experimental for best performance
-export const GEMINI_MODEL = process.env.GEMINI_MODEL || GEMINI_MODELS.FLASH_2_0_EXP;
+// Default model - Use latest stable Flash for automatic updates
+// gemini-1.5-flash-latest: Always points to newest stable 1.5 Flash (recommended for production)
+// gemini-2.0-flash-exp: Latest experimental 2.0 (fastest but experimental)
+export const GEMINI_MODEL = process.env.GEMINI_MODEL || GEMINI_MODELS.FLASH_1_5_LATEST;
 
 // Export the AI instance
 export const gemini = genAI;

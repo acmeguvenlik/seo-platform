@@ -28,15 +28,19 @@ GEMINI_API_KEY=your-gemini-api-key-here
 ### 2. Gemini Model Selection (Optional)
 
 ```bash
-GEMINI_MODEL=gemini-2.0-flash-exp
+GEMINI_MODEL=gemini-1.5-flash-latest
 ```
 
 **Available models:**
-- `gemini-2.0-flash-exp` (Default - Fastest, recommended)
-- `gemini-2.0-flash-thinking-exp-1219` (Enhanced reasoning)
-- `gemini-1.5-flash` (Stable)
+- `gemini-1.5-flash-latest` (Default - Always latest stable, RECOMMENDED)
+- `gemini-2.0-flash-exp` (Latest experimental, fastest but may change)
+- `gemini-2.0-flash` (Stable 2.0 version)
+- `gemini-2.0-flash-thinking-exp` (Enhanced reasoning)
+- `gemini-1.5-flash` (Specific stable version)
 - `gemini-1.5-flash-8b` (Lowest cost)
-- `gemini-1.5-pro` (Highest quality)
+- `gemini-1.5-pro-latest` (Always latest Pro, highest quality)
+
+**Recommendation:** Use `gemini-1.5-flash-latest` for automatic updates to the newest stable model.
 
 ### 3. Other Required Variables
 
