@@ -82,9 +82,8 @@ Return ONLY a JSON object with this structure:
   ]
 }`;
 
-    // Use Gemini 2.0 Flash for fast, accurate analysis
+    // Use latest stable Flash model for fast, accurate analysis
     const responseText = await generateContent(prompt, {
-      model: GEMINI_MODELS.FLASH_2_0,
       temperature: 0.3,
       maxTokens: 4096,
     });
@@ -95,7 +94,6 @@ Return ONLY a JSON object with this structure:
       success: true,
       url,
       audit,
-      model: GEMINI_MODELS.FLASH_2_0,
     });
   } catch (error) {
     console.error('AI SEO Audit error:', error);
