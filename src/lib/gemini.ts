@@ -9,20 +9,27 @@ if (process.env.GEMINI_API_KEY) {
 
 // Available Gemini Models
 export const GEMINI_MODELS = {
-  // Gemini 2.0 Models (Latest - March 2026)
+  // Gemini 3.1 Models (Latest - March 2026)
+  FLASH_3_1_LITE_PREVIEW: 'gemini-3.1-flash-lite-preview',
+  
+  // Gemini 3.0 Models
+  FLASH_3_0_PREVIEW: 'gemini-3-flash-preview',
+  
+  // Latest Auto-Update Models
+  FLASH_LATEST: 'gemini-flash-latest',
+  FLASH_LITE_LATEST: 'gemini-flash-lite-latest',
+  
+  // Gemini 2.0 Models (Stable)
   FLASH_2_0_EXP: 'gemini-2.0-flash-exp',
   FLASH_2_0: 'gemini-2.0-flash',
   FLASH_2_0_THINKING: 'gemini-2.0-flash-thinking-exp',
   
-  // Gemini 1.5 Models (Stable)
+  // Gemini 1.5 Models (Legacy)
   FLASH_1_5: 'gemini-1.5-flash',
   FLASH_1_5_LATEST: 'gemini-1.5-flash-latest',
   FLASH_1_5_8B: 'gemini-1.5-flash-8b',
   PRO_1_5: 'gemini-1.5-pro',
   PRO_1_5_LATEST: 'gemini-1.5-pro-latest',
-  
-  // Legacy Models
-  PRO_1_0: 'gemini-1.0-pro',
 } as const;
 
 // Model configurations with capabilities
