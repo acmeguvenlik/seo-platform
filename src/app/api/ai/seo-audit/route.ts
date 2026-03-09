@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateContent, parseJSONFromResponse } from '@/lib/gemini';
+import { generateContent, parseJSONFromResponse, GEMINI_MODELS } from '@/lib/gemini';
 import * as cheerio from 'cheerio';
 
 export async function POST(request: NextRequest) {
@@ -82,13 +82,20 @@ Return ONLY a JSON object with this structure:
   ]
 }`;
 
-    const responseText = await generateContent(prompt);
+    // Use Gemini 2.0 Flash for fast, accurate analysis
+    const responseText = await generateContent(prompt, {
+      model: GEMINI_MODELS.FLASH_2_0,
+      temperature: 0.3,
+      maxTokens: 4096,
+    });
+    
     const audit = parseJSONFromResponse(responseText);
 
     return NextResponse.json({
       success: true,
       url,
       audit,
+      model: GEMINI_MODELS.FLASH_2_0,
     });
   } catch (error) {
     console.error('AI SEO Audit error:', error);
